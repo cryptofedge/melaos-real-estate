@@ -3,10 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Site Status — Melao's Real Estate Development</title>
-<meta name="description" content="Live health checks and automated test results for the Melao's Real Estate Development website." />
-<!-- Kept out of search results, but still shared directly - link previews matter. -->
-<meta name="robots" content="noindex" />
+<title>Resident Portal — Maintenance &amp; Complaints — Melao's Real Estate Development</title>
+<meta name="description" content="Check your warranty coverage and service history, keep your unit up to date, and raise a maintenance request or a formal complaint about your Melao's home." />
 <meta name="theme-color" content="#111827" />
 <link rel="icon" href="assets/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="assets/favicon.png" />
@@ -15,20 +13,20 @@
 <meta property="og:site_name" content="Melao's Real Estate Development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://cryptofedge.github.io/melaos-real-estate/status.html" />
-<meta property="og:title" content="Site Status — Melao's Real Estate Development" />
-<meta property="og:description" content="Live health checks and automated test results for the Melao's Real Estate Development website." />
-<meta property="og:image" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-status.png" />
-<meta property="og:image:secure_url" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-status.png" />
+<meta property="og:title" content="Resident Portal — Melao's Real Estate Development" />
+<meta property="og:description" content="Check your warranty coverage and service history, keep your unit up to date, and raise a maintenance request or a formal complaint about your Melao's home." />
+<meta property="og:image" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-resident.png" />
+<meta property="og:image:secure_url" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-resident.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Melao's Real Estate Development — site status and automated health checks" />
+<meta property="og:image:alt" content="Melao's Real Estate Development — resident maintenance, warranty and service" />
 <meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Site Status — Melao's Real Estate Development" />
-<meta name="twitter:description" content="Live health checks and automated test results for the Melao's site." />
-<meta name="twitter:image" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-status.png" />
+<meta name="twitter:title" content="Resident Portal — Melao's Real Estate Development" />
+<meta name="twitter:description" content="Warranty coverage, service history, maintenance requests and complaints for your Melao's home." />
+<meta name="twitter:image" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-resident.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -39,26 +37,29 @@
     theme: { extend: {
       colors: { cloud:'#F9FAFB', slate7:'#1F2937', ink:'#111827', gold:'#C5A059', gilt:'#D4AF37', sand:'#F3EFE6' },
       fontFamily: { sans:['Inter','ui-sans-serif','system-ui','sans-serif'], display:['"Plus Jakarta Sans"','Inter','sans-serif'] },
-      boxShadow: { card:'0 1px 2px rgba(17,24,39,.04), 0 8px 24px -12px rgba(17,24,39,.18)' },
-      maxWidth: { shell:'1000px' },
+      boxShadow: { card:'0 1px 2px rgba(17,24,39,.04), 0 8px 24px -12px rgba(17,24,39,.18)',
+                   lift:'0 2px 4px rgba(17,24,39,.05), 0 24px 48px -20px rgba(17,24,39,.28)' },
+      maxWidth: { shell:'1080px' },
     } },
   };
 </script>
 <style>
   :focus-visible { outline: 2px solid #C5A059; outline-offset: 2px; border-radius: 4px; }
   [hidden] { display: none !important; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .spin { animation: spin .9s linear infinite; }
-  @media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
+  .rule::after { content:''; display:block; width:44px; height:2px; margin-top:.75rem;
+                 background:linear-gradient(90deg,#D4AF37,#C5A059); }
+  @media (prefers-reduced-motion: reduce) { * { transition-duration:.01ms !important; } }
 </style>
 </head>
 <body class="bg-cloud font-sans text-ink antialiased">
 
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white">Skip to main content</a>
+
 <header class="border-b border-ink/10 bg-white">
   <div class="mx-auto flex max-w-shell items-center justify-between gap-6 px-5 py-4 lg:px-8">
-    <a href="index.html" class="flex items-center gap-3">
-      <span class="grid h-11 w-11 place-items-center rounded-md bg-ink ring-1 ring-gold/40">
-        <img src="assets/logo.svg" alt="" class="h-9 w-9 object-contain" />
+    <a href="index.html" class="flex items-center gap-3" aria-label="Melao's Real Estate Development — home">
+      <span class="grid h-11 w-11 place-items-center rounded-full bg-ink ring-1 ring-gold/40">
+        <img src="assets/logo.svg" alt="" class="h-6 w-6 object-contain" />
       </span>
       <span class="leading-tight">
         <span class="block font-display text-[15px] font-extrabold tracking-tight">MELAO&rsquo;S</span>
@@ -69,210 +70,650 @@
   </div>
 </header>
 
-<main class="mx-auto max-w-shell px-5 py-12 lg:px-8">
+<main id="main">
 
-  <div class="flex flex-wrap items-start justify-between gap-4">
-    <div>
-      <p class="text-[11px] font-bold uppercase tracking-[.18em] text-gold">Maintenance</p>
-      <h1 class="mt-3 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">Site status</h1>
-      <p class="mt-2 max-w-2xl text-slate7">
-        Automated checks guard this site. The live checks below run in your browser right now;
-        the test suite runs on every change and once a day.
+<!-- ═════════════════════ LOOK UP YOUR HOME ═════════════════════ -->
+<section class="border-b border-ink/10 bg-white">
+  <div class="mx-auto max-w-shell px-5 py-12 lg:px-8 lg:py-16">
+    <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-gold">Resident Maintenance</p>
+    <h1 class="mt-4 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+      Keep your home up to date
+    </h1>
+    <p class="mt-3 max-w-2xl text-[17px] leading-relaxed text-slate7">
+      Check what your warranty still covers, see every service visit on record, work through the
+      seasonal checklist for your home, and raise a maintenance request or a formal complaint &mdash;
+      we log and answer both.
+    </p>
+
+    <form id="lookupForm" class="mt-8 rounded-xl border border-ink/10 bg-cloud p-5 shadow-card sm:p-6" novalidate>
+      <label for="unitInput" class="block text-xs font-semibold uppercase tracking-wide text-slate7">
+        Your address or unit number
+      </label>
+      <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+        <input id="unitInput" name="unit" type="text" autocomplete="street-address"
+               aria-describedby="unitHelp unitErr"
+               class="w-full rounded-md border border-ink/15 bg-white px-4 py-3 text-sm transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0"
+               placeholder="e.g. 1428 Cypress Grove Ln, or CG-1428" />
+        <button type="submit" class="shrink-0 rounded-md bg-ink px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate7">
+          Look up my home
+        </button>
+      </div>
+      <p id="unitHelp" class="mt-2 text-xs text-slate7/70">
+        Demonstration records available:
+        <button type="button" class="demo font-semibold text-gold underline underline-offset-2" data-demo="CG-1428">CG-1428</button>,
+        <button type="button" class="demo font-semibold text-gold underline underline-offset-2" data-demo="BR-0212">BR-0212</button>,
+        <button type="button" class="demo font-semibold text-gold underline underline-offset-2" data-demo="CC-0905">CC-0905</button>
       </p>
-    </div>
-    <button id="rerun" type="button"
-            class="rounded-md bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate7">
-      Run checks again
-    </button>
+      <p id="unitErr" hidden class="mt-2 text-sm font-medium text-red-600"></p>
+    </form>
   </div>
+</section>
 
-  <!-- Overall verdict -->
-  <div id="verdict" class="mt-8 flex items-center gap-4 rounded-xl border border-ink/10 bg-white p-6 shadow-card">
-    <span id="verdictDot" class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-sand">
-      <svg class="spin h-6 w-6 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-        <path d="M21 12a9 9 0 1 1-6.2-8.6" stroke-linecap="round" />
-      </svg>
-    </span>
-    <div>
-      <p id="verdictText" class="font-display text-xl font-extrabold">Running checks&hellip;</p>
-      <p id="verdictSub" class="mt-0.5 text-sm text-slate7">Checking assets, link previews and dependencies.</p>
+<!-- ═════════════════════ UNIT DASHBOARD ═════════════════════ -->
+<div id="dashboard" hidden>
+
+  <!-- Summary -->
+  <section class="bg-ink py-10 text-white">
+    <div class="mx-auto max-w-shell px-5 lg:px-8">
+      <div class="flex flex-wrap items-start justify-between gap-6">
+        <div>
+          <p class="text-[11px] font-bold uppercase tracking-[.18em] text-gilt">Your home</p>
+          <h2 id="uAddress" class="mt-2 font-display text-2xl font-extrabold sm:text-3xl"></h2>
+          <p id="uMeta" class="mt-1 text-sm text-white/70"></p>
+        </div>
+        <div id="uOverall" class="rounded-lg border border-white/15 bg-white/[.06] px-5 py-4">
+          <p class="text-[11px] font-semibold uppercase tracking-wide text-white/60">Overall</p>
+          <p id="uOverallText" class="mt-1 font-display text-lg font-extrabold text-gilt"></p>
+        </div>
+      </div>
+
+      <dl class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-lg border border-white/10 bg-white/[.04] p-4">
+          <dt class="text-[11px] font-semibold uppercase tracking-wide text-white/60">Plan</dt>
+          <dd id="uPlan" class="mt-1 font-display text-lg font-bold"></dd>
+        </div>
+        <div class="rounded-lg border border-white/10 bg-white/[.04] p-4">
+          <dt class="text-[11px] font-semibold uppercase tracking-wide text-white/60">Closed</dt>
+          <dd id="uClosed" class="mt-1 font-display text-lg font-bold"></dd>
+        </div>
+        <div class="rounded-lg border border-white/10 bg-white/[.04] p-4">
+          <dt class="text-[11px] font-semibold uppercase tracking-wide text-white/60">Open requests</dt>
+          <dd id="uOpen" class="mt-1 font-display text-lg font-bold"></dd>
+        </div>
+        <div class="rounded-lg border border-white/10 bg-white/[.04] p-4">
+          <dt class="text-[11px] font-semibold uppercase tracking-wide text-white/60">Next service visit</dt>
+          <dd id="uNext" class="mt-1 font-display text-lg font-bold"></dd>
+        </div>
+      </dl>
     </div>
+  </section>
+
+  <!-- Warranty coverage -->
+  <section class="bg-white py-12 lg:py-16">
+    <div class="mx-auto max-w-shell px-5 lg:px-8">
+      <h2 class="font-display text-2xl font-extrabold tracking-tight">Warranty coverage</h2>
+      <p class="mt-2 max-w-2xl text-slate7">
+        Every Melao&rsquo;s home carries 1&ndash;2&ndash;10 coverage from the closing date: one year on
+        workmanship, two on systems, ten on structural.
+      </p>
+      <div id="warranty" class="mt-6 grid gap-5 md:grid-cols-3"></div>
+    </div>
+  </section>
+
+  <!-- Seasonal checklist -->
+  <section class="bg-cloud py-12 lg:py-16">
+    <div class="mx-auto max-w-shell px-5 lg:px-8">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 class="font-display text-2xl font-extrabold tracking-tight">Is your unit up to date?</h2>
+          <p class="mt-2 max-w-2xl text-slate7">
+            Routine upkeep that keeps your warranty valid. Tick an item when you complete it &mdash;
+            we will remind you when it comes due again.
+          </p>
+        </div>
+        <button id="resetChecklist" type="button"
+                class="rounded-md border border-ink/15 bg-white px-4 py-2.5 text-sm font-semibold text-slate7 transition hover:border-gold hover:text-gold">
+          Reset checklist
+        </button>
+      </div>
+
+      <div class="mt-6 rounded-xl border border-ink/10 bg-white p-5 shadow-card sm:p-6">
+        <div class="flex items-center justify-between gap-4">
+          <p class="text-sm font-semibold">Completion</p>
+          <p id="progressLabel" class="text-sm font-semibold text-slate7"></p>
+        </div>
+        <div class="mt-2 h-2.5 overflow-hidden rounded-full bg-sand" role="progressbar"
+             id="progressBar" aria-valuemin="0" aria-valuemax="100" aria-label="Maintenance completion">
+          <div id="progressFill" class="h-full rounded-full bg-gradient-to-r from-gilt to-gold transition-all duration-500" style="width:0%"></div>
+        </div>
+        <ul id="checklist" class="mt-6 divide-y divide-ink/10"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service history -->
+  <section class="bg-white py-12 lg:py-16">
+    <div class="mx-auto max-w-shell px-5 lg:px-8">
+      <h2 class="font-display text-2xl font-extrabold tracking-tight">Service history</h2>
+      <p class="mt-2 text-slate7">Every visit and request on record for this home.</p>
+      <ol id="history" class="mt-6 space-y-3"></ol>
+    </div>
+  </section>
+</div>
+
+<!-- ═════════════════════ REQUEST FORM ═════════════════════ -->
+<section id="request" class="scroll-mt-16 bg-cloud py-12 lg:py-16">
+  <div class="mx-auto max-w-shell px-5 lg:px-8">
+    <div class="overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-lift">
+      <div class="grid lg:grid-cols-[.85fr_1.15fr]">
+
+        <div class="bg-ink p-8 text-white sm:p-10">
+          <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-gilt">Requests &amp; complaints</p>
+          <h2 class="mt-4 font-display text-2xl font-extrabold">Something need attention?</h2>
+          <p class="mt-3 text-[15px] leading-relaxed text-white/75">
+            Repairs, or a complaint about the property, the grounds or how you were treated &mdash;
+            both go to a named coordinator, both get a reference number, and both get an answer.
+          </p>
+
+          <dl class="mt-6 space-y-3 text-sm">
+            <div class="rounded-lg border border-white/10 bg-white/[.04] p-3.5">
+              <dt class="font-semibold text-white">Maintenance requests</dt>
+              <dd class="text-white/70">Acknowledged within 1 business day.</dd>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-white/[.04] p-3.5">
+              <dt class="font-semibold text-white">Complaints</dt>
+              <dd class="text-white/70">Acknowledged within 1 business day, written response within 5.</dd>
+            </div>
+          </dl>
+
+          <div class="mt-8 rounded-lg border border-gilt/30 bg-gilt/10 p-4">
+            <p class="flex items-center gap-2 font-display text-sm font-bold uppercase tracking-wide text-gilt">
+              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+              Emergency
+            </p>
+            <p class="mt-2 text-sm text-white/80">
+              Active water leak, no heat or cooling in extreme weather, gas smell, or anything unsafe &mdash;
+              call <a href="tel:+15125550188" class="font-semibold text-gilt underline underline-offset-4">(512) 555-0188</a> now.
+              Do not wait on this form.
+            </p>
+          </div>
+
+          <ul class="mt-8 space-y-4 text-sm text-white/75">
+            <li><strong class="block font-semibold text-white">Warranty service</strong>tours@melaosdevelopment.com</li>
+            <li><strong class="block font-semibold text-white">Office hours</strong>Mon&ndash;Fri 8a&ndash;5p CT</li>
+          </ul>
+        </div>
+
+        <div class="p-8 sm:p-10">
+          <form id="requestForm" novalidate class="space-y-5">
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="rName" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Your name <span class="text-gold" aria-hidden="true">*</span></label>
+                <input id="rName" type="text" autocomplete="name" required aria-required="true" aria-describedby="rNameErr"
+                       class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0" placeholder="Jordan Alvarez" />
+                <p id="rNameErr" hidden class="mt-1.5 text-xs font-medium text-red-600">Please enter your name.</p>
+              </div>
+              <div>
+                <label for="rEmail" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Email <span class="text-gold" aria-hidden="true">*</span></label>
+                <input id="rEmail" type="email" autocomplete="email" required aria-required="true" aria-describedby="rEmailErr"
+                       class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0" placeholder="you@email.com" />
+                <p id="rEmailErr" hidden class="mt-1.5 text-xs font-medium text-red-600">Please enter a valid email address.</p>
+              </div>
+            </div>
+
+            <div>
+              <label for="rUnit" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Address or unit <span class="text-gold" aria-hidden="true">*</span></label>
+              <input id="rUnit" type="text" autocomplete="street-address" required aria-required="true" aria-describedby="rUnitErr"
+                     class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0" placeholder="1428 Cypress Grove Ln" />
+              <p id="rUnitErr" hidden class="mt-1.5 text-xs font-medium text-red-600">Please tell us which home this is about.</p>
+            </div>
+
+            <fieldset>
+              <legend class="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate7">What are you reporting?</legend>
+              <div class="grid gap-2 sm:grid-cols-3">
+                <label class="rType flex cursor-pointer items-center gap-2.5 rounded-md border border-gold bg-sand/60 px-3.5 py-3 text-sm font-medium transition">
+                  <input type="radio" name="reportType" value="Maintenance request" checked
+                         class="h-4 w-4 border-ink/30 text-gold focus:ring-gold" />
+                  Repair needed
+                </label>
+                <label class="rType flex cursor-pointer items-center gap-2.5 rounded-md border border-ink/15 px-3.5 py-3 text-sm font-medium transition hover:border-gold">
+                  <input type="radio" name="reportType" value="Complaint"
+                         class="h-4 w-4 border-ink/30 text-gold focus:ring-gold" />
+                  Complaint
+                </label>
+                <label class="rType flex cursor-pointer items-center gap-2.5 rounded-md border border-ink/15 px-3.5 py-3 text-sm font-medium transition hover:border-gold">
+                  <input type="radio" name="reportType" value="Question"
+                         class="h-4 w-4 border-ink/30 text-gold focus:ring-gold" />
+                  Question
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="rCategory" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Category <span class="text-gold" aria-hidden="true">*</span></label>
+                <select id="rCategory" required aria-required="true" aria-describedby="rCategoryErr"
+                        class="w-full rounded-md border border-ink/15 bg-white px-3.5 py-3 text-sm transition hover:border-gold focus:border-gold focus:ring-0"></select>
+                <p id="rCategoryErr" hidden class="mt-1.5 text-xs font-medium text-red-600">Please choose a category.</p>
+              </div>
+              <div>
+                <label for="rUrgency" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Urgency</label>
+                <select id="rUrgency" class="w-full rounded-md border border-ink/15 bg-white px-3.5 py-3 text-sm transition hover:border-gold focus:border-gold focus:ring-0">
+                  <option>Routine &mdash; within 5 business days</option>
+                  <option>Priority &mdash; within 48 hours</option>
+                  <option>Urgent &mdash; same day</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="complaintNote" hidden class="rounded-lg border border-gold/40 bg-sand/50 p-4 text-sm leading-relaxed text-slate7">
+              <strong class="block font-semibold text-ink">How complaints are handled</strong>
+              Logged with a reference number and assigned to a coordinator who is not the person
+              involved. You get an acknowledgement within one business day and a written response
+              within five. If you are not satisfied with the outcome you can ask for it to be
+              escalated to the division manager.
+            </div>
+
+            <div>
+              <label for="rDetail" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">What is happening? <span class="text-gold" aria-hidden="true">*</span></label>
+              <textarea id="rDetail" rows="4" required aria-required="true" aria-describedby="rDetailErr"
+                        class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0"
+                        placeholder="Which room, when it started, and anything that makes it better or worse."></textarea>
+              <p id="rDetailErr" hidden class="mt-1.5 text-xs font-medium text-red-600">Please describe the issue so we can send the right trade.</p>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <input id="rAccess" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-ink/30 text-gold focus:ring-gold" />
+              <label for="rAccess" class="text-sm leading-relaxed text-slate7">
+                Our team may enter with the key on file if I am not home.
+                <span class="block text-xs text-slate7/70">Leave unticked and we will schedule a time with you first.</span>
+              </label>
+            </div>
+
+            <button type="submit" class="w-full rounded-md bg-gold px-6 py-3.5 text-sm font-semibold text-ink transition hover:bg-gilt sm:w-auto">
+              Submit request
+            </button>
+
+            <p id="requestStatus" role="status" aria-live="polite" class="text-sm font-medium text-slate7"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <p class="mx-auto mt-6 max-w-3xl text-center text-xs leading-relaxed text-slate7/70">
+      Demonstration portal. Records shown are sample data and requests are not transmitted &mdash;
+      connect the form to your warranty system before going live. Warranty terms are summarised here for
+      convenience; your signed warranty document governs.
+    </p>
   </div>
-
-  <!-- Live checks -->
-  <section class="mt-10">
-    <h2 class="font-display text-lg font-bold">Live checks</h2>
-    <p class="mt-1 text-sm text-slate7">
-      Run against this deployment each time you load the page.
-    </p>
-    <ul id="checks" class="mt-4 divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/10 bg-white shadow-card"></ul>
-  </section>
-
-  <!-- CI history -->
-  <section class="mt-10">
-    <div class="flex flex-wrap items-baseline justify-between gap-3">
-      <h2 class="font-display text-lg font-bold">Automated test runs</h2>
-      <a class="text-sm font-semibold text-gold underline underline-offset-4"
-         href="https://github.com/cryptofedge/melaos-real-estate/actions/workflows/maintenance.yml"
-         target="_blank" rel="noopener">View all runs on GitHub &rarr;</a>
-    </div>
-    <p class="mt-1 text-sm text-slate7">
-      50 browser tests across desktop and mobile, plus 19 live checks. Triggered by every change and daily at 13:00 UTC.
-    </p>
-    <ul id="runs" class="mt-4 divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/10 bg-white shadow-card">
-      <li class="px-5 py-4 text-sm text-slate7">Loading run history&hellip;</li>
-    </ul>
-  </section>
-
-  <!-- What is covered -->
-  <section class="mt-10 rounded-xl border border-ink/10 bg-white p-6 shadow-card">
-    <h2 class="font-display text-lg font-bold">What the tests cover</h2>
-    <dl class="mt-4 grid gap-x-8 gap-y-4 sm:grid-cols-2">
-      <div><dt class="text-sm font-semibold">Stylesheet loaded</dt><dd class="text-sm text-slate7">Catches the Tailwind CDN failing, which would silently unstyle the whole page.</dd></div>
-      <div><dt class="text-sm font-semibold">Inventory intact</dt><dd class="text-sm text-slate7">40 homes split 14 / 16 / 10 across the tabs, and 6 communities.</dd></div>
-      <div><dt class="text-sm font-semibold">Filters and tabs</dt><dd class="text-sm text-slate7">Narrow both grids correctly, and respond to the keyboard.</dd></div>
-      <div><dt class="text-sm font-semibold">Floor plan modal</dt><dd class="text-sm text-slate7">Stays hidden when closed, opens populated, returns focus on Escape.</dd></div>
-      <div><dt class="text-sm font-semibold">Contact form</dt><dd class="text-sm text-slate7">Rejects bad input, confirms a valid tour request.</dd></div>
-      <div><dt class="text-sm font-semibold">Layout and access</dt><dd class="text-sm text-slate7">No sideways scroll at three widths; labels, alt text and anchors all resolve.</dd></div>
-    </dl>
-  </section>
-
-  <p class="mt-8 text-xs text-slate7/70">
-    Last loaded <span id="stamp"></span>. This page is not indexed and is intended for the site owner.
-  </p>
+</section>
 </main>
+
+<footer class="bg-ink py-10 text-white/60">
+  <div class="mx-auto flex max-w-shell flex-col items-center justify-between gap-4 px-5 text-xs sm:flex-row lg:px-8">
+    <p>&copy; <span id="year"></span> Melao&rsquo;s Real Estate Development. All rights reserved.</p>
+    <a href="index.html" class="transition hover:text-gilt">Return to the main site</a>
+  </div>
+</footer>
 
 <script>
 (function () {
   'use strict';
 
-  const REPO = 'cryptofedge/melaos-real-estate';
-  const BASE = location.href.replace(/status\.html.*$/, '');
-  const list = document.getElementById('checks');
-
-  const icons = {
-    pass: '<svg viewBox="0 0 24 24" class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
-    fail: '<svg viewBox="0 0 24 24" class="h-5 w-5 text-red-600" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
-    run:  '<svg viewBox="0 0 24 24" class="spin h-5 w-5 text-gold" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg>',
+  /* ─────────────────────────── Sample records ─────────────────────────── */
+  const UNITS = {
+    'CG-1428': {
+      address: '1428 Cypress Grove Ln',
+      community: 'Cypress Grove', city: 'Katy, TX 77494',
+      plan: 'The Sabine', closed: '2024-03-15',
+      history: [
+        { date: '2025-02-18', type: '11-month warranty walk', note: 'Nine items logged, all closed within two weeks.', state: 'closed' },
+        { date: '2024-04-20', type: '30-day orientation', note: 'Two drywall touch-ups completed on site.', state: 'closed' },
+        { date: '2026-07-02', type: 'Request — HVAC', note: 'Upstairs zone not holding set point. Coil cleaned, refrigerant topped.', state: 'closed' },
+      ],
+    },
+    'BR-0212': {
+      address: '212 Bluebonnet Ridge Dr',
+      community: 'Bluebonnet Ridge', city: 'Georgetown, TX 78628',
+      plan: 'The Guadalupe', closed: '2023-08-02',
+      history: [
+        { date: '2024-07-11', type: '11-month warranty walk', note: 'Four items logged, all closed.', state: 'closed' },
+        { date: '2023-09-05', type: '30-day orientation', note: 'Cabinet door realigned; irrigation head replaced.', state: 'closed' },
+        { date: '2026-08-09', type: 'Request — Irrigation', note: 'Zone 3 not cycling. Controller replaced under systems coverage.', state: 'open' },
+      ],
+    },
+    'CC-0905': {
+      address: '905 Copper Creek Way',
+      community: 'Copper Creek', city: 'Celina, TX 75009',
+      plan: 'The Trinity', closed: '2025-11-20',
+      history: [
+        { date: '2025-12-19', type: '30-day orientation', note: 'Punch list closed before funding. No open items.', state: 'closed' },
+      ],
+    },
   };
 
-  function row(name, state, detail) {
-    return '<li class="flex items-start gap-3 px-5 py-3.5">' +
-      '<span class="mt-0.5 shrink-0">' + icons[state] + '</span>' +
-      '<span class="min-w-0 flex-1"><span class="block text-sm font-medium">' + name + '</span>' +
-      (detail ? '<span class="block truncate text-xs text-slate7/70">' + detail + '</span>' : '') +
-      '</span></li>';
+  // Routine upkeep. `months` is how often each item comes due.
+  const TASKS = [
+    { id: 'filter',    months: 3,  title: 'Replace HVAC filters',            note: 'Every quarter, sooner in cedar season. Neglect here voids HVAC coverage.' },
+    { id: 'detectors', months: 6,  title: 'Test smoke and CO detectors',      note: 'Press and hold test on each unit; replace batteries yearly.' },
+    { id: 'irrigation',months: 6,  title: 'Check irrigation heads and timer', note: 'Run each zone, look for broken heads and overspray onto the slab.' },
+    { id: 'gutters',   months: 6,  title: 'Clear gutters and downspouts',     note: 'Water pooling at the foundation is the fastest route to a structural claim.' },
+    { id: 'grout',     months: 6,  title: 'Inspect caulk and grout in wet areas', note: 'Tubs, showers, and around sinks. Reseal anything cracked.' },
+    { id: 'water',     months: 12, title: 'Flush the water heater',           note: 'Annual flush clears sediment and keeps the system warranty valid.' },
+    { id: 'grading',   months: 12, title: 'Check grading and foundation watering', note: 'Soil should slope away from the slab. Water evenly in drought.' },
+    { id: 'exterior',  months: 12, title: 'Inspect exterior paint and sealant', note: 'Look at south and west elevations first; they weather hardest.' },
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const DAY = 86400000;
+
+  const fmt = (d) => new Date(d + 'T00:00:00').toLocaleDateString('en-US',
+    { year: 'numeric', month: 'short', day: 'numeric' });
+
+  const monthsBetween = (from, to) =>
+    (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth());
+
+  let current = null;
+
+  /* ───────────────────────────── Lookup ───────────────────────────── */
+  function findUnit(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) return null;
+    for (const code of Object.keys(UNITS)) {
+      const u = UNITS[code];
+      if (code.toLowerCase() === q) return { code, ...u };
+      if (u.address.toLowerCase().includes(q)) return { code, ...u };
+      // Allow just the street number.
+      if (/^\d+$/.test(q) && u.address.startsWith(q)) return { code, ...u };
+    }
+    return null;
   }
 
-  async function head(url) {
-    const res = await fetch(url, { cache: 'no-store' });
-    return { ok: res.ok, status: res.status, type: res.headers.get('content-type') || '' };
-  }
-
-  async function runChecks() {
-    const checks = [];
-    list.innerHTML = row('Running&hellip;', 'run', '');
-
-    const add = (name, ok, detail) => {
-      checks.push(ok);
-      list.insertAdjacentHTML('beforeend', row(name, ok ? 'pass' : 'fail', detail));
-    };
-    list.innerHTML = '';
-
-    // The page itself
-    try {
-      const res = await fetch(BASE + 'index.html', { cache: 'no-store' });
-      const html = await res.text();
-      add('Homepage responds', res.ok, 'HTTP ' + res.status);
-      add('Inventory present', /40 homes you can walk through/.test(html), '40 homes section found');
-      add('All three tab panels shipped',
-        ['panel-single', 'panel-two', 'panel-custom'].every(id => html.includes(id)));
-
-      const meta = p => (html.match(new RegExp('<meta\\s+(?:property|name)="' + p + '"\\s+content="([^"]*)"', 'i')) || [])[1] || '';
-      add('Link preview image set', /^https:\/\//.test(meta('og:image')), meta('og:image').split('/').pop());
-      add('Link preview URL absolute', /^https:\/\//.test(meta('og:url')), meta('og:url'));
-    } catch (e) {
-      add('Homepage responds', false, String(e));
-    }
-
-    // Brand and share assets
-    for (const [label, path] of [
-      ['Logo (vector)', 'assets/logo.svg'],
-      ['Favicon', 'assets/favicon.png'],
-      ['Share card', 'assets/og-card.png'],
-    ]) {
-      try {
-        const r = await head(BASE + path);
-        add(label, r.ok && /image/.test(r.type), 'HTTP ' + r.status + ' · ' + r.type);
-      } catch (e) { add(label, false, String(e)); }
-    }
-
-    // Upstream dependencies the page cannot render without
-    for (const [label, url] of [
-      ['Tailwind CDN reachable', 'https://cdn.tailwindcss.com'],
-      ['Google Fonts reachable', 'https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap'],
-    ]) {
-      try {
-        await fetch(url, { mode: 'no-cors', cache: 'no-store' });
-        add(label, true, 'responded');
-      } catch (e) { add(label, false, 'unreachable'); }
-    }
-
-    const failed = checks.filter(c => !c).length;
-    const dot = document.getElementById('verdictDot');
-    const txt = document.getElementById('verdictText');
-    const sub = document.getElementById('verdictSub');
-
-    if (failed === 0) {
-      dot.className = 'grid h-12 w-12 shrink-0 place-items-center rounded-full bg-emerald-50';
-      dot.innerHTML = '<svg viewBox="0 0 24 24" class="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
-      txt.textContent = 'All systems healthy';
-      sub.textContent = checks.length + ' of ' + checks.length + ' live checks passed.';
-    } else {
-      dot.className = 'grid h-12 w-12 shrink-0 place-items-center rounded-full bg-red-50';
-      dot.innerHTML = icons.fail;
-      txt.textContent = failed + ' check' + (failed > 1 ? 's' : '') + ' failing';
-      sub.textContent = 'See the list below for what broke.';
-    }
-  }
-
-  async function loadRuns() {
-    const ul = document.getElementById('runs');
-    try {
-      const res = await fetch('https://api.github.com/repos/' + REPO + '/actions/workflows/maintenance.yml/runs?per_page=5');
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const { workflow_runs: runs } = await res.json();
-      if (!runs || !runs.length) { ul.innerHTML = '<li class="px-5 py-4 text-sm text-slate7">No runs yet.</li>'; return; }
-
-      ul.innerHTML = runs.map(r => {
-        const ok = r.conclusion === 'success';
-        const pending = r.status !== 'completed';
-        const when = new Date(r.updated_at).toLocaleString();
-        const badge = pending
-          ? '<span class="rounded-full bg-sand px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-gold">Running</span>'
-          : ok
-            ? '<span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-emerald-700">Passed</span>'
-            : '<span class="rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-red-700">Failed</span>';
-        return '<li class="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5">' +
-          '<span class="min-w-0"><a class="block truncate text-sm font-medium hover:text-gold" href="' + r.html_url + '" target="_blank" rel="noopener">' +
-          (r.head_commit && r.head_commit.message ? r.head_commit.message.split('\n')[0] : r.name) + '</a>' +
-          '<span class="block text-xs text-slate7/70">' + when + ' · ' + r.head_sha.slice(0, 7) + '</span></span>' +
-          badge + '</li>';
-      }).join('');
-    } catch (e) {
-      ul.innerHTML = '<li class="px-5 py-4 text-sm text-slate7">Could not load run history (' + e.message + '). ' +
-        '<a class="font-semibold text-gold underline underline-offset-4" href="https://github.com/' + REPO + '/actions" target="_blank" rel="noopener">Open Actions</a></li>';
-    }
-  }
-
-  document.getElementById('stamp').textContent = new Date().toLocaleString();
-  document.getElementById('rerun').addEventListener('click', () => {
-    document.getElementById('stamp').textContent = new Date().toLocaleString();
-    runChecks();
+  $('lookupForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    show($('unitInput').value);
   });
 
-  runChecks();
-  loadRuns();
+  document.querySelectorAll('.demo').forEach(function (b) {
+    b.addEventListener('click', function () {
+      $('unitInput').value = b.dataset.demo;
+      show(b.dataset.demo);
+    });
+  });
+
+  function show(query) {
+    const unit = findUnit(query);
+    const err = $('unitErr');
+
+    if (!unit) {
+      err.hidden = false;
+      err.textContent = 'We could not find that address. Check the spelling, or call (512) 555-0142 and we will look it up with you.';
+      $('unitInput').setAttribute('aria-invalid', 'true');
+      $('dashboard').hidden = true;
+      return;
+    }
+
+    err.hidden = true;
+    $('unitInput').setAttribute('aria-invalid', 'false');
+    current = unit;
+
+    $('uAddress').textContent = unit.address;
+    $('uMeta').textContent = unit.community + ' · ' + unit.city;
+    $('uPlan').textContent = unit.plan;
+    $('uClosed').textContent = fmt(unit.closed);
+
+    const open = unit.history.filter(function (h) { return h.state === 'open'; }).length;
+    $('uOpen').textContent = open === 0 ? 'None' : String(open);
+
+    renderWarranty(unit);
+    renderChecklist(unit);
+    renderHistory(unit);
+
+    $('dashboard').hidden = false;
+    $('dashboard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ──────────────────────────── Warranty ──────────────────────────── */
+  function renderWarranty(unit) {
+    const closed = new Date(unit.closed + 'T00:00:00');
+    const now = new Date();
+    const tiers = [
+      { years: 1,  label: 'Workmanship', covers: 'Finishes, fit and trim — paint, drywall, doors, hardware.' },
+      { years: 2,  label: 'Systems',     covers: 'Plumbing, electrical, HVAC distribution and controls.' },
+      { years: 10, label: 'Structural',  covers: 'Load-bearing frame, foundation, roof structure.' },
+    ];
+
+    $('warranty').innerHTML = tiers.map(function (t) {
+      const ends = new Date(closed); ends.setFullYear(ends.getFullYear() + t.years);
+      const total = ends - closed;
+      const used = Math.min(Math.max(now - closed, 0), total);
+      const pct = Math.round((used / total) * 100);
+      const daysLeft = Math.ceil((ends - now) / DAY);
+      const active = daysLeft > 0;
+
+      const badge = active
+        ? '<span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700">Active</span>'
+        : '<span class="rounded-full bg-ink/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate7/70">Expired</span>';
+
+      const remaining = active
+        ? (daysLeft > 365
+            ? Math.floor(daysLeft / 365) + ' yr ' + Math.floor((daysLeft % 365) / 30) + ' mo remaining'
+            : daysLeft > 60 ? Math.floor(daysLeft / 30) + ' months remaining'
+            : daysLeft + ' days remaining')
+        : 'Ended ' + fmt(ends.toISOString().slice(0, 10));
+
+      return '<div class="rounded-xl border border-ink/10 bg-white p-5 shadow-card">' +
+        '<div class="flex items-center justify-between gap-3">' +
+          '<p class="font-display text-lg font-bold">' + t.years + '-year ' + t.label + '</p>' + badge +
+        '</div>' +
+        '<p class="mt-2 text-sm leading-relaxed text-slate7">' + t.covers + '</p>' +
+        '<div class="mt-4 h-2 overflow-hidden rounded-full bg-sand">' +
+          '<div class="h-full rounded-full ' + (active ? 'bg-gradient-to-r from-gilt to-gold' : 'bg-ink/20') +
+          '" style="width:' + pct + '%"></div>' +
+        '</div>' +
+        '<p class="mt-2 text-xs font-semibold uppercase tracking-wide ' + (active ? 'text-gold' : 'text-slate7/60') + '">' +
+          remaining + '</p></div>';
+    }).join('');
+  }
+
+  /* ──────────────────────────── Checklist ──────────────────────────── */
+  const storeKey = (code) => 'melaos.maintenance.' + code;
+
+  function loadState(code) {
+    try { return JSON.parse(localStorage.getItem(storeKey(code))) || {}; }
+    catch (e) { return {}; }
+  }
+  function saveState(code, state) {
+    try { localStorage.setItem(storeKey(code), JSON.stringify(state)); } catch (e) {}
+  }
+
+  function renderChecklist(unit) {
+    const state = loadState(unit.code);
+    const now = new Date();
+    let done = 0;
+
+    $('checklist').innerHTML = TASKS.map(function (task) {
+      const last = state[task.id] ? new Date(state[task.id]) : null;
+      const due = last ? monthsBetween(last, now) >= task.months : true;
+      const ok = !due;
+      if (ok) done++;
+
+      const status = ok
+        ? '<span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700">Up to date</span>'
+        : last
+          ? '<span class="rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-700">Due now</span>'
+          : '<span class="rounded-full bg-ink/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate7/70">Not logged</span>';
+
+      const when = last
+        ? 'Last done ' + last.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        : 'Every ' + (task.months === 12 ? 'year' : task.months + ' months');
+
+      return '<li class="flex flex-wrap items-start gap-3 py-4 sm:flex-nowrap">' +
+        '<input type="checkbox" id="t-' + task.id + '" data-task="' + task.id + '" ' + (ok ? 'checked' : '') +
+          ' class="mt-1 h-5 w-5 shrink-0 rounded border-ink/30 text-gold focus:ring-gold" />' +
+        '<div class="min-w-0 flex-1">' +
+          '<label for="t-' + task.id + '" class="block text-sm font-semibold">' + task.title + '</label>' +
+          '<p class="mt-0.5 text-sm leading-relaxed text-slate7">' + task.note + '</p>' +
+          '<p class="mt-1 text-xs text-slate7/70">' + when + '</p>' +
+        '</div>' + status + '</li>';
+    }).join('');
+
+    const pct = Math.round((done / TASKS.length) * 100);
+    $('progressFill').style.width = pct + '%';
+    $('progressBar').setAttribute('aria-valuenow', String(pct));
+    $('progressLabel').textContent = done + ' of ' + TASKS.length + ' up to date · ' + pct + '%';
+
+    const overall = pct === 100 ? 'Up to date'
+      : pct >= 60 ? 'Mostly current'
+      : 'Needs attention';
+    $('uOverallText').textContent = overall;
+
+    // Next visit: soonest task that is due, otherwise the next annual milestone.
+    const overdue = TASKS.length - done;
+    $('uNext').textContent = overdue > 0
+      ? overdue + ' item' + (overdue > 1 ? 's' : '') + ' due'
+      : 'Nothing due';
+
+    $('checklist').querySelectorAll('input[data-task]').forEach(function (box) {
+      box.addEventListener('change', function () {
+        const s = loadState(unit.code);
+        if (box.checked) s[box.dataset.task] = new Date().toISOString().slice(0, 10);
+        else delete s[box.dataset.task];
+        saveState(unit.code, s);
+        renderChecklist(unit);
+      });
+    });
+  }
+
+  $('resetChecklist').addEventListener('click', function () {
+    if (!current) return;
+    saveState(current.code, {});
+    renderChecklist(current);
+  });
+
+  /* ──────────────────────────── History ──────────────────────────── */
+  function renderHistory(unit) {
+    const rows = unit.history.slice().sort(function (a, b) { return b.date < a.date ? -1 : 1; });
+    $('history').innerHTML = rows.map(function (h) {
+      const badge = h.state === 'open'
+        ? '<span class="shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-700">In progress</span>'
+        : '<span class="shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700">Closed</span>';
+      return '<li class="flex flex-wrap items-start gap-3 rounded-xl border border-ink/10 bg-white p-4 shadow-card sm:flex-nowrap">' +
+        '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-sand text-gold">' +
+          '<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2 4 12l-2 8 8-2L20 8z"/><path d="m14 6 4 4"/></svg>' +
+        '</span>' +
+        '<div class="min-w-0 flex-1"><p class="text-sm font-semibold">' + h.type + '</p>' +
+          '<p class="mt-0.5 text-sm leading-relaxed text-slate7">' + h.note + '</p>' +
+          '<p class="mt-1 text-xs text-slate7/70">' + fmt(h.date) + '</p></div>' +
+        badge + '</li>';
+    }).join('');
+  }
+
+  /* ─────────────────── Report type: repair, complaint, question ─────────────────── */
+  const CATEGORIES = {
+    'Maintenance request': ['Plumbing', 'Electrical', 'HVAC / heating &amp; cooling', 'Roof or exterior',
+      'Doors, windows, trim', 'Drywall or paint', 'Appliance', 'Foundation or structural',
+      'Landscaping / irrigation', 'Other'],
+    'Complaint': ['Quality of a completed repair', 'Repair taking too long', 'Contractor or staff conduct',
+      'Missed or late appointment', 'Damage caused during a visit', 'Noise or construction disturbance',
+      'Common areas and grounds', 'Parking or access', 'Billing or fees', 'Safety concern', 'Other'],
+    'Question': ['What my warranty covers', 'Scheduling a service visit', 'Seasonal maintenance',
+      'Documents and paperwork', 'Other'],
+  };
+
+  const typeInputs = Array.prototype.slice.call(
+    document.querySelectorAll('input[name="reportType"]'));
+
+  function currentType() {
+    const picked = typeInputs.filter(function (i) { return i.checked; })[0];
+    return picked ? picked.value : 'Maintenance request';
+  }
+
+  function applyType() {
+    const type = currentType();
+
+    // Highlight the selected card.
+    typeInputs.forEach(function (input) {
+      const label = input.closest('label');
+      label.classList.toggle('border-gold', input.checked);
+      label.classList.toggle('bg-sand/60', input.checked);
+      label.classList.toggle('border-ink/15', !input.checked);
+    });
+
+    $('rCategory').innerHTML = '<option value="">Select a category</option>' +
+      CATEGORIES[type].map(function (c) { return '<option>' + c + '</option>'; }).join('');
+
+    $('complaintNote').hidden = type !== 'Complaint';
+
+    $('rDetail').placeholder = type === 'Complaint'
+      ? 'What happened, when, and who was involved. Tell us what outcome you are looking for.'
+      : type === 'Question'
+        ? 'What would you like to know?'
+        : 'Which room, when it started, and anything that makes it better or worse.';
+  }
+
+  typeInputs.forEach(function (input) { input.addEventListener('change', applyType); });
+  applyType();
+
+  /* ──────────────────────────── Request form ──────────────────────────── */
+  function flag(input, errId, bad) {
+    $(errId).hidden = !bad;
+    input.setAttribute('aria-invalid', bad ? 'true' : 'false');
+    input.classList.toggle('border-red-500', bad);
+    input.classList.toggle('border-ink/15', !bad);
+  }
+
+  $('requestForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = $('rName'), email = $('rEmail'), unit = $('rUnit'),
+          cat = $('rCategory'), detail = $('rDetail');
+
+    const badName = name.value.trim().length < 2;
+    const badEmail = !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
+    const badUnit = unit.value.trim().length < 3;
+    const badCat = cat.value === '';
+    const badDetail = detail.value.trim().length < 10;
+
+    flag(name, 'rNameErr', badName);
+    flag(email, 'rEmailErr', badEmail);
+    flag(unit, 'rUnitErr', badUnit);
+    flag(cat, 'rCategoryErr', badCat);
+    flag(detail, 'rDetailErr', badDetail);
+
+    const first = badName ? name : badEmail ? email : badUnit ? unit : badCat ? cat : badDetail ? detail : null;
+    const status = $('requestStatus');
+
+    if (first) {
+      status.className = 'text-sm font-medium text-red-600';
+      status.textContent = 'Please fix the highlighted fields and try again.';
+      first.focus();
+      return;
+    }
+
+    const type = currentType();
+    const prefix = type === 'Complaint' ? 'CX' : type === 'Question' ? 'QA' : 'MR';
+    const ref = prefix + '-' + new Date().getFullYear() + '-' +
+      String(Math.floor(Math.random() * 9000) + 1000);
+
+    status.className = 'text-sm font-medium text-ink';
+    status.textContent = type === 'Complaint'
+      ? 'Complaint ' + ref + ' logged. You will hear from a coordinator within one business day, and get a written response within five.'
+      : type === 'Question'
+        ? 'Question ' + ref + ' received. We will come back to you within one business day.'
+        : 'Request ' + ref + ' received. A warranty coordinator will contact you within one business day.';
+
+    $('requestForm').reset();
+    applyType();
+    // Demo build: no backend. Point this at your warranty system:
+    // fetch('/api/maintenance-requests', { method: 'POST', body: new FormData(form) });
+  });
+
+  // Prefill the request form once a home is loaded.
+  $('lookupForm').addEventListener('submit', function () {
+    if (current) $('rUnit').value = current.address;
+  });
+
+  $('year').textContent = new Date().getFullYear();
 })();
 </script>
 </body>

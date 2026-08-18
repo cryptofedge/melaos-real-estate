@@ -22,6 +22,11 @@ Open the file in a browser and it runs.
 | About | Company story, homeowner testimonials, energy and warranty certifications |
 | Contact | Private tour booking form with client-side validation |
 | Site health | Live status panel — runs checks in-browser, shows recent CI runs |
+
+Plus `status.html`, the **resident portal**: unit lookup, live 1-2-10 warranty countdowns,
+a seasonal upkeep checklist that persists per unit, service history, and intake for
+maintenance requests, complaints and questions (each routed with its own categories and
+reference prefix).
 | Footer | Equal Housing Opportunity, Texas disclosures, sitemap, social links |
 
 ## Interactivity
@@ -90,7 +95,7 @@ Workflow: [`.github/workflows/maintenance.yml`](.github/workflows/maintenance.ym
 
 ### Browser smoke tests
 
-27 Playwright tests across seven device profiles — 189 runs per pass:
+59 Playwright tests across seven device profiles — 413 runs per pass:
 
 | Profile | Engine |
 | --- | --- |

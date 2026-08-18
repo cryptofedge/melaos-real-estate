@@ -215,13 +215,25 @@ test.describe('contact form', () => {
 });
 
 test.describe('layout', () => {
-  for (const [label, width] of [['mobile', 375], ['tablet', 768], ['desktop', 1280]]) {
+  // 1024 and 1152 are where the header broke when the Resident Portal button
+  // was added: too many items to fit before the nav collapses to the drawer.
+  for (const [label, width] of [['mobile', 375], ['tablet', 768], ['small laptop', 1024],
+                                ['laptop', 1152], ['desktop', 1280], ['wide', 1440]]) {
     test(`no horizontal overflow at ${label}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto('/index.html');
       const overflow = await page.evaluate(() =>
         document.documentElement.scrollWidth - document.documentElement.clientWidth);
       expect(overflow, 'page should never scroll sideways').toBeLessThanOrEqual(0);
+    });
+  }
+
+  for (const width of [1024, 1152, 1280, 1440]) {
+    test(`header stays on one line at ${width}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 600 });
+      await page.goto('/index.html');
+      const h = await page.locator('header').evaluate(el => el.getBoundingClientRect().height);
+      expect(h, 'a wrapped header grows past ~80px').toBeLessThan(90);
     });
   }
 

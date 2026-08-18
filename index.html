@@ -159,11 +159,11 @@
   <div class="mx-auto flex max-w-shell items-center justify-between gap-6 px-5 py-3.5 lg:px-8">
 
     <a href="#top" class="flex shrink-0 items-center gap-3" aria-label="Melao's Real Estate Development — home">
-      <span class="grid h-11 w-11 place-items-center rounded-md bg-ink ring-1 ring-gold/40">
+      <span class="grid h-11 w-11 place-items-center rounded-full bg-ink ring-1 ring-gold/40">
         <!-- Official mark; the vector symbol only appears if the file fails to load. -->
-        <img src="assets/logo.svg" alt="" class="h-9 w-9 object-contain"
+        <img src="assets/logo.svg" alt="" class="h-6 w-6 object-contain"
              onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
-        <svg viewBox="0 0 200 214" class="h-9 w-8" hidden aria-hidden="true" focusable="false"><use href="#brandMark" /></svg>
+        <svg viewBox="0 0 200 214" class="h-6 w-5" hidden aria-hidden="true" focusable="false"><use href="#brandMark" /></svg>
       </span>
       <span class="leading-tight">
         <span class="block font-display text-[15px] font-extrabold tracking-tight text-ink sm:text-base">MELAO&rsquo;S</span>
@@ -171,8 +171,8 @@
       </span>
     </a>
 
-    <nav aria-label="Primary" class="hidden lg:block">
-      <ul class="flex items-center gap-7 text-[15px] font-medium text-slate7">
+    <nav aria-label="Primary" class="hidden xl:block">
+      <ul class="flex items-center gap-5 whitespace-nowrap text-[14px] font-medium text-slate7 2xl:gap-7 2xl:text-[15px]">
         <li><a class="py-2 transition-colors hover:text-gold" href="#communities">Communities</a></li>
         <li><a class="py-2 transition-colors hover:text-gold" href="#floorplans">Available Floor Plans</a></li>
         <li><a class="py-2 transition-colors hover:text-gold" href="#custom">Custom Builds</a></li>
@@ -182,9 +182,10 @@
     </nav>
 
     <div class="flex items-center gap-2">
-      <a href="#contact" class="hidden rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate7 sm:inline-block">Schedule a Tour</a>
+      <a href="status.html" class="hidden whitespace-nowrap rounded-md border border-ink/15 px-3.5 py-2.5 text-sm font-semibold text-slate7 transition hover:border-gold hover:text-gold xl:inline-block">Resident Portal</a>
+      <a href="#contact" class="hidden whitespace-nowrap rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate7 sm:inline-block">Schedule a Tour</a>
       <button id="navToggle" type="button" aria-expanded="false" aria-controls="mobileDrawer"
-              class="grid h-11 w-11 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-gold hover:text-gold lg:hidden">
+              class="grid h-11 w-11 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-gold hover:text-gold xl:hidden">
         <span class="sr-only">Open navigation menu</span>
         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       </button>
@@ -193,9 +194,9 @@
 </header>
 
 <!-- Mobile drawer -->
-<div id="navScrim" hidden class="fixed inset-0 z-[60] bg-ink/50 backdrop-blur-sm lg:hidden"></div>
+<div id="navScrim" hidden class="fixed inset-0 z-[60] bg-ink/50 backdrop-blur-sm xl:hidden"></div>
 <aside id="mobileDrawer" hidden role="dialog" aria-modal="true" aria-label="Site navigation"
-       class="fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-sm flex-col bg-white shadow-lift lg:hidden">
+       class="fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-sm flex-col bg-white shadow-lift xl:hidden">
   <div class="flex items-center justify-between border-b border-ink/10 px-5 py-4">
     <span class="font-display text-sm font-extrabold uppercase tracking-[.16em] text-ink">Menu</span>
     <button id="navClose" type="button" class="grid h-10 w-10 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-gold hover:text-gold">
@@ -210,6 +211,7 @@
       <li><a class="block rounded-md px-3 py-3 transition hover:bg-sand hover:text-ink" href="#custom">Custom Builds</a></li>
       <li><a class="block rounded-md px-3 py-3 transition hover:bg-sand hover:text-ink" href="#about">About Us</a></li>
       <li><a class="block rounded-md px-3 py-3 transition hover:bg-sand hover:text-ink" href="#process">Warranty &amp; Process</a></li>
+      <li><a class="block rounded-md px-3 py-3 font-semibold text-gold transition hover:bg-sand" href="status.html">Resident Portal</a></li>
     </ul>
   </nav>
   <div class="border-t border-ink/10 p-5">
@@ -947,8 +949,10 @@
           50-test suite runs on every change and again every day.
         </p>
       </div>
-      <a href="status.html" class="shrink-0 text-sm font-semibold text-ink underline decoration-gold decoration-2 underline-offset-8 transition hover:text-gold">
-        Full status page
+      <a href="https://github.com/cryptofedge/melaos-real-estate/actions/workflows/maintenance.yml"
+         target="_blank" rel="noopener"
+         class="shrink-0 text-sm font-semibold text-ink underline decoration-gold decoration-2 underline-offset-8 transition hover:text-gold">
+        Full run history
       </a>
     </div>
 
@@ -999,10 +1003,10 @@
 
       <div>
         <div class="flex items-center gap-3">
-          <span class="grid h-11 w-11 place-items-center rounded-md bg-white/[.06] ring-1 ring-gold/30">
-            <img src="assets/logo.svg" alt="" class="h-9 w-9 object-contain"
+          <span class="grid h-11 w-11 place-items-center rounded-full bg-white/[.06] ring-1 ring-gold/30">
+            <img src="assets/logo.svg" alt="" class="h-6 w-6 object-contain"
                  onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
-            <svg viewBox="0 0 200 214" class="h-9 w-8" hidden aria-hidden="true"><use href="#brandMark" /></svg>
+            <svg viewBox="0 0 200 214" class="h-6 w-5" hidden aria-hidden="true"><use href="#brandMark" /></svg>
           </span>
           <span class="leading-tight">
             <span class="block font-display text-base font-extrabold tracking-tight text-white">MELAO&rsquo;S</span>
@@ -1060,7 +1064,8 @@
           <li><a href="#contact" class="transition hover:text-gilt">Contact a builder</a></li>
           <li><a href="#" class="transition hover:text-gilt">Careers</a></li>
           <li><a href="#" class="transition hover:text-gilt">Realtor program</a></li>
-          <li><a href="#" class="transition hover:text-gilt">Warranty service request</a></li>
+          <li><a href="status.html" class="transition hover:text-gilt">Resident portal &amp; complaints</a></li>
+          <li><a href="status.html#request" class="transition hover:text-gilt">Warranty service request</a></li>
         </ul>
       </nav>
     </div>
@@ -1470,7 +1475,7 @@
     a.addEventListener('click', closeDrawer);
   });
   window.addEventListener('resize', function () {
-    if (window.innerWidth >= 1024 && !drawer.hidden) closeDrawer();
+    if (window.innerWidth >= 1280 && !drawer.hidden) closeDrawer();
   });
 
   /* ────────────────────── Floor plan modal ────────────────────── */
