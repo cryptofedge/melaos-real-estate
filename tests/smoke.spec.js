@@ -17,7 +17,12 @@ test.describe('page health', () => {
   test('loads with no console errors and no failed requests', async ({ page }) => {
     const seen = watch(page);
     await page.goto('/index.html');
-    await page.waitForLoadState('networkidle');
+
+    // Wait on the page's own work finishing, not networkidle -- the CDN keeps
+    // connections open, so networkidle is flaky and times out on slow links.
+    await expect(page.locator('.plan')).toHaveCount(40);
+    await expect(page.locator('img[src*="logo"]').first()).toHaveJSProperty('complete', true);
+
     expect(seen.errors, 'console errors').toEqual([]);
     expect(seen.failed, 'requests that 404ed or worse').toEqual([]);
   });

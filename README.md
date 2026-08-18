@@ -112,8 +112,14 @@ cannot render without:
   every internal anchor resolves to a real element.
 
 ```bash
-npm install && npx playwright install chromium && npm test
+npm install
+npm run setup
+npm test
 ```
+
+PowerShell has no `&&` operator, so these are three separate commands rather than
+one chain. `npm run setup` downloads the Chromium build Playwright drives
+(~115 MB, once per machine).
 
 ### Live site health
 
@@ -127,6 +133,6 @@ going down.
 node scripts/check-live.mjs
 ```
 
-Point it at any deployment by passing a URL. When the **scheduled** run fails it opens
+Works as-is in both PowerShell and bash. Point it at any deployment by passing a URL. When the **scheduled** run fails it opens
 a GitHub issue labelled `maintenance` (or comments on the open one) so a broken site
 surfaces instead of sitting as a red tick in the Actions tab.

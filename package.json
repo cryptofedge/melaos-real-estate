@@ -5,6 +5,7 @@
   "description": "Marketing site for Melao's Real Estate Development",
   "scripts": {
     "serve": "python -m http.server 8080",
+    "setup": "playwright install chromium",
     "test": "playwright test",
     "test:ui": "playwright test --ui"
   },
