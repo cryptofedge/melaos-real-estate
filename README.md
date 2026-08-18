@@ -21,6 +21,7 @@ Open the file in a browser and it runs.
 | Process | Four-stage build workflow plus warranty and certification callouts |
 | About | Company story, homeowner testimonials, energy and warranty certifications |
 | Contact | Private tour booking form with client-side validation |
+| Site health | Live status panel — runs checks in-browser, shows recent CI runs |
 | Footer | Equal Housing Opportunity, Texas disclosures, sitemap, social links |
 
 ## Interactivity
@@ -89,9 +90,23 @@ Workflow: [`.github/workflows/maintenance.yml`](.github/workflows/maintenance.ym
 
 ### Browser smoke tests
 
-25 Playwright tests, run against desktop Chrome and a Pixel 7 viewport (50 total).
-They cover the things that have actually broken here, plus the dependencies the page
-cannot render without:
+27 Playwright tests across seven device profiles — 189 runs per pass:
+
+| Profile | Engine |
+| --- | --- |
+| Desktop Chrome | Chromium |
+| Desktop Safari | WebKit |
+| iPhone 14 (portrait and landscape) | WebKit |
+| Pixel 7 | Chromium |
+| iPad (gen 7) | WebKit |
+| Galaxy Tab S4 | Chromium |
+
+iPhone and iPad run **WebKit**, the engine behind every browser on iOS. It diverges
+from Chromium in ways that matter — this matrix immediately caught a focus bug that
+only affected Safari and iOS users.
+
+The tests cover the things that have actually broken here, plus the dependencies the
+page cannot render without:
 
 - **Stylesheet loaded.** Asserts computed styles from the custom palette. The Tailwind
   Play CDN is the biggest single fragility — if it fails, every class silently does
@@ -110,6 +125,7 @@ cannot render without:
   closes.
 - **Accessibility floor**: one `h1`, every control labelled, every image has `alt`, and
   every internal anchor resolves to a real element.
+- **Maintenance panel** runs its checks when scrolled into view and reports healthy.
 
 ```bash
 npm install

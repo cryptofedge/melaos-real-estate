@@ -14,9 +14,16 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
+  // Real engines, not just narrow viewports: iPhone and iPad run WebKit, which is
+  // what every browser on iOS actually uses, and it diverges from Chromium.
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
-    { name: 'mobile',  use: { ...devices['Pixel 7'] } },
+    { name: 'desktop-chrome',  use: { ...devices['Desktop Chrome'] } },
+    { name: 'desktop-safari',  use: { ...devices['Desktop Safari'] } },
+    { name: 'iphone',          use: { ...devices['iPhone 14'] } },
+    { name: 'iphone-landscape', use: { ...devices['iPhone 14 landscape'] } },
+    { name: 'android',         use: { ...devices['Pixel 7'] } },
+    { name: 'ipad',            use: { ...devices['iPad (gen 7)'] } },
+    { name: 'android-tablet',  use: { ...devices['Galaxy Tab S4'] } },
   ],
 
   // The site is static: serve the folder as-is, exactly as Pages does.

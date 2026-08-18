@@ -2,15 +2,30 @@
 // in development, or is a dependency the page cannot render correctly without.
 import { test, expect } from '@playwright/test';
 
-/** Collects console errors and failed requests for the life of a page. */
-function watch(page) {
-  const errors = [], failed = [];
-  page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+/**
+ * Collects console errors and failed requests for the life of a page.
+ *
+ * Only same-origin responses count as failures. Third-party endpoints we do not
+ * control (GitHub's API rate-limits unauthenticated callers to 60/hour per IP)
+ * would otherwise fail the suite for reasons that are not a site defect - the
+ * page already degrades gracefully when they do.
+ */
+function watch(page, origin = '127.0.0.1:8080') {
+  const errors = [], failed = [], thirdParty = [];
+  page.on('console', m => {
+    const text = m.text();
+    if (m.type() !== 'error') return;
+    // Browsers log a console error for any non-2xx, including third-party ones.
+    if (/403|429|rate limit/i.test(text) && /github/i.test(text)) return;
+    if (/Failed to load resource/i.test(text) && !text.includes(origin)) return;
+    errors.push(text);
+  });
   page.on('pageerror', e => errors.push(String(e)));
   page.on('response', r => {
-    if (r.status() >= 400) failed.push(`${r.status()} ${r.url()}`);
+    if (r.status() < 400) return;
+    (r.url().includes(origin) ? failed : thirdParty).push(`${r.status()} ${r.url()}`);
   });
-  return { errors, failed };
+  return { errors, failed, thirdParty };
 }
 
 test.describe('page health', () => {
@@ -220,6 +235,29 @@ test.describe('layout', () => {
     await page.keyboard.press('Escape');
     await expect(page.locator('#mobileDrawer')).toBeHidden();
     await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  });
+});
+
+test.describe('maintenance panel', () => {
+  test('runs its checks once scrolled into view and reports healthy', async ({ page }) => {
+    await page.goto('/index.html');
+    const section = page.locator('#maintenance');
+    await section.scrollIntoViewIfNeeded();
+
+    // Checks are lazy: nothing should have run before the panel was visible.
+    await expect(page.locator('#mChecks li')).not.toHaveCount(0);
+    await expect(page.locator('#mVerdictText')).toHaveText(/All systems healthy/, { timeout: 15_000 });
+
+    const failing = await page.locator('#mChecks svg.text-red-600').count();
+    expect(failing, 'live checks reporting failure').toBe(0);
+  });
+
+  test('re-run button works', async ({ page }) => {
+    await page.goto('/index.html');
+    await page.locator('#maintenance').scrollIntoViewIfNeeded();
+    await expect(page.locator('#mVerdictText')).toHaveText(/All systems healthy/, { timeout: 15_000 });
+    await page.locator('#mRerun').click();
+    await expect(page.locator('#mVerdictText')).toHaveText(/All systems healthy/, { timeout: 15_000 });
   });
 });
 
