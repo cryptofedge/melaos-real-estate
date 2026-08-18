@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 214" width="400" height="428" role="img" aria-label="Melao's Real Estate Development mark">
+  <defs>
+    <linearGradient id="gilt" x1="0" y1="0" x2=".85" y2="1">
+      <stop offset="0%"   stop-color="#F5E7BE" /><stop offset="24%" stop-color="#E2C782" />
+      <stop offset="48%"  stop-color="#D4AF37" /><stop offset="72%" stop-color="#C5A059" />
+      <stop offset="100%" stop-color="#93762F" />
+    </linearGradient>
+  </defs>
+
+  <rect width="200" height="214" fill="#111827" />
+
+  <g fill="url(#gilt)">
+    <path d="M84 132 V30 L96 14 V132 Z" />
+    <path d="M104 132 V14 L116 30 V132 Z" />
+    <path d="M60 132 V68 L76 50 V132 Z" />
+    <path d="M124 132 V50 L140 68 V132 Z" />
+    <path d="M22 198 V164 L70 70 H88 L100 152 L112 70 H130 L178 164 V198 H150 V168 L120 100 L100 118 L80 100 L50 168 V198 Z" />
+  </g>
+
+  <g stroke="#111827" stroke-width="8" stroke-linecap="butt">
+    <path d="M100 62 V96" /><path d="M80 62 V104" /><path d="M120 62 V104" />
+  </g>
+
+  <path d="M100 96 L107.05 116.29 L128.53 116.73 L111.41 129.71 L117.63 150.27 L100 138 L82.37 150.27 L88.59 129.71 L71.47 116.73 L92.95 116.29 Z"
+        fill="url(#gilt)" stroke="#111827" stroke-width="6" stroke-linejoin="round" />
+</svg>
