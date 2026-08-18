@@ -37,3 +37,16 @@ path and nothing else needs to change.
 The star in the mark is a knockout — it shows whatever sits behind it. Both lockups and
 the favicon place it on an ink tile to match the original artwork on black. On a light
 background the star fills white and largely disappears.
+
+## Link previews
+
+`og-card.png` (1200×630) is what WhatsApp, iMessage, Facebook, LinkedIn, Slack and X
+show when the URL is shared. Built from `logo-full.png` on ink with the market line.
+
+The Open Graph tags in `index.html` use **absolute** URLs. Scrapers do not resolve
+relative paths — a relative `og:image` yields a preview with no image at all. If the
+site moves to a custom domain, update the host in every `og:*` and `twitter:*` tag.
+
+WhatsApp caches aggressively. After changing the card, existing chats keep showing the
+old preview; re-scrape at https://developers.facebook.com/tools/debug/ (WhatsApp shares
+Facebook's crawler cache) or append a query string to the link to force a fresh fetch.
