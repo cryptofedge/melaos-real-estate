@@ -86,7 +86,7 @@
       Brand mark — vector interpretation of the Melao's logo: stepped art-deco
       spires rising over an M, with the Texas star knocked into the centre.
       Drawn to sit on a dark ground; the star's stroke is the ink separator.
-      Drop the official artwork at assets/logo.png and it supersedes this.
+      Superseded by assets/logo.svg; this only renders if that file fails to load.
     -->
     <symbol id="brandMark" viewBox="0 0 200 214">
       <g fill="url(#gilt)">
@@ -139,7 +139,7 @@
     <a href="#top" class="flex shrink-0 items-center gap-3" aria-label="Melao's Real Estate Development — home">
       <span class="grid h-11 w-11 place-items-center rounded-md bg-ink ring-1 ring-gold/40">
         <!-- Official mark; the vector symbol only appears if the file fails to load. -->
-        <img src="assets/logo.png" alt="" class="h-9 w-9 object-contain"
+        <img src="assets/logo.svg" alt="" class="h-9 w-9 object-contain"
              onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
         <svg viewBox="0 0 200 214" class="h-9 w-8" hidden aria-hidden="true" focusable="false"><use href="#brandMark" /></svg>
       </span>
@@ -922,7 +922,7 @@
       <div>
         <div class="flex items-center gap-3">
           <span class="grid h-11 w-11 place-items-center rounded-md bg-white/[.06] ring-1 ring-gold/30">
-            <img src="assets/logo.png" alt="" class="h-9 w-9 object-contain"
+            <img src="assets/logo.svg" alt="" class="h-9 w-9 object-contain"
                  onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
             <svg viewBox="0 0 200 214" class="h-9 w-8" hidden aria-hidden="true"><use href="#brandMark" /></svg>
           </span>
