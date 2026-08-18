@@ -81,3 +81,52 @@ should be reviewed by counsel against the actual entity registration.
 For a real deployment, replace the Tailwind Play CDN with a compiled stylesheet
 (`npx tailwindcss -i in.css -o dist.css --minify`), self-host the two fonts, and add real
 `<meta property="og:*">` tags with a social share image.
+
+## Maintenance
+
+Automated checks run on every push, on pull requests, and daily at 13:00 UTC.
+Workflow: [`.github/workflows/maintenance.yml`](.github/workflows/maintenance.yml).
+
+### Browser smoke tests
+
+25 Playwright tests, run against desktop Chrome and a Pixel 7 viewport (50 total).
+They cover the things that have actually broken here, plus the dependencies the page
+cannot render without:
+
+- **Stylesheet loaded.** Asserts computed styles from the custom palette. The Tailwind
+  Play CDN is the biggest single fragility — if it fails, every class silently does
+  nothing and the page renders as unstyled HTML with no error in the console.
+- **No console errors and no request 404s** anywhere on the page.
+- **Inventory intact.** 40 homes split 14 / 16 / 10 across the tabs, 6 communities, and
+  every card carrying the `data-city` / `data-price` / `data-beds` the filters read.
+- **Filters** narrow both grids, report an accurate count, and only show matching cards.
+- **Tabs** switch panels and respond to arrow, Home and End keys.
+- **Floor plan modal** stays fully hidden when closed (it once leaked as an empty shell),
+  opens with populated stats and a generated drawing, renders both floors for two-story
+  plans, closes on Escape and returns focus to the trigger.
+- **Contact form** rejects empty and malformed input with `aria-invalid`, and confirms a
+  valid submission.
+- **Layout** never scrolls sideways at 375, 768 or 1280px; the mobile drawer opens and
+  closes.
+- **Accessibility floor**: one `h1`, every control labelled, every image has `alt`, and
+  every internal anchor resolves to a real element.
+
+```bash
+npm install && npx playwright install chromium && npm test
+```
+
+### Live site health
+
+[`scripts/check-live.mjs`](scripts/check-live.mjs) checks the published site — the
+failure modes that only appear in production: Pages serving a stale build, an asset
+that never got committed, Open Graph tags edited back to relative paths so link
+previews break silently, a share card too large for messengers, or an upstream CDN
+going down.
+
+```bash
+node scripts/check-live.mjs
+```
+
+Point it at any deployment by passing a URL. When the **scheduled** run fails it opens
+a GitHub issue labelled `maintenance` (or comments on the open one) so a broken site
+surfaces instead of sitting as a red tick in the Actions tab.
