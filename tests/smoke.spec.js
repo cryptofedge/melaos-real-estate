@@ -26,12 +26,14 @@ test.describe('page health', () => {
   // every class silently does nothing and the page renders as unstyled HTML.
   test('Tailwind actually applied its styles', async ({ page }) => {
     await page.goto('/index.html');
-    const body = page.locator('body');
-    await expect(body).toHaveCSS('background-color', 'rgb(249, 250, 251)');
 
-    const cta = page.getByRole('link', { name: 'Schedule a Tour' }).first();
-    const radius = await cta.evaluate(el => getComputedStyle(el).borderRadius);
-    expect(radius, 'CTA should be rounded, not browser-default').not.toBe('0px');
+    // Custom palette from the inline tailwind.config.
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(249, 250, 251)');
+
+    // A utility on an element that is present at every breakpoint. Anything
+    // viewport-dependent makes this test fail for layout reasons rather than
+    // because the stylesheet went missing.
+    await expect(page.locator('#quickFilter')).toHaveCSS('border-radius', '12px');
   });
 
   test('brand mark renders from the vector, not the fallback', async ({ page }) => {
