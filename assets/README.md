@@ -1,16 +1,25 @@
 # Brand assets
 
-## logo.png
+Extracted from `Melaos logo (1)-Photoroom.png` — the transparent-background export
+of the official lockup.
 
-Save the official Melao's logo mark here as `logo.png` (or `logo.svg` — then update
-the two `<img src>` references in `index.html`).
+| File | What it is | Used by |
+| --- | --- | --- |
+| `logo.png` | The mark alone, 512×512, transparent, centred with 6% padding | Header and footer brand lockups |
+| `logo-full.png` | Full lockup, mark over the wordmark, 1200px wide | Open Graph share image |
+| `favicon.png` | Mark on a rounded ink tile, 256×256 | Browser tab, Apple touch icon |
+| `favicon.ico` | 32×32 fallback | Legacy browsers |
 
-The header and footer already point at this path. Until the file exists they fall back
-to the vector `#brandMark` symbol defined at the top of `index.html`; the moment a real
-file loads it takes over automatically in both places.
+The star in the mark is knocked out — it reads as whatever sits behind it. That is why
+both brand lockups place it on an ink tile, matching the original artwork on black.
+Put it on a light background and the star fills with white.
 
-**What to export:** the spire-and-star mark only, without the "MELAO'S / REAL ESTATE
-DEVELOPMENT" wordmark — the site sets that type in Plus Jakarta Sans beside the mark.
-Square canvas, transparent background, 512×512 or larger. A transparent PNG is fine;
-an SVG is better since the mark renders at 36px in the header and stays crisp on
-high-density screens.
+## Replacing these
+
+Drop a new `logo.png` in and both lockups pick it up with no code change. If the file
+ever fails to load, the header and footer fall back to the `#brandMark` vector symbol
+defined near the top of `index.html`.
+
+An SVG export of the mark would be better than PNG at these sizes — the mark renders at
+36px in the header, where the fine bevels alias. If you get one from the designer, save
+it as `logo.svg` and update the two `<img src>` references.

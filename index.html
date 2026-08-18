@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Melao's Real Estate Development — Modern Texas Neighborhoods</title>
 <meta name="description" content="Melao's Real Estate Development builds thoughtfully designed single-family homes and master-planned residential communities across Austin, Dallas-Fort Worth, Houston and San Antonio." />
-<meta name="theme-color" content="#1F2937" />
+<meta name="theme-color" content="#111827" />
+<link rel="icon" href="assets/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="assets/favicon.png" />
+
+<meta property="og:title" content="Melao's Real Estate Development" />
+<meta property="og:description" content="Thoughtfully designed single-family homes and residential communities across Texas." />
+<meta property="og:image" content="assets/logo-full.png" />
+<meta property="og:type" content="website" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -131,10 +138,10 @@
 
     <a href="#top" class="flex shrink-0 items-center gap-3" aria-label="Melao's Real Estate Development — home">
       <span class="grid h-11 w-11 place-items-center rounded-md bg-ink ring-1 ring-gold/40">
-        <!-- Official artwork wins when assets/logo.png exists; the vector mark stands in until then. -->
-        <img src="assets/logo.png" alt="" hidden class="h-9 w-9 object-contain"
-             onload="this.hidden=false;this.nextElementSibling.hidden=true" />
-        <svg viewBox="0 0 200 214" class="h-9 w-8" aria-hidden="true" focusable="false"><use href="#brandMark" /></svg>
+        <!-- Official mark; the vector symbol only appears if the file fails to load. -->
+        <img src="assets/logo.png" alt="" class="h-9 w-9 object-contain"
+             onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
+        <svg viewBox="0 0 200 214" class="h-9 w-8" hidden aria-hidden="true" focusable="false"><use href="#brandMark" /></svg>
       </span>
       <span class="leading-tight">
         <span class="block font-display text-[15px] font-extrabold tracking-tight text-ink sm:text-base">MELAO&rsquo;S</span>
@@ -915,9 +922,9 @@
       <div>
         <div class="flex items-center gap-3">
           <span class="grid h-11 w-11 place-items-center rounded-md bg-white/[.06] ring-1 ring-gold/30">
-            <img src="assets/logo.png" alt="" hidden class="h-9 w-9 object-contain"
-                 onload="this.hidden=false;this.nextElementSibling.hidden=true" />
-            <svg viewBox="0 0 200 214" class="h-9 w-8" aria-hidden="true"><use href="#brandMark" /></svg>
+            <img src="assets/logo.png" alt="" class="h-9 w-9 object-contain"
+                 onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
+            <svg viewBox="0 0 200 214" class="h-9 w-8" hidden aria-hidden="true"><use href="#brandMark" /></svg>
           </span>
           <span class="leading-tight">
             <span class="block font-display text-base font-extrabold tracking-tight text-white">MELAO&rsquo;S</span>
