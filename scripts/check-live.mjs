@@ -84,6 +84,35 @@ for (const url of assets) {
   }
 }
 
+// ── the status page shares too, so its preview has to hold up as well ────────
+try {
+  const res = await get(`${BASE}status.html`);
+  check('status page responds 200', res.status === 200, `HTTP ${res.status}`);
+  const statusHtml = await res.text();
+
+  const sMeta = (prop) => {
+    const re = new RegExp(`<meta\\s+(?:property|name)="${prop}"\\s+content="([^"]*)"`, 'i');
+    return (statusHtml.match(re) || [])[1] || '';
+  };
+
+  for (const prop of ['og:title', 'og:url', 'og:image']) {
+    check(`status ${prop} is absolute or set`,
+      prop === 'og:title' ? sMeta(prop).length > 0 : /^https:\/\//.test(sMeta(prop)),
+      sMeta(prop).slice(0, 70) || '(empty)');
+  }
+
+  const card = sMeta('og:image');
+  if (card) {
+    const img = await get(card);
+    const size = Number(img.headers.get('content-length') || 0);
+    check('status share card loads', img.status === 200 &&
+      /image/.test(img.headers.get('content-type') || ''),
+      `HTTP ${img.status}  ${Math.round(size / 1024)} KB`);
+  }
+} catch (err) {
+  check('status page responds 200', false, String(err));
+}
+
 // ── third-party dependencies the page cannot render without ──────────────────
 for (const [name, url] of [
   ['Tailwind Play CDN', 'https://cdn.tailwindcss.com'],
