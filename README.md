@@ -110,6 +110,26 @@ show the layout. Replace them with real, substantiated figures — a homebuilder
 advertising and Fair Housing obligations, and the TREC and warranty language in the footer
 should be reviewed by counsel against the actual entity registration.
 
+## Admin security
+
+`admin.html` holds a token that can write to the repository, so it is deliberately
+built differently from the rest of the site:
+
+- **No third-party resources at all.** No Tailwind CDN, no web fonts. Its CSS is
+  hand-written and inline. A third-party script on this page could read the token
+  straight out of storage.
+- **A Content Security Policy pins where data can go.** `default-src 'none'` with
+  `connect-src` limited to `https://api.github.com`, so even an injected script has
+  nowhere to send anything. `frame-ancestors 'none'` blocks clickjacking.
+- **Photos never leave the device until Publish**, and upload before the listing file,
+  so a failed upload cannot leave the site pointing at a missing image.
+
+Tests assert the page makes zero off-origin requests and that the policy genuinely
+blocks a cross-origin `fetch` — not just that the meta tag is present.
+
+The page itself is public and unlisted; obscurity is not the protection. The token is,
+and it is scoped to this one repository with Contents write and nothing else.
+
 ## Accessibility
 
 Text contrast meets WCAG 2.1 AA throughout, enforced by

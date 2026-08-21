@@ -7,93 +7,213 @@
 <meta name="robots" content="noindex, nofollow" />
 <meta name="theme-color" content="#111827" />
 <link rel="icon" href="assets/favicon.png" type="image/png" />
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: { extend: {
-      colors: { cloud:'#F9FAFB', slate7:'#1F2937', ink:'#111827', gold:'#C5A059',
-                bronze:'#826A3B', gilt:'#D4AF37', sand:'#F3EFE6' },
-      fontFamily: { sans:['Inter','ui-sans-serif','system-ui','sans-serif'],
-                    display:['"Plus Jakarta Sans"','Inter','sans-serif'] },
-      boxShadow: { card:'0 1px 2px rgba(17,24,39,.04), 0 8px 24px -12px rgba(17,24,39,.18)' },
-      maxWidth: { shell:'1200px' },
-    } },
-  };
-</script>
+
+<!--
+  This page holds a token that can write to the repository, so it deliberately
+  loads nothing from anywhere else. No CDN, no web fonts, no analytics: a
+  third-party script here could read the token straight out of storage.
+
+  The policy below is the enforcement. connect-src allows only GitHub's API, so
+  even if something did get injected it has nowhere to send anything.
+-->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'none';
+  script-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: blob: https://raw.githubusercontent.com;
+  connect-src 'self' https://api.github.com;
+  form-action 'none';
+  base-uri 'none';
+  frame-ancestors 'none';
+" />
+
 <style>
-  :focus-visible { outline: 2px solid #C5A059; outline-offset: 2px; border-radius: 4px; }
-  [hidden] { display: none !important; }
-  .field { width:100%; border-radius:.375rem; border:1px solid rgba(17,24,39,.15);
-           padding:.6rem .75rem; font-size:.875rem; background:#fff; }
-  .field:hover { border-color:#C5A059; }
-  .field:focus { border-color:#C5A059; outline:none; }
+  :root {
+    --cloud:#F9FAFB; --ink:#111827; --slate:#1F2937; --gold:#C5A059;
+    --bronze:#826A3B; --gilt:#D4AF37; --sand:#F3EFE6; --line:rgba(17,24,39,.12);
+    --card:0 1px 2px rgba(17,24,39,.04), 0 8px 24px -12px rgba(17,24,39,.18);
+    --sans: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  body { margin:0; background:var(--cloud); color:var(--ink); font-family:var(--sans);
+         font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  [hidden] { display:none !important; }
+  :focus-visible { outline:2px solid var(--gold); outline-offset:2px; border-radius:4px; }
+  h1,h2,h3 { margin:0; font-weight:800; letter-spacing:-.01em; }
+  a { color:var(--bronze); }
+  code { background:var(--sand); padding:.1rem .35rem; border-radius:4px; font-size:.8em; }
+
+  .shell { max-width:1200px; margin:0 auto; padding:0 1.25rem; }
+  @media (min-width:1024px){ .shell { padding:0 2rem; } }
+
+  .topbar { background:#fff; border-bottom:1px solid var(--line); }
+  .topbar .shell { display:flex; align-items:center; justify-content:space-between;
+                   gap:1rem; padding-top:1rem; padding-bottom:1rem; }
+  .brand { display:flex; align-items:center; gap:.75rem; }
+  .brand .mark { display:grid; place-items:center; width:44px; height:44px; border-radius:999px;
+                 background:var(--ink); box-shadow:inset 0 0 0 1px rgba(197,160,89,.4); }
+  .brand img { width:24px; height:24px; object-fit:contain; }
+  .brand b { display:block; font-size:15px; font-weight:800; }
+  .brand span { display:block; font-size:10px; font-weight:600; letter-spacing:.18em;
+                text-transform:uppercase; color:var(--bronze); }
+  .topbar-actions { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; }
+
+  main { padding:2.5rem 0 4rem; }
+  .muted { color:var(--slate); }
+  .small { font-size:.875rem; }
+  .tiny { font-size:.78rem; }
+
+  .btn { display:inline-block; border-radius:.375rem; padding:.65rem 1.1rem; font-size:.875rem;
+         font-weight:600; border:1px solid transparent; cursor:pointer; font-family:inherit;
+         background:#fff; color:var(--slate); border-color:var(--line); }
+  .btn:hover { border-color:var(--gold); color:var(--bronze); }
+  .btn-primary { background:var(--ink); color:#fff; border-color:var(--ink); }
+  .btn-primary:hover { background:var(--slate); color:#fff; border-color:var(--slate); }
+  .btn-gold { background:var(--gold); color:var(--ink); border-color:var(--gold); }
+  .btn-gold:hover { background:var(--gilt); color:var(--ink); }
+  .btn:disabled { opacity:.4; cursor:not-allowed; }
+  .btn-link { background:none; border:none; padding:0; color:#b91c1c; font-weight:600;
+              text-decoration:underline; text-underline-offset:4px; cursor:pointer;
+              font-size:.875rem; font-family:inherit; }
+
+  .panel { background:#fff; border:1px solid var(--line); border-radius:.75rem;
+           box-shadow:var(--card); padding:1.5rem; }
+  .stack > * + * { margin-top:1rem; }
+
   .lbl { display:block; font-size:.7rem; font-weight:600; text-transform:uppercase;
-         letter-spacing:.05em; color:#1F2937; margin-bottom:.35rem; }
+         letter-spacing:.05em; color:var(--slate); margin-bottom:.35rem; }
+  .field { width:100%; border-radius:.375rem; border:1px solid var(--line);
+           padding:.6rem .75rem; font-size:.875rem; background:#fff; color:var(--ink);
+           font-family:inherit; }
+  .field:hover { border-color:var(--gold); }
+  .field:focus { border-color:var(--gold); outline:none; }
+  .mono { font-family:ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace; }
+  .check { display:flex; align-items:flex-start; gap:.6rem; font-size:.875rem; color:var(--slate); }
+  .check input { margin-top:.2rem; width:16px; height:16px; accent-color:var(--gold); }
+  .err { color:#b91c1c; font-weight:500; font-size:.875rem; }
+  .ok  { color:#047857; font-weight:500; font-size:.875rem; }
+
+  .tabs { display:flex; gap:.25rem; border-bottom:1px solid var(--line); margin:1.5rem 0 0; }
+  .tab { background:none; border:none; border-bottom:2px solid transparent; padding:.75rem 1rem;
+         font-size:.875rem; font-weight:600; color:var(--slate); cursor:pointer; font-family:inherit; }
+  .tab[aria-selected="true"] { border-bottom-color:var(--gold); color:var(--ink); }
+
+  .grid { display:grid; gap:1rem; grid-template-columns:1fr; margin-top:1.5rem; }
+  @media (min-width:640px){ .grid { grid-template-columns:repeat(2,1fr); } }
+  @media (min-width:1024px){ .grid { grid-template-columns:repeat(3,1fr); } }
+
+  .card { background:#fff; border:1px solid var(--line); border-radius:.75rem;
+          box-shadow:var(--card); overflow:hidden; }
+  .card .thumb { position:relative; aspect-ratio:16/10; background:var(--cloud); overflow:hidden; }
+  .card .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .card .thumb .none { display:grid; place-items:center; width:100%; height:100%;
+                       background:var(--sand); color:var(--bronze); font-size:.7rem;
+                       font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
+  .badge { position:absolute; left:.5rem; top:.5rem; background:rgba(255,255,255,.95);
+           border-radius:999px; padding:.15rem .5rem; font-size:.65rem; font-weight:700;
+           letter-spacing:.03em; text-transform:uppercase;
+           box-shadow:0 0 0 1px rgba(197,160,89,.5); }
+  .card .body { padding:1rem; }
+  .card h3 { font-size:1rem; }
+  .card .btn { width:100%; margin-top:.75rem; }
+
+  .head { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:1rem; }
+  .head .actions { display:flex; flex-wrap:wrap; gap:.5rem; }
+
+  .scrim { position:fixed; inset:0; z-index:40; background:rgba(17,24,39,.6); }
+  .dialog { position:fixed; inset:0; z-index:50; display:flex; align-items:flex-end;
+            justify-content:center; padding:0; }
+  @media (min-width:640px){ .dialog { align-items:center; padding:1.5rem; } }
+  .dialog .box { background:#fff; width:100%; max-width:42rem; max-height:92vh;
+                 display:flex; flex-direction:column; overflow:hidden;
+                 border-radius:1rem 1rem 0 0; box-shadow:0 25px 50px -12px rgba(0,0,0,.35); }
+  @media (min-width:640px){ .dialog .box { border-radius:1rem; } }
+  .dialog .dhead, .dialog .dfoot { display:flex; align-items:center; gap:1rem;
+                                   padding:1rem 1.5rem; }
+  .dialog .dhead { border-bottom:1px solid var(--line); justify-content:space-between; }
+  .dialog .dfoot { border-top:1px solid var(--line); background:var(--cloud);
+                   justify-content:space-between; flex-wrap:wrap; }
+  .dialog form { flex:1; overflow-y:auto; padding:1.25rem 1.5rem; }
+  .icon-btn { display:grid; place-items:center; width:40px; height:40px; border-radius:.375rem;
+              border:1px solid var(--line); background:#fff; cursor:pointer; color:var(--ink); }
+  .icon-btn:hover { border-color:var(--gold); color:var(--bronze); }
+
+  .photos { display:grid; gap:.75rem; grid-template-columns:repeat(2,1fr); }
+  @media (min-width:640px){ .photos { grid-template-columns:repeat(3,1fr); } }
+  .photos figure { position:relative; margin:0; border:1px solid var(--line);
+                   border-radius:.5rem; overflow:hidden; }
+  .photos img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+  .photos .drop { position:absolute; right:.35rem; top:.35rem; background:rgba(255,255,255,.95);
+                  border:none; box-shadow:0 0 0 1px var(--line); border-radius:.375rem;
+                  padding:.2rem .45rem; font-size:.68rem; font-weight:700; color:#b91c1c;
+                  cursor:pointer; font-family:inherit; }
+  .pending { position:absolute; left:.35rem; bottom:.35rem; background:var(--ink); color:var(--gilt);
+             border-radius:999px; padding:.1rem .45rem; font-size:.6rem; font-weight:700;
+             letter-spacing:.04em; text-transform:uppercase; }
+  .note { border:1px solid rgba(197,160,89,.45); background:rgba(243,239,230,.6);
+          border-radius:.5rem; padding:.85rem; font-size:.875rem; color:var(--slate); }
+  details summary { cursor:pointer; font-weight:700; }
+  ol { padding-left:1.25rem; }
+  ol li { margin:.4rem 0; font-size:.875rem; color:var(--slate); }
 </style>
 </head>
-<body class="bg-cloud font-sans text-ink antialiased">
+<body>
 
-<header class="border-b border-ink/10 bg-white">
-  <div class="mx-auto flex max-w-shell items-center justify-between gap-4 px-5 py-4 lg:px-8">
-    <div class="flex items-center gap-3">
-      <span class="grid h-11 w-11 place-items-center rounded-full bg-ink ring-1 ring-gold/40">
-        <img src="assets/logo.svg" alt="" class="h-6 w-6 object-contain" />
-      </span>
-      <span class="leading-tight">
-        <span class="block font-display text-[15px] font-extrabold tracking-tight">MELAO&rsquo;S</span>
-        <span class="block text-[10px] font-semibold uppercase tracking-[.18em] text-bronze">Property Admin</span>
-      </span>
+<header class="topbar">
+  <div class="shell">
+    <div class="brand">
+      <span class="mark"><img src="assets/logo.svg" alt="" /></span>
+      <span><b>MELAO&rsquo;S</b><span>Property Admin</span></span>
     </div>
-    <div class="flex items-center gap-3">
-      <span id="who" hidden class="text-sm text-slate7"></span>
-      <button id="signOut" hidden type="button"
-              class="rounded-md border border-ink/15 px-3.5 py-2 text-sm font-semibold text-slate7 transition hover:border-gold hover:text-bronze">Sign out</button>
-      <a href="index.html" class="text-sm font-semibold text-slate7 transition hover:text-bronze">View site &rarr;</a>
+    <div class="topbar-actions">
+      <span id="who" hidden class="small muted"></span>
+      <button id="signOut" hidden type="button" class="btn">Sign out</button>
+      <a href="index.html" class="small" style="font-weight:600">View site &rarr;</a>
     </div>
   </div>
 </header>
 
-<main class="mx-auto max-w-shell px-5 py-10 lg:px-8">
+<main class="shell">
 
 <!-- ═══════════════════════ SIGN IN ═══════════════════════ -->
 <section id="signIn">
-  <h1 class="font-display text-3xl font-extrabold tracking-tight">Sign in to edit properties</h1>
-  <p class="mt-3 max-w-2xl text-slate7">
+  <h1 style="font-size:1.9rem">Sign in to edit properties</h1>
+  <p class="muted" style="max-width:42rem">
     Changes are saved straight into the website&rsquo;s repository, so every edit is recorded
     under your own name and can be undone. You need a GitHub access token to do that.
   </p>
 
-  <form id="tokenForm" class="mt-8 max-w-xl rounded-xl border border-ink/10 bg-white p-6 shadow-card" novalidate>
-    <label class="lbl" for="token">GitHub access token</label>
-    <input id="token" type="password" class="field font-mono" autocomplete="off"
-           spellcheck="false" placeholder="github_pat_..." aria-describedby="tokenErr" />
-    <p id="tokenErr" hidden class="mt-2 text-sm font-medium text-red-600"></p>
+  <form id="tokenForm" class="panel stack" style="max-width:36rem; margin-top:2rem" novalidate>
+    <div>
+      <label class="lbl" for="token">GitHub access token</label>
+      <input id="token" type="password" class="field mono" autocomplete="off"
+             spellcheck="false" placeholder="github_pat_..." aria-describedby="tokenErr" />
+      <p id="tokenErr" hidden class="err" style="margin:.5rem 0 0"></p>
+    </div>
 
-    <label class="mt-4 flex items-start gap-2.5 text-sm text-slate7">
-      <input id="remember" type="checkbox" checked class="mt-0.5 h-4 w-4 rounded border-ink/30 text-gold focus:ring-gold" />
+    <label class="check">
+      <input id="remember" type="checkbox" checked />
       <span>Keep me signed in on this device
-        <span class="block text-xs text-slate7/70">Leave this unticked on a shared or public computer.</span>
+        <span class="tiny" style="display:block; opacity:.75">Leave this unticked on a shared or public computer.</span>
       </span>
     </label>
 
-    <button type="submit" class="mt-5 w-full rounded-md bg-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate7 sm:w-auto">
-      Sign in
-    </button>
+    <button type="submit" class="btn btn-primary">Sign in</button>
   </form>
 
-  <details class="mt-6 max-w-2xl rounded-xl border border-ink/10 bg-white p-6 shadow-card">
-    <summary class="cursor-pointer font-display font-bold">How to get your token (one time, 2 minutes)</summary>
-    <ol class="mt-4 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-slate7">
-      <li>Open <a class="font-semibold text-bronze underline underline-offset-4" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a> while signed in to GitHub.</li>
+  <details class="panel" style="max-width:44rem; margin-top:1.5rem">
+    <summary>How to get your token (one time, 2 minutes)</summary>
+    <ol style="margin-top:1rem">
+      <li>Open <strong>github.com/settings/personal-access-tokens/new</strong> while signed in to GitHub.</li>
       <li>Give it a name like &ldquo;Melao&rsquo;s website&rdquo; and an expiry you are comfortable with.</li>
       <li>Under <strong>Repository access</strong> choose <strong>Only select repositories</strong> and pick
-          <code class="rounded bg-sand px-1.5 py-0.5 text-xs">melaos-real-estate</code>.</li>
+          <code>melaos-real-estate</code>.</li>
       <li>Under <strong>Permissions &rarr; Repository permissions</strong>, set <strong>Contents</strong> to
           <strong>Read and write</strong>. Leave everything else alone.</li>
       <li>Generate it, copy it, and paste it above. GitHub only shows it once.</li>
     </ol>
-    <p class="mt-4 rounded-lg border border-gold/40 bg-sand/60 p-3 text-sm leading-relaxed text-slate7">
-      <strong class="text-ink">Keep it to yourself.</strong> That token can change the website.
+    <p class="note" style="margin-top:1rem">
+      <strong style="color:var(--ink)">Keep it to yourself.</strong> That token can change the website.
       Do not share it or paste it anywhere else &mdash; each brother should make his own, so the
       history shows who changed what. If one leaks, delete it on GitHub and make a new one.
     </p>
@@ -102,52 +222,49 @@
 
 <!-- ═══════════════════════ EDITOR ═══════════════════════ -->
 <section id="editor" hidden>
-  <div class="flex flex-wrap items-end justify-between gap-4">
+  <div class="head">
     <div>
-      <h1 class="font-display text-3xl font-extrabold tracking-tight">Properties</h1>
-      <p id="dirtyNote" class="mt-2 text-sm text-slate7">Everything is published.</p>
+      <h1 style="font-size:1.9rem">Properties</h1>
+      <p id="dirtyNote" class="small muted" style="margin:.5rem 0 0">Everything is published.</p>
     </div>
-    <div class="flex flex-wrap gap-2">
-      <button id="addHome" type="button" class="rounded-md border border-ink/15 bg-white px-4 py-2.5 text-sm font-semibold transition hover:border-gold hover:text-bronze">Add a home</button>
-      <button id="addCommunity" type="button" class="rounded-md border border-ink/15 bg-white px-4 py-2.5 text-sm font-semibold transition hover:border-gold hover:text-bronze">Add a community</button>
-      <button id="publish" type="button" class="rounded-md bg-gold px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-gilt disabled:opacity-40" disabled>Publish changes</button>
-    </div>
-  </div>
-
-  <p id="log" role="status" aria-live="polite" class="mt-4 text-sm font-medium text-slate7"></p>
-
-  <div class="mt-6 border-b border-ink/10">
-    <div role="tablist" aria-label="What to edit" class="-mb-px flex gap-1">
-      <button role="tab" id="tab-homes" aria-controls="panel-homes" aria-selected="true" data-panel="homes"
-              class="atab rounded-t-md border-b-2 border-gold px-4 py-3 text-sm font-semibold text-ink">Homes <span class="text-xs font-normal text-slate7/70">(0)</span></button>
-      <button role="tab" id="tab-communities" aria-controls="panel-communities" aria-selected="false" tabindex="-1" data-panel="communities"
-              class="atab rounded-t-md border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-slate7 hover:text-ink">Communities <span class="text-xs font-normal text-slate7/70">(0)</span></button>
+    <div class="actions">
+      <button id="addHome" type="button" class="btn">Add a home</button>
+      <button id="addCommunity" type="button" class="btn">Add a community</button>
+      <button id="publish" type="button" class="btn btn-gold" disabled>Publish changes</button>
     </div>
   </div>
 
-  <div id="panel-homes" role="tabpanel" aria-labelledby="tab-homes" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
-  <div id="panel-communities" role="tabpanel" aria-labelledby="tab-communities" hidden class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+  <p id="log" role="status" aria-live="polite" class="small muted" style="margin-top:1rem"></p>
+
+  <div class="tabs" role="tablist" aria-label="What to edit">
+    <button role="tab" id="tab-homes" aria-controls="panel-homes" aria-selected="true"
+            data-panel="homes" class="tab">Homes <span style="font-weight:400; opacity:.7">(0)</span></button>
+    <button role="tab" id="tab-communities" aria-controls="panel-communities" aria-selected="false"
+            tabindex="-1" data-panel="communities" class="tab">Communities <span style="font-weight:400; opacity:.7">(0)</span></button>
+  </div>
+
+  <div id="panel-homes" role="tabpanel" aria-labelledby="tab-homes" class="grid"></div>
+  <div id="panel-communities" role="tabpanel" aria-labelledby="tab-communities" hidden class="grid"></div>
 </section>
 </main>
 
 <!-- ═══════════════════════ EDIT DIALOG ═══════════════════════ -->
-<div id="scrim" hidden class="fixed inset-0 z-40 bg-ink/60 backdrop-blur-sm"></div>
-<div id="dialog" hidden role="dialog" aria-modal="true" aria-labelledby="dlgTitle"
-     class="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-6">
-  <div class="flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl bg-white shadow-xl sm:rounded-2xl">
-    <div class="flex items-start justify-between gap-4 border-b border-ink/10 px-6 py-4">
-      <h2 id="dlgTitle" class="font-display text-xl font-extrabold"></h2>
-      <button id="dlgClose" type="button" class="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-ink/15 transition hover:border-gold hover:text-bronze">
-        <span class="sr-only">Close</span>
-        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+<div id="scrim" hidden class="scrim"></div>
+<div id="dialog" hidden role="dialog" aria-modal="true" aria-labelledby="dlgTitle" class="dialog">
+  <div class="box">
+    <div class="dhead">
+      <h2 id="dlgTitle" style="font-size:1.25rem"></h2>
+      <button id="dlgClose" type="button" class="icon-btn">
+        <span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Close</span>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
-    <form id="dlgForm" class="flex-1 overflow-y-auto px-6 py-5" novalidate></form>
-    <div class="flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 bg-cloud px-6 py-4">
-      <button id="dlgDelete" type="button" class="text-sm font-semibold text-red-600 underline underline-offset-4">Delete this listing</button>
-      <div class="flex gap-2">
-        <button id="dlgCancel" type="button" class="rounded-md border border-ink/15 bg-white px-4 py-2.5 text-sm font-semibold">Cancel</button>
-        <button id="dlgSave" type="button" class="rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate7">Done</button>
+    <form id="dlgForm" novalidate></form>
+    <div class="dfoot">
+      <button id="dlgDelete" type="button" class="btn-link">Delete this listing</button>
+      <div style="display:flex; gap:.5rem">
+        <button id="dlgCancel" type="button" class="btn">Cancel</button>
+        <button id="dlgSave" type="button" class="btn btn-primary">Done</button>
       </div>
     </div>
   </div>
@@ -170,10 +287,18 @@
 
   let token = '', data = null, sha = null, dirty = false, editing = null;
 
+  // Photos wait here until Publish. Uploading straight away would put them on
+  // the public internet before anyone pressed publish, which is not what
+  // "nothing is live until you publish" should mean.
+  //   pending[path] = { b64, name, url }   (url is a local blob for preview)
+  let pending = {};
+  const isPending = (p) => Object.prototype.hasOwnProperty.call(pending, p);
+  const hasPending = () => Object.keys(pending).length > 0;
+
   const log = (msg, tone) => {
     $('log').textContent = msg;
-    $('log').className = 'mt-4 text-sm font-medium ' +
-      (tone === 'bad' ? 'text-red-600' : tone === 'good' ? 'text-emerald-700' : 'text-slate7');
+    $('log').className = 'small ' + (tone === 'bad' ? 'err' : tone === 'good' ? 'ok' : 'muted');
+    $('log').style.marginTop = '1rem';
   };
 
   /* ─────────────────────────── GitHub API ─────────────────────────── */
@@ -224,17 +349,12 @@
     e.preventDefault();
     const value = $('token').value.trim();
     const err = $('tokenErr');
-    if (!value) {
-      err.hidden = false; err.textContent = 'Paste your token first.';
-      return;
-    }
+    if (!value) { err.hidden = false; err.textContent = 'Paste your token first.'; return; }
     err.hidden = true;
     token = value;
     try {
       const user = await gh('/user');
-      if ($('remember').checked) {
-        try { localStorage.setItem(KEY, token); } catch (e2) {}
-      }
+      if ($('remember').checked) { try { localStorage.setItem(KEY, token); } catch (e2) {} }
       signedIn(user.login);
     } catch (ex) {
       token = '';
@@ -264,6 +384,7 @@
       sha = file.sha;
       data = JSON.parse(fromB64(file.content));
       dirty = false;
+      pending = {};
       render();
       log('Loaded ' + data.homes.length + ' homes and ' + data.communities.length + ' communities.');
     } catch (ex) {
@@ -273,32 +394,15 @@
 
   /* ─────────────────────────── Rendering ─────────────────────────── */
   const money = (n) => '$' + Number(n || 0).toLocaleString('en-US');
-  const rawUrl = (p) => 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + p;
+  const srcFor = (p) => isPending(p)
+    ? pending[p].url
+    : 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/' + p;
 
-  function thumb(photos, label) {
+  function thumb(photos) {
     if (photos && photos.length) {
-      return '<img src="' + esc(rawUrl(photos[0])) + '" alt="" loading="lazy" class="h-full w-full object-cover" />';
+      return '<img src="' + esc(srcFor(photos[0])) + '" alt="" loading="lazy" />';
     }
-    return '<span class="grid h-full w-full place-items-center bg-sand text-xs font-semibold uppercase tracking-wide text-bronze">No photo</span>';
-  }
-
-  function card(item, kind) {
-    const sub = kind === 'home'
-      ? esc((commName(item.community)) + ' · ' + item.beds + ' bd · ' + item.sqft.toLocaleString('en-US') + ' sq ft')
-      : esc(item.place + ' · ' + item.market);
-    const price = kind === 'home' ? money(item.price) : 'From ' + money(item.fromPrice);
-    const count = (item.photos || []).length;
-    return '<article class="overflow-hidden rounded-xl border border-ink/10 bg-white shadow-card">' +
-      '<div class="relative aspect-[16/10] overflow-hidden bg-cloud">' + thumb(item.photos) +
-        '<span class="absolute left-2 top-2 rounded-full bg-white/95 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink ring-1 ring-gold/50">' +
-        count + ' photo' + (count === 1 ? '' : 's') + '</span></div>' +
-      '<div class="p-4">' +
-        '<h3 class="font-display font-bold">' + esc(item.name) + '</h3>' +
-        '<p class="mt-0.5 text-xs text-slate7">' + sub + '</p>' +
-        '<p class="mt-2 text-sm font-semibold">' + price + '</p>' +
-        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="' + kind + '" ' +
-          'class="mt-3 w-full rounded-md border border-ink/15 px-3 py-2 text-sm font-semibold transition hover:border-gold hover:text-bronze">Edit</button>' +
-      '</div></article>';
+    return '<span class="none">No photo</span>';
   }
 
   const commName = (id) => {
@@ -306,29 +410,50 @@
     return c ? c.name : id;
   };
 
+  function card(item, kind) {
+    const sub = kind === 'home'
+      ? esc(commName(item.community) + ' · ' + item.beds + ' bd · ' + Number(item.sqft || 0).toLocaleString('en-US') + ' sq ft')
+      : esc(item.place + ' · ' + item.market);
+    const price = kind === 'home' ? money(item.price) : 'From ' + money(item.fromPrice);
+    const photos = item.photos || [];
+    const waiting = photos.filter(isPending).length;
+    return '<article class="card">' +
+      '<div class="thumb">' + thumb(photos) +
+        '<span class="badge">' + photos.length + ' photo' + (photos.length === 1 ? '' : 's') + '</span>' +
+        (waiting ? '<span class="pending">' + waiting + ' not yet published</span>' : '') +
+      '</div>' +
+      '<div class="body">' +
+        '<h3>' + esc(item.name) + '</h3>' +
+        '<p class="tiny muted" style="margin:.25rem 0 0">' + sub + '</p>' +
+        '<p class="small" style="margin:.5rem 0 0; font-weight:600">' + price + '</p>' +
+        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="' + kind + '" class="btn">Edit</button>' +
+      '</div></article>';
+  }
+
   function render() {
     $('panel-homes').innerHTML = data.homes.map(function (h) { return card(h, 'home'); }).join('');
     $('panel-communities').innerHTML = data.communities.map(function (c) { return card(c, 'community'); }).join('');
     $('tab-homes').querySelector('span').textContent = '(' + data.homes.length + ')';
     $('tab-communities').querySelector('span').textContent = '(' + data.communities.length + ')';
-    $('publish').disabled = !dirty;
-    $('dirtyNote').textContent = dirty
-      ? 'You have unpublished changes.'
+
+    const changed = dirty || hasPending();
+    $('publish').disabled = !changed;
+    const waiting = Object.keys(pending).length;
+    $('dirtyNote').textContent = changed
+      ? 'You have unpublished changes' + (waiting ? ', including ' + waiting + ' photo' + (waiting === 1 ? '' : 's') + ' not yet uploaded' : '') + '.'
       : 'Everything is published.';
-    $('dirtyNote').className = 'mt-2 text-sm ' + (dirty ? 'font-semibold text-bronze' : 'text-slate7');
+    $('dirtyNote').className = 'small' + (changed ? '' : ' muted');
+    $('dirtyNote').style.fontWeight = changed ? '600' : '400';
+    $('dirtyNote').style.color = changed ? 'var(--bronze)' : '';
   }
 
   /* ─────────────────────────── Tabs ─────────────────────────── */
-  document.querySelectorAll('.atab').forEach(function (tab) {
+  document.querySelectorAll('.tab').forEach(function (tab) {
     tab.addEventListener('click', function () {
-      document.querySelectorAll('.atab').forEach(function (t) {
+      document.querySelectorAll('.tab').forEach(function (t) {
         const on = t === tab;
         t.setAttribute('aria-selected', String(on));
         t.tabIndex = on ? 0 : -1;
-        t.classList.toggle('border-gold', on);
-        t.classList.toggle('text-ink', on);
-        t.classList.toggle('border-transparent', !on);
-        t.classList.toggle('text-slate7', !on);
         $('panel-' + t.dataset.panel).hidden = !on;
       });
     });
@@ -366,52 +491,58 @@
     $('dlgTitle').textContent = item.name || (kind === 'home' ? 'New home' : 'New community');
 
     const rows = FIELDS[kind].map(function (f) {
-      const [key, label, type, options] = f;
+      const key = f[0], label = f[1], type = f[2], options = f[3];
       const val = key === 'amenities' ? (item[key] || []).join('\n') : (item[key] != null ? item[key] : '');
       if (type === 'textarea') {
-        return '<div class="mb-4"><label class="lbl" for="f-' + key + '">' + label + '</label>' +
+        return '<div style="margin-bottom:1rem"><label class="lbl" for="f-' + key + '">' + label + '</label>' +
           '<textarea id="f-' + key + '" rows="3" class="field">' + esc(val) + '</textarea></div>';
       }
       if (type === 'select' || type === 'community') {
         const opts = type === 'community'
           ? data.communities.map(function (c) { return [c.id, c.name]; })
           : options.map(function (o) { return [o, o]; });
-        return '<div class="mb-4"><label class="lbl" for="f-' + key + '">' + label + '</label>' +
+        return '<div style="margin-bottom:1rem"><label class="lbl" for="f-' + key + '">' + label + '</label>' +
           '<select id="f-' + key + '" class="field">' +
           opts.map(function (o) {
             return '<option value="' + esc(o[0]) + '"' + (o[0] === val ? ' selected' : '') + '>' + esc(o[1]) + '</option>';
           }).join('') + '</select></div>';
       }
-      return '<div class="mb-4"><label class="lbl" for="f-' + key + '">' + label + '</label>' +
+      return '<div style="margin-bottom:1rem"><label class="lbl" for="f-' + key + '">' + label + '</label>' +
         '<input id="f-' + key + '" type="' + type + '" class="field" value="' + esc(val) + '" /></div>';
     }).join('');
 
     const photos = (item.photos || []).map(function (src, i) {
-      return '<figure class="relative overflow-hidden rounded-lg border border-ink/10">' +
-        '<img src="' + esc(rawUrl(src)) + '" alt="" class="aspect-[4/3] w-full object-cover" />' +
-        '<button type="button" data-drop="' + i + '" class="absolute right-1.5 top-1.5 rounded-md bg-white/95 px-2 py-1 text-[11px] font-bold text-red-600 ring-1 ring-ink/10">Remove</button>' +
+      return '<figure>' +
+        '<img src="' + esc(srcFor(src)) + '" alt="" />' +
+        (isPending(src) ? '<span class="pending">Not published</span>' : '') +
+        '<button type="button" class="drop" data-drop="' + i + '">Remove</button>' +
         '</figure>';
     }).join('');
 
     $('dlgForm').innerHTML = rows +
-      '<div class="mt-2 border-t border-ink/10 pt-5">' +
+      '<div style="border-top:1px solid var(--line); padding-top:1.25rem; margin-top:.5rem">' +
         '<p class="lbl">Photos</p>' +
-        '<div id="photoGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-3">' + photos + '</div>' +
-        '<label class="mt-4 block">' +
+        '<div id="photoGrid" class="photos">' + photos + '</div>' +
+        '<label style="display:block; margin-top:1rem">' +
           '<span class="lbl">Add photos</span>' +
-          '<input id="photoInput" type="file" accept="image/*" multiple ' +
-            'class="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-ink file:px-4 file:py-2.5 file:text-sm file:font-semibold file:text-white hover:file:bg-slate7" />' +
+          '<input id="photoInput" type="file" accept="image/*" multiple class="small" />' +
         '</label>' +
-        '<p class="mt-2 text-xs text-slate7/70">Photos are resized to 1600px and compressed before upload, ' +
-          'so a phone photo lands at roughly 200&ndash;400 KB. The first photo is the one shown on the card.</p>' +
-        '<p id="photoLog" role="status" aria-live="polite" class="mt-2 text-sm font-medium text-slate7"></p>' +
+        '<p class="tiny muted" style="margin-top:.5rem">Photos are resized and compressed here on your ' +
+          'phone or laptop, then uploaded when you press Publish. Nothing leaves this device until then. ' +
+          'The first photo is the one shown on the card.</p>' +
+        '<p id="photoLog" role="status" aria-live="polite" class="small muted" style="margin-top:.5rem"></p>' +
       '</div>';
 
     $('photoInput').addEventListener('change', onPhotos);
     $('dlgForm').querySelectorAll('[data-drop]').forEach(function (b) {
       b.addEventListener('click', function () {
-        item.photos.splice(Number(b.dataset.drop), 1);
-        dirty = true;
+        const removed = item.photos.splice(Number(b.dataset.drop), 1)[0];
+        if (isPending(removed)) {
+          URL.revokeObjectURL(pending[removed].url);
+          delete pending[removed];
+        } else {
+          dirty = true;
+        }
         openDialog(kind, item);
         render();
       });
@@ -436,9 +567,9 @@
 
   $('dlgSave').addEventListener('click', function () {
     if (!editing) return;
-    const { kind, item } = editing;
+    const kind = editing.kind, item = editing.item;
     FIELDS[kind].forEach(function (f) {
-      const [key, , type] = f;
+      const key = f[0], type = f[2];
       const el = $('f-' + key);
       if (!el) return;
       if (key === 'amenities') item[key] = el.value.split('\n').map(function (v) { return v.trim(); }).filter(Boolean);
@@ -486,7 +617,7 @@
       statusTone: 'white', fromPrice: 0, lots: '', beds: 3, amenities: [], photos: [] });
   });
 
-  /* ─────────────────────── Photo upload ─────────────────────── */
+  /* ─────────────────────── Photos: prepared here, uploaded on publish ─────────────────────── */
   // Phone photos are 3-8 MB. Committing those straight into the repo would
   // bloat it fast and slow the site, so resize and compress in the browser.
   function shrink(file, maxSide, quality) {
@@ -499,8 +630,7 @@
         const canvas = document.createElement('canvas');
         canvas.width = Math.round(img.width * scale);
         canvas.height = Math.round(img.height * scale);
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
         canvas.toBlob(function (blob) {
           blob ? resolve(blob) : reject(new Error('Could not process that image'));
         }, 'image/jpeg', quality);
@@ -525,51 +655,65 @@
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      note.textContent = 'Uploading ' + (i + 1) + ' of ' + files.length +
-        ' (' + file.name + ')' + String.fromCharCode(8230);
+      note.textContent = 'Preparing ' + (i + 1) + ' of ' + files.length + String.fromCharCode(8230);
       try {
         const blob = await shrink(file, 1600, 0.82);
         const b64 = await blobToB64(blob);
         const slug = (item.id || item.name || 'new').toLowerCase().replace(/[^a-z0-9]+/g, '-');
         const path = 'assets/properties/' + slug + '/' + Date.now() + '-' + i + '.jpg';
-        await putFile(path, b64, 'Add photo for ' + (item.name || 'a listing'));
+        pending[path] = { b64: b64, name: file.name, url: URL.createObjectURL(blob) };
         item.photos = item.photos || [];
         item.photos.push(path);
-        dirty = true;
-        note.textContent = 'Uploaded ' + (i + 1) + ' of ' + files.length + '.';
       } catch (ex) {
-        note.textContent = 'Upload failed: ' + ex.message;
-        note.className = 'mt-2 text-sm font-medium text-red-600';
+        note.className = 'small err';
+        note.textContent = 'Could not add that photo: ' + ex.message;
         return;
       }
     }
-    note.className = 'mt-2 text-sm font-medium text-emerald-700';
-    note.textContent = 'Photos uploaded. Press Done, then Publish changes.';
+    // Re-render first: openDialog rebuilds the form, which would wipe the
+    // message if it were set before, leaving "Preparing..." on screen forever.
     openDialog(editing.kind, item);
     render();
+    const done = $('photoLog');
+    done.className = 'small ok';
+    done.textContent = files.length + ' photo' + (files.length === 1 ? '' : 's') +
+      ' ready. They upload when you press Publish changes.';
   }
 
   /* ─────────────────────────── Publish ─────────────────────────── */
   $('publish').addEventListener('click', async function () {
-    if (!dirty) return;
+    if (!dirty && !hasPending()) return;
     $('publish').disabled = true;
-    log('Publishing' + String.fromCharCode(8230));
+
+    const paths = Object.keys(pending);
     try {
+      // Photos first. If one fails the listing file is left untouched, so the
+      // site never ends up pointing at an image that was never uploaded.
+      for (let i = 0; i < paths.length; i++) {
+        log('Uploading photo ' + (i + 1) + ' of ' + paths.length + String.fromCharCode(8230));
+        await putFile(paths[i], pending[paths[i]].b64, 'Add photo for the website');
+      }
+
+      log('Publishing' + String.fromCharCode(8230));
       data.updated = new Date().toISOString();
       const res = await putFile(DATA, toB64(JSON.stringify(data, null, 2) + '\n'),
         'Update properties from admin', sha);
       sha = res.content.sha;
+
+      paths.forEach(function (p) { URL.revokeObjectURL(pending[p].url); });
+      pending = {};
       dirty = false;
       render();
       log('Published. The website updates in about a minute.', 'good');
     } catch (ex) {
+      render();
       $('publish').disabled = false;
       log('Could not publish: ' + ex.message, 'bad');
     }
   });
 
   window.addEventListener('beforeunload', function (e) {
-    if (dirty) { e.preventDefault(); e.returnValue = ''; }
+    if (dirty || hasPending()) { e.preventDefault(); e.returnValue = ''; }
   });
 
   /* ─────────────────────── Resume a session ─────────────────────── */

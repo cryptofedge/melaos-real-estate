@@ -29,19 +29,23 @@ working.
 
 **Edit a listing.** Click *Edit* on any card, change what you need, press *Done*.
 
-**Add photos.** Open a listing, choose *Add photos*, pick as many as you like. They
-upload one by one. Phone photos are 3–8 MB each; the page resizes them to 1600px and
-compresses before uploading, so they land at roughly 200–400 KB. The **first photo is
-the one shown on the card** — remove and re-add to change the order.
+**Add photos.** Open a listing, choose *Add photos*, pick as many as you like. Phone
+photos are 3–8 MB each; they are resized to 1600px and compressed **on your own phone
+or laptop**, landing at roughly 200–400 KB.
+
+Nothing leaves your device until you press Publish. Until then a photo is marked *Not
+published* and the card shows how many are still waiting. Remove one before publishing
+and it is simply discarded — it was never uploaded. The **first photo is the one shown
+on the card**; remove and re-add to change the order.
 
 **Add a home or community.** Buttons at the top right. New listings need at minimum a
 name, a price and a square footage to look right.
 
 **Delete.** Open the listing, *Delete this listing*, confirm.
 
-**Publish.** Nothing is live until you press **Publish changes**. The site updates about
-a minute later. Photos upload immediately, but they do not appear on the site until you
-publish.
+**Publish.** Nothing is live until you press **Publish changes** — photos included. The
+site updates about a minute later. Photos upload first; if one fails, the listing file
+is left alone, so the site never points at an image that did not make it.
 
 ## Things worth knowing
 
@@ -50,7 +54,8 @@ publish.
   your change — annoying, but it never loses their work.
 - **Everything is reversible.** Every change is a commit. Nothing is ever truly gone;
   ask for anything to be restored.
-- **Photos are public the moment they upload**, before you publish. Do not upload
+- **Publishing makes photos public.** They are on the open internet from that moment,
+  and deleting a photo later does not erase it from the site's history. Do not publish
   anything you would not want seen.
 - **Don't put anything private in a listing.** This is a public marketing site — buyer
   names, phone numbers, and anything about a specific resident do not belong here.
@@ -62,5 +67,6 @@ publish.
 | "That token was rejected" | Expired or mistyped. Make a new one. |
 | "That token cannot write to this repository" | Missing **Contents: Read and write**, or the repo was not selected. |
 | "Someone else published while you were editing" | Reload and redo. Their change is safe. |
+| "Could not publish" after choosing photos | Nothing was changed. Press Publish again. |
 | Site looks unchanged after publishing | Give it a minute, then hard-refresh (Ctrl+Shift+R). |
 | "Our listings could not be loaded" on the public site | The data file is broken or missing — this needs a developer. |
