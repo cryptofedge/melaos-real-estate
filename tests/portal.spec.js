@@ -156,7 +156,7 @@ test.describe('requests and complaints', () => {
     await page.fill('#rDetail', 'The technician did not arrive in the booked window and nobody called.');
     await page.locator('#requestForm button[type="submit"]').click();
 
-    await expect(page.locator('#requestStatus')).toContainText(/Complaint CX-\d{4}-\d{4} logged/);
+    await expect(page.locator('#requestStatus')).toContainText(/Complaint CX-\d{4}-\d{4}/);
     await expect(page.locator('#requestStatus')).toContainText(/within five/i);
   });
 
@@ -167,7 +167,7 @@ test.describe('requests and complaints', () => {
     await page.selectOption('#rCategory', 'Plumbing');
     await page.fill('#rDetail', 'Slow drain in the upstairs guest bathroom since Tuesday.');
     await page.locator('#requestForm button[type="submit"]').click();
-    await expect(page.locator('#requestStatus')).toContainText(/Request MR-\d{4}-\d{4} received/);
+    await expect(page.locator('#requestStatus')).toContainText(/Request MR-\d{4}-\d{4}/);
   });
 
   test('emergency guidance is visible without submitting anything', async ({ page }) => {
@@ -219,5 +219,55 @@ test.describe('portal page health', () => {
         return !labelled && !el.getAttribute('aria-label') && !el.closest('label');
       }).map(el => el.id || el.name || el.tagName));
     expect(unnamed).toEqual([]);
+  });
+});
+
+test.describe('delivery and configuration', () => {
+  // A submission must never vanish just because no backend is wired yet.
+  test('a submitted request offers a prefilled email carrying the details', async ({ page }) => {
+    await page.fill('#rName', 'Jordan Alvarez');
+    await page.fill('#rEmail', 'jordan@example.com');
+    await page.fill('#rUnit', '1428 Cypress Grove Ln');
+    await page.selectOption('#rCategory', 'Plumbing');
+    await page.fill('#rDetail', 'Slow drain in the upstairs guest bathroom since Tuesday.');
+    await page.locator('#requestForm button[type="submit"]').click();
+
+    const link = page.locator('#requestStatus a[href^="mailto:"]');
+    await expect(link).toBeVisible();
+
+    const href = decodeURIComponent(await link.getAttribute('href'));
+    expect(href).toContain('Jordan Alvarez');
+    expect(href).toContain('1428 Cypress Grove Ln');
+    expect(href).toContain('Plumbing');
+    expect(href).toContain('Slow drain');
+    expect(href).toMatch(/^mailto:[^?]+@/);
+  });
+
+  test('the page states plainly how submissions are delivered', async ({ page }) => {
+    await expect(page.locator('#deliveryNote')).not.toBeEmpty();
+  });
+
+  test('promised timescales all come from one config value', async ({ page }) => {
+    const ack = await page.locator('[data-sla="ack"]').allTextContents();
+    const complaint = await page.locator('[data-sla="complaint"]').allTextContents();
+    expect(ack.length).toBeGreaterThan(0);
+    expect(new Set(ack).size, 'acknowledgement wording should be identical everywhere').toBe(1);
+    expect(new Set(complaint).size, 'complaint wording should be identical everywhere').toBe(1);
+    expect(ack[0]).not.toMatch(/^\s*$/);
+  });
+
+  test('records come from data/units.json, not hardcoded markup', async ({ page }) => {
+    const res = await page.request.get('/data/units.json');
+    expect(res.status()).toBe(200);
+    const data = await res.json();
+    expect(Object.keys(data)).toContain('CG-1428');
+    expect(data['CG-1428'].closed).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
+  test('if the records fail to load, the resident is told what to do', async ({ page }) => {
+    await page.route('**/data/units.json', route => route.abort());
+    await page.goto('/status.html');
+    await expect(page.locator('#unitErr')).toBeVisible();
+    await expect(page.locator('#unitErr')).toContainText(/could not be loaded/i);
   });
 });

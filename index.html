@@ -1141,6 +1141,16 @@
 (function () {
   'use strict';
 
+  /* ══════════════════════════════════════════════════════════════════════
+     CONFIGURATION — edit this block to connect the tour form.
+     ══════════════════════════════════════════════════════════════════════ */
+  const CONFIG = {
+    // POST target for tour requests. Empty falls back to the resident's own
+    // email client, prefilled, so an enquiry is never silently dropped.
+    endpoint: '',
+    salesEmail: 'tours@melaosdevelopment.com',
+  };
+
   /* ───────────────────────── Data: 40 homes ───────────────────────── */
   const COMMUNITIES = {
     cg: { name: 'Cypress Grove',        place: 'Katy',        market: 'Greater Houston',     city: 'houston'    },
@@ -1553,12 +1563,66 @@
       return;
     }
 
+    const payload = {
+      name: name.value.trim(),
+      email: email.value.trim(),
+      phone: document.getElementById('cPhone').value.trim(),
+      location: location.value,
+      timeline: document.getElementById('cTimeline').value,
+      budget: document.getElementById('cBudget').value,
+      message: document.getElementById('cMessage').value.trim(),
+      submitted: new Date().toISOString(),
+    };
+    const firstName = payload.name.split(' ')[0];
+
+    function tourMailto(p) {
+      const body = [
+        'Tour request',
+        '',
+        'Name:     ' + p.name,
+        'Email:    ' + p.email,
+        'Phone:    ' + (p.phone || '-'),
+        'Market:   ' + p.location,
+        'Timeline: ' + (p.timeline || 'Not sure yet'),
+        'Budget:   ' + (p.budget || 'Prefer not to say'),
+        '',
+        p.message,
+      ].join(String.fromCharCode(10));
+      return 'mailto:' + CONFIG.salesEmail +
+        '?subject=' + encodeURIComponent('Tour request - ' + p.name + ' - ' + p.location) +
+        '&body=' + encodeURIComponent(body);
+    }
+
+    if (CONFIG.endpoint) {
+      status.className = 'text-sm font-medium text-slate7';
+      status.textContent = 'Sending' + String.fromCharCode(8230);
+      fetch(CONFIG.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        status.className = 'text-sm font-medium text-ink';
+        status.textContent = 'Thank you, ' + firstName +
+          '. Your tour request is in — a community manager will reach out within one business day.';
+        form.reset();
+      }).catch(function (err) {
+        status.className = 'text-sm font-medium text-red-600';
+        status.textContent = 'We could not send that (' + err.message + '). ';
+        status.insertAdjacentHTML('beforeend',
+          '<a class="font-semibold text-gold underline underline-offset-4" href="' +
+          tourMailto(payload) + '">Send it by email instead</a>, or call (512) 555-0142.');
+      });
+      return;
+    }
+
     status.className = 'text-sm font-medium text-ink';
-    status.textContent = 'Thank you, ' + name.value.trim().split(' ')[0] +
-      '. Your tour request is in — a community manager will reach out within one business day.';
+    status.textContent = 'Thank you, ' + firstName +
+      '. Your tour request is ready to send — a community manager will reach out within one business day.';
+    status.insertAdjacentHTML('beforeend',
+      ' <a class="font-semibold text-gold underline underline-offset-4" href="' +
+      tourMailto(payload) + '">Open your email to send it</a>.');
     form.reset();
-    // Demo build: no backend attached. Point this at your CRM endpoint:
-    // fetch('/api/tour-requests', { method: 'POST', body: new FormData(form) });
   });
 
   form.addEventListener('reset', function () {

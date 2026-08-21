@@ -75,6 +75,33 @@ price, beds, baths, square feet, garage, status. Communities are static markup i
 `#communityGrid` section; keep the `data-city`, `data-price` and `data-beds` attributes in
 sync so filtering keeps working.
 
+## Going live
+
+Both forms work today without a backend: they hand the visitor a prefilled email so an
+enquiry is never silently dropped. To post them to a real system instead, set one value
+per page — there is a clearly marked `CONFIG` block at the top of each page's script.
+
+| Page | Field | What it does |
+| --- | --- | --- |
+| `index.html` | `CONFIG.endpoint` | POSTs tour requests as JSON |
+| `index.html` | `CONFIG.salesEmail` | Address used by the email fallback |
+| `status.html` | `CONFIG.endpoint` | POSTs requests, complaints and questions as JSON |
+| `status.html` | `CONFIG.serviceEmail` | Address used by the email fallback |
+| `status.html` | `CONFIG.sla` | The response times the portal promises residents |
+
+With an endpoint set, a failed POST is never swallowed — the resident is shown the error
+and offered the email route plus a phone number.
+
+`CONFIG.sla` is the single source for every promised timescale on the portal. The
+defaults say acknowledgement within one business day and a written complaint response
+within five. **Confirm you can staff that before launch** — it is a commitment residents
+will hold you to, and changing it later reads badly.
+
+Resident records live in [`data/units.json`](data/units.json), not in code. Read
+[`data/README.md`](data/README.md) first: that file is served publicly, so real
+homeowner addresses and service history do not belong in it without an authenticated
+endpoint behind a resident login.
+
 ## Before this goes live
 
 Prices, plans, testimonials and certifications on the page are placeholder content written to

@@ -218,11 +218,11 @@
           <dl class="mt-6 space-y-3 text-sm">
             <div class="rounded-lg border border-white/10 bg-white/[.04] p-3.5">
               <dt class="font-semibold text-white">Maintenance requests</dt>
-              <dd class="text-white/70">Acknowledged within 1 business day.</dd>
+              <dd class="text-white/70">Acknowledged within <span data-sla="ack">one business day</span>.</dd>
             </div>
             <div class="rounded-lg border border-white/10 bg-white/[.04] p-3.5">
               <dt class="font-semibold text-white">Complaints</dt>
-              <dd class="text-white/70">Acknowledged within 1 business day, written response within 5.</dd>
+              <dd class="text-white/70">Acknowledged within <span data-sla="ack">one business day</span>, written response within <span data-sla="complaint">five business days</span>.</dd>
             </div>
           </dl>
 
@@ -309,9 +309,10 @@
             <div id="complaintNote" hidden class="rounded-lg border border-gold/40 bg-sand/50 p-4 text-sm leading-relaxed text-slate7">
               <strong class="block font-semibold text-ink">How complaints are handled</strong>
               Logged with a reference number and assigned to a coordinator who is not the person
-              involved. You get an acknowledgement within one business day and a written response
-              within five. If you are not satisfied with the outcome you can ask for it to be
-              escalated to the division manager.
+              involved. You get an acknowledgement within <span data-sla="ack">one business day</span>
+              and a written response within <span data-sla="complaint">five business days</span>. If you
+              are not satisfied with the outcome you can ask for it to be escalated to the division
+              manager.
             </div>
 
             <div>
@@ -341,9 +342,8 @@
     </div>
 
     <p class="mx-auto mt-6 max-w-3xl text-center text-xs leading-relaxed text-slate7/70">
-      Demonstration portal. Records shown are sample data and requests are not transmitted &mdash;
-      connect the form to your warranty system before going live. Warranty terms are summarised here for
-      convenience; your signed warranty document governs.
+      <span id="deliveryNote"></span>
+      Warranty terms are summarised here for convenience; your signed warranty document governs.
     </p>
   </div>
 </section>
@@ -360,37 +360,42 @@
 (function () {
   'use strict';
 
-  /* ─────────────────────────── Sample records ─────────────────────────── */
-  const UNITS = {
-    'CG-1428': {
-      address: '1428 Cypress Grove Ln',
-      community: 'Cypress Grove', city: 'Katy, TX 77494',
-      plan: 'The Sabine', closed: '2024-03-15',
-      history: [
-        { date: '2025-02-18', type: '11-month warranty walk', note: 'Nine items logged, all closed within two weeks.', state: 'closed' },
-        { date: '2024-04-20', type: '30-day orientation', note: 'Two drywall touch-ups completed on site.', state: 'closed' },
-        { date: '2026-07-02', type: 'Request — HVAC', note: 'Upstairs zone not holding set point. Coil cleaned, refrigerant topped.', state: 'closed' },
-      ],
-    },
-    'BR-0212': {
-      address: '212 Bluebonnet Ridge Dr',
-      community: 'Bluebonnet Ridge', city: 'Georgetown, TX 78628',
-      plan: 'The Guadalupe', closed: '2023-08-02',
-      history: [
-        { date: '2024-07-11', type: '11-month warranty walk', note: 'Four items logged, all closed.', state: 'closed' },
-        { date: '2023-09-05', type: '30-day orientation', note: 'Cabinet door realigned; irrigation head replaced.', state: 'closed' },
-        { date: '2026-08-09', type: 'Request — Irrigation', note: 'Zone 3 not cycling. Controller replaced under systems coverage.', state: 'open' },
-      ],
-    },
-    'CC-0905': {
-      address: '905 Copper Creek Way',
-      community: 'Copper Creek', city: 'Celina, TX 75009',
-      plan: 'The Trinity', closed: '2025-11-20',
-      history: [
-        { date: '2025-12-19', type: '30-day orientation', note: 'Punch list closed before funding. No open items.', state: 'closed' },
-      ],
+  /* ══════════════════════════════════════════════════════════════════════
+     CONFIGURATION — the only block you need to edit to go live.
+     ══════════════════════════════════════════════════════════════════════ */
+  const CONFIG = {
+    // Where submissions are POSTed as JSON. Leave empty and the form falls back
+    // to opening the resident's email client with everything filled in, so
+    // nothing is lost while the backend is being built.
+    endpoint: '',
+
+    // Used for the email fallback, and shown as the contact address.
+    serviceEmail: 'service@melaosdevelopment.com',
+
+    // Response commitments. These appear everywhere they are promised, so this
+    // is the single place to change what the portal tells residents.
+    sla: {
+      acknowledge: 'one business day',
+      complaintResponse: 'five business days',
     },
   };
+
+  /* ─────────────────────────── Resident records ───────────────────────────
+     Loaded from data/units.json. See data/README.md before putting real
+     homeowner records in a publicly served file. */
+  let UNITS = {};
+  const unitsReady = fetch('data/units.json', { cache: 'no-store' })
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (data) { UNITS = data; })
+    .catch(function (err) {
+      const box = document.getElementById('unitErr');
+      box.hidden = false;
+      box.textContent = 'Resident records could not be loaded (' + err.message +
+        '). Call (512) 555-0142 and we will look your home up with you.';
+    });
 
   // Routine upkeep. `months` is how often each item comes due.
   const TASKS = [
@@ -431,13 +436,14 @@
 
   $('lookupForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    show($('unitInput').value);
+    const value = $('unitInput').value;
+    unitsReady.then(function () { show(value); });
   });
 
   document.querySelectorAll('.demo').forEach(function (b) {
     b.addEventListener('click', function () {
       $('unitInput').value = b.dataset.demo;
-      show(b.dataset.demo);
+      unitsReady.then(function () { show(b.dataset.demo); });
     });
   });
 
@@ -695,23 +701,99 @@
     const ref = prefix + '-' + new Date().getFullYear() + '-' +
       String(Math.floor(Math.random() * 9000) + 1000);
 
-    status.className = 'text-sm font-medium text-ink';
-    status.textContent = type === 'Complaint'
-      ? 'Complaint ' + ref + ' logged. You will hear from a coordinator within one business day, and get a written response within five.'
-      : type === 'Question'
-        ? 'Question ' + ref + ' received. We will come back to you within one business day.'
-        : 'Request ' + ref + ' received. A warranty coordinator will contact you within one business day.';
+    const payload = {
+      reference: ref,
+      type: type,
+      name: name.value.trim(),
+      email: email.value.trim(),
+      unit: unit.value.trim(),
+      category: cat.value,
+      urgency: $('rUrgency').value,
+      detail: detail.value.trim(),
+      mayEnter: $('rAccess').checked,
+      submitted: new Date().toISOString(),
+    };
 
-    $('requestForm').reset();
-    applyType();
-    // Demo build: no backend. Point this at your warranty system:
-    // fetch('/api/maintenance-requests', { method: 'POST', body: new FormData(form) });
+    const promise = type === 'Complaint'
+      ? ' You will hear from a coordinator within ' + CONFIG.sla.acknowledge +
+        ', and get a written response within ' + CONFIG.sla.complaintResponse + '.'
+      : ' We will come back to you within ' + CONFIG.sla.acknowledge + '.';
+
+    const noun = type === 'Complaint' ? 'Complaint' : type === 'Question' ? 'Question' : 'Request';
+
+    function done(text, extraHtml) {
+      status.className = 'text-sm font-medium text-ink';
+      status.textContent = text;
+      if (extraHtml) status.insertAdjacentHTML('beforeend', extraHtml);
+      $('requestForm').reset();
+      applyType();
+    }
+
+    if (CONFIG.endpoint) {
+      status.className = 'text-sm font-medium text-slate7';
+      status.textContent = 'Sending' + String.fromCharCode(8230);
+      fetch(CONFIG.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        done(noun + ' ' + ref + ' received.' + promise);
+      }).catch(function (err) {
+        // Never swallow a failed submission - hand the resident a way through.
+        status.className = 'text-sm font-medium text-red-600';
+        status.textContent = 'We could not send that (' + err.message + '). ';
+        status.insertAdjacentHTML('beforeend',
+          '<a class="font-semibold text-gold underline underline-offset-4" href="' +
+          mailtoLink(payload) + '">Send it by email instead</a>' +
+          ', or call (512) 555-0142.');
+      });
+      return;
+    }
+
+    // No endpoint configured: hand off to the resident's mail client with
+    // everything filled in, rather than pretending the request went somewhere.
+    done(noun + ' ' + ref + ' is ready to send.' + promise,
+      ' <a class="font-semibold text-gold underline underline-offset-4" href="' +
+      mailtoLink(payload) + '">Open your email to send it</a>.');
   });
+
+  /* Builds a prefilled message so a submission survives having no backend. */
+  function mailtoLink(p) {
+    const body = [
+      p.type + ' ' + p.reference,
+      '',
+      'Name:      ' + p.name,
+      'Email:     ' + p.email,
+      'Home:      ' + p.unit,
+      'Category:  ' + p.category,
+      'Urgency:   ' + p.urgency,
+      'May enter: ' + (p.mayEnter ? 'Yes, key on file' : 'No, please schedule'),
+      '',
+      p.detail,
+    ].join(String.fromCharCode(10));
+    return 'mailto:' + CONFIG.serviceEmail +
+      '?subject=' + encodeURIComponent(p.type + ' ' + p.reference + ' - ' + p.unit) +
+      '&body=' + encodeURIComponent(body);
+  }
 
   // Prefill the request form once a home is loaded.
   $('lookupForm').addEventListener('submit', function () {
     if (current) $('rUnit').value = current.address;
   });
+
+  // One place to change what the portal promises residents.
+  document.querySelectorAll('[data-sla="ack"]').forEach(function (el) {
+    el.textContent = CONFIG.sla.acknowledge;
+  });
+  document.querySelectorAll('[data-sla="complaint"]').forEach(function (el) {
+    el.textContent = CONFIG.sla.complaintResponse;
+  });
+
+  $('deliveryNote').textContent = CONFIG.endpoint
+    ? 'Submissions are sent to our service system.'
+    : 'Records shown are sample data. Submissions are not yet wired to a service system, so the ' +
+      'form hands your message to your own email client to send — it still reaches us.';
 
   $('year').textContent = new Date().getFullYear();
 })();
