@@ -48,7 +48,8 @@ Everything is vanilla JS in one IIFE at the bottom of the file:
 | `cloud` | `#F9FAFB` | Page background |
 | `ink` | `#111827` | Body text, dark sections |
 | `slate7` | `#1F2937` | Secondary text |
-| `gold` | `#C5A059` | CTAs, badges, borders |
+| `gold` | `#C5A059` | CTAs, badges, borders — decoration only |
+| `bronze` | `#826A3B` | Gold **text** on light surfaces (AA compliant) |
 | `gilt` | `#D4AF37` | Highlights on dark |
 | `sand` | `#F3EFE6` | Amenity chips, icon wells |
 
@@ -109,11 +110,24 @@ show the layout. Replace them with real, substantiated figures — a homebuilder
 advertising and Fair Housing obligations, and the TREC and warranty language in the footer
 should be reviewed by counsel against the actual entity registration.
 
+## Accessibility
+
+Text contrast meets WCAG 2.1 AA throughout, enforced by
+[`tests/contrast.spec.js`](tests/contrast.spec.js).
+
+The brand gold `#C5A059` is only **2.4:1 on white** — fine as a border, badge or fill,
+but failing as text at any size. Gold text therefore uses `bronze` `#826A3B`: the same
+hue, dark enough to pass (4.5:1 on white, 4.5:1 on the warm `sand` tiles). On dark
+surfaces the bright `gilt` is used instead, where it measures 8.4:1.
+
+Keep that split when adding anything: **`gold` for decoration, `bronze` for text on
+light, `gilt` for text on dark.** The contrast test will catch it if you don't.
+
 ## Production notes
 
 For a real deployment, replace the Tailwind Play CDN with a compiled stylesheet
-(`npx tailwindcss -i in.css -o dist.css --minify`), self-host the two fonts, and add real
-`<meta property="og:*">` tags with a social share image.
+(`npx tailwindcss -i in.css -o dist.css --minify`) and self-host the two fonts. The CDN
+is the single largest runtime dependency: if it fails, every class silently does nothing.
 
 ## Maintenance
 
@@ -158,6 +172,8 @@ page cannot render without:
 - **Accessibility floor**: one `h1`, every control labelled, every image has `alt`, and
   every internal anchor resolves to a real element.
 - **Maintenance panel** runs its checks when scrolled into view and reports healthy.
+- **Colour contrast** — every visible text node is measured against WCAG AA (4.5:1, or
+  3:1 for large text) on both pages, including the portal dashboard and complaint path.
 
 ```bash
 npm install

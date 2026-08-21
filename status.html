@@ -35,7 +35,7 @@
 <script>
   tailwind.config = {
     theme: { extend: {
-      colors: { cloud:'#F9FAFB', slate7:'#1F2937', ink:'#111827', gold:'#C5A059', gilt:'#D4AF37', sand:'#F3EFE6' },
+      colors: { cloud:'#F9FAFB', slate7:'#1F2937', ink:'#111827', gold:'#C5A059', bronze:'#826A3B', gilt:'#D4AF37', sand:'#F3EFE6' },
       fontFamily: { sans:['Inter','ui-sans-serif','system-ui','sans-serif'], display:['"Plus Jakarta Sans"','Inter','sans-serif'] },
       boxShadow: { card:'0 1px 2px rgba(17,24,39,.04), 0 8px 24px -12px rgba(17,24,39,.18)',
                    lift:'0 2px 4px rgba(17,24,39,.05), 0 24px 48px -20px rgba(17,24,39,.28)' },
@@ -63,10 +63,10 @@
       </span>
       <span class="leading-tight">
         <span class="block font-display text-[15px] font-extrabold tracking-tight">MELAO&rsquo;S</span>
-        <span class="block text-[10px] font-semibold uppercase tracking-[.18em] text-gold">Real Estate Development</span>
+        <span class="block text-[10px] font-semibold uppercase tracking-[.18em] text-bronze">Real Estate Development</span>
       </span>
     </a>
-    <a href="index.html" class="text-sm font-semibold text-slate7 transition hover:text-gold">&larr; Back to site</a>
+    <a href="index.html" class="text-sm font-semibold text-slate7 transition hover:text-bronze">&larr; Back to site</a>
   </div>
 </header>
 
@@ -75,7 +75,7 @@
 <!-- ═════════════════════ LOOK UP YOUR HOME ═════════════════════ -->
 <section class="border-b border-ink/10 bg-white">
   <div class="mx-auto max-w-shell px-5 py-12 lg:px-8 lg:py-16">
-    <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-gold">Resident Maintenance</p>
+    <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-bronze">Resident Maintenance</p>
     <h1 class="mt-4 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
       Keep your home up to date
     </h1>
@@ -100,9 +100,9 @@
       </div>
       <p id="unitHelp" class="mt-2 text-xs text-slate7/70">
         Demonstration records available:
-        <button type="button" class="demo font-semibold text-gold underline underline-offset-2" data-demo="CG-1428">CG-1428</button>,
-        <button type="button" class="demo font-semibold text-gold underline underline-offset-2" data-demo="BR-0212">BR-0212</button>,
-        <button type="button" class="demo font-semibold text-gold underline underline-offset-2" data-demo="CC-0905">CC-0905</button>
+        <button type="button" class="demo font-semibold text-bronze underline underline-offset-2" data-demo="CG-1428">CG-1428</button>,
+        <button type="button" class="demo font-semibold text-bronze underline underline-offset-2" data-demo="BR-0212">BR-0212</button>,
+        <button type="button" class="demo font-semibold text-bronze underline underline-offset-2" data-demo="CC-0905">CC-0905</button>
       </p>
       <p id="unitErr" hidden class="mt-2 text-sm font-medium text-red-600"></p>
     </form>
@@ -172,7 +172,7 @@
           </p>
         </div>
         <button id="resetChecklist" type="button"
-                class="rounded-md border border-ink/15 bg-white px-4 py-2.5 text-sm font-semibold text-slate7 transition hover:border-gold hover:text-gold">
+                class="rounded-md border border-ink/15 bg-white px-4 py-2.5 text-sm font-semibold text-slate7 transition hover:border-gold hover:text-bronze">
           Reset checklist
         </button>
       </div>
@@ -248,13 +248,13 @@
           <form id="requestForm" novalidate class="space-y-5">
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
-                <label for="rName" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Your name <span class="text-gold" aria-hidden="true">*</span></label>
+                <label for="rName" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Your name <span class="text-bronze" aria-hidden="true">*</span></label>
                 <input id="rName" type="text" autocomplete="name" required aria-required="true" aria-describedby="rNameErr"
                        class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0" placeholder="Jordan Alvarez" />
                 <p id="rNameErr" hidden class="mt-1.5 text-xs font-medium text-red-600">Please enter your name.</p>
               </div>
               <div>
-                <label for="rEmail" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Email <span class="text-gold" aria-hidden="true">*</span></label>
+                <label for="rEmail" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Email <span class="text-bronze" aria-hidden="true">*</span></label>
                 <input id="rEmail" type="email" autocomplete="email" required aria-required="true" aria-describedby="rEmailErr"
                        class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0" placeholder="you@email.com" />
                 <p id="rEmailErr" hidden class="mt-1.5 text-xs font-medium text-red-600">Please enter a valid email address.</p>
@@ -262,7 +262,7 @@
             </div>
 
             <div>
-              <label for="rUnit" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Address or unit <span class="text-gold" aria-hidden="true">*</span></label>
+              <label for="rUnit" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Address or unit <span class="text-bronze" aria-hidden="true">*</span></label>
               <input id="rUnit" type="text" autocomplete="street-address" required aria-required="true" aria-describedby="rUnitErr"
                      class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0" placeholder="1428 Cypress Grove Ln" />
               <p id="rUnitErr" hidden class="mt-1.5 text-xs font-medium text-red-600">Please tell us which home this is about.</p>
@@ -273,17 +273,17 @@
               <div class="grid gap-2 sm:grid-cols-3">
                 <label class="rType flex cursor-pointer items-center gap-2.5 rounded-md border border-gold bg-sand/60 px-3.5 py-3 text-sm font-medium transition">
                   <input type="radio" name="reportType" value="Maintenance request" checked
-                         class="h-4 w-4 border-ink/30 text-gold focus:ring-gold" />
+                         class="h-4 w-4 border-ink/30 text-bronze focus:ring-gold" />
                   Repair needed
                 </label>
                 <label class="rType flex cursor-pointer items-center gap-2.5 rounded-md border border-ink/15 px-3.5 py-3 text-sm font-medium transition hover:border-gold">
                   <input type="radio" name="reportType" value="Complaint"
-                         class="h-4 w-4 border-ink/30 text-gold focus:ring-gold" />
+                         class="h-4 w-4 border-ink/30 text-bronze focus:ring-gold" />
                   Complaint
                 </label>
                 <label class="rType flex cursor-pointer items-center gap-2.5 rounded-md border border-ink/15 px-3.5 py-3 text-sm font-medium transition hover:border-gold">
                   <input type="radio" name="reportType" value="Question"
-                         class="h-4 w-4 border-ink/30 text-gold focus:ring-gold" />
+                         class="h-4 w-4 border-ink/30 text-bronze focus:ring-gold" />
                   Question
                 </label>
               </div>
@@ -291,7 +291,7 @@
 
             <div class="grid gap-5 sm:grid-cols-2">
               <div>
-                <label for="rCategory" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Category <span class="text-gold" aria-hidden="true">*</span></label>
+                <label for="rCategory" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Category <span class="text-bronze" aria-hidden="true">*</span></label>
                 <select id="rCategory" required aria-required="true" aria-describedby="rCategoryErr"
                         class="w-full rounded-md border border-ink/15 bg-white px-3.5 py-3 text-sm transition hover:border-gold focus:border-gold focus:ring-0"></select>
                 <p id="rCategoryErr" hidden class="mt-1.5 text-xs font-medium text-red-600">Please choose a category.</p>
@@ -316,7 +316,7 @@
             </div>
 
             <div>
-              <label for="rDetail" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">What is happening? <span class="text-gold" aria-hidden="true">*</span></label>
+              <label for="rDetail" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">What is happening? <span class="text-bronze" aria-hidden="true">*</span></label>
               <textarea id="rDetail" rows="4" required aria-required="true" aria-describedby="rDetailErr"
                         class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0"
                         placeholder="Which room, when it started, and anything that makes it better or worse."></textarea>
@@ -324,7 +324,7 @@
             </div>
 
             <div class="flex items-start gap-3">
-              <input id="rAccess" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-ink/30 text-gold focus:ring-gold" />
+              <input id="rAccess" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-ink/30 text-bronze focus:ring-gold" />
               <label for="rAccess" class="text-sm leading-relaxed text-slate7">
                 Our team may enter with the key on file if I am not home.
                 <span class="block text-xs text-slate7/70">Leave unticked and we will schedule a time with you first.</span>
@@ -517,7 +517,7 @@
           '<div class="h-full rounded-full ' + (active ? 'bg-gradient-to-r from-gilt to-gold' : 'bg-ink/20') +
           '" style="width:' + pct + '%"></div>' +
         '</div>' +
-        '<p class="mt-2 text-xs font-semibold uppercase tracking-wide ' + (active ? 'text-gold' : 'text-slate7/60') + '">' +
+        '<p class="mt-2 text-xs font-semibold uppercase tracking-wide ' + (active ? 'text-bronze' : 'text-slate7/60') + '">' +
           remaining + '</p></div>';
     }).join('');
   }
@@ -556,7 +556,7 @@
 
       return '<li class="flex flex-wrap items-start gap-3 py-4 sm:flex-nowrap">' +
         '<input type="checkbox" id="t-' + task.id + '" data-task="' + task.id + '" ' + (ok ? 'checked' : '') +
-          ' class="mt-1 h-5 w-5 shrink-0 rounded border-ink/30 text-gold focus:ring-gold" />' +
+          ' class="mt-1 h-5 w-5 shrink-0 rounded border-ink/30 text-bronze focus:ring-gold" />' +
         '<div class="min-w-0 flex-1">' +
           '<label for="t-' + task.id + '" class="block text-sm font-semibold">' + task.title + '</label>' +
           '<p class="mt-0.5 text-sm leading-relaxed text-slate7">' + task.note + '</p>' +
@@ -605,7 +605,7 @@
         ? '<span class="shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-700">In progress</span>'
         : '<span class="shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700">Closed</span>';
       return '<li class="flex flex-wrap items-start gap-3 rounded-xl border border-ink/10 bg-white p-4 shadow-card sm:flex-nowrap">' +
-        '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-sand text-gold">' +
+        '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-sand text-bronze">' +
           '<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2 4 12l-2 8 8-2L20 8z"/><path d="m14 6 4 4"/></svg>' +
         '</span>' +
         '<div class="min-w-0 flex-1"><p class="text-sm font-semibold">' + h.type + '</p>' +
@@ -744,7 +744,7 @@
         status.className = 'text-sm font-medium text-red-600';
         status.textContent = 'We could not send that (' + err.message + '). ';
         status.insertAdjacentHTML('beforeend',
-          '<a class="font-semibold text-gold underline underline-offset-4" href="' +
+          '<a class="font-semibold text-bronze underline underline-offset-4" href="' +
           mailtoLink(payload) + '">Send it by email instead</a>' +
           ', or call (512) 555-0142.');
       });
@@ -754,7 +754,7 @@
     // No endpoint configured: hand off to the resident's mail client with
     // everything filled in, rather than pretending the request went somewhere.
     done(noun + ' ' + ref + ' is ready to send.' + promise,
-      ' <a class="font-semibold text-gold underline underline-offset-4" href="' +
+      ' <a class="font-semibold text-bronze underline underline-offset-4" href="' +
       mailtoLink(payload) + '">Open your email to send it</a>.');
   });
 
