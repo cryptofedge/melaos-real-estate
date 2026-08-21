@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-21T22:43:18.270Z",
+  "updated": "2026-08-21T22:45:08.735Z",
   "communities": [
     {
       "id": "cg",
@@ -116,14 +116,14 @@
       "name": "The Llano",
       "community": "cg",
       "story": "single",
-      "price": 361500,
+      "price": 354000,
       "beds": 3,
       "baths": 2,
       "sqft": 1642,
       "garage": 2,
       "status": "Move-in ready",
       "photos": [],
-      "description": "Greenbelt lot, extended covered patio, three-car tandem garage."
+      "description": ""
     },
     {
       "id": "the-frio-ah",

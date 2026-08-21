@@ -1025,14 +1025,15 @@
   function adaptHome(h, comms) {
     return {
       id: h.id, name: h.name, comm: comms[h.community] || {},
-      story: h.story, price: Math.round(h.price / 1000),
+      story: h.story, price: h.price,
       beds: h.beds, baths: h.baths, sqft: h.sqft, garage: h.garage,
       status: h.status, photos: h.photos || [], description: h.description || '',
     };
   }
 
   const STORY_LABEL = { single: 'Single-Story', two: 'Two-Story', custom: 'Custom Spec Home' };
-  const usd = function (k) { return '$' + (k * 1000).toLocaleString('en-US'); };
+  const usd = function (dollars) { return '$' + Number(dollars || 0).toLocaleString('en-US'); };
+  const thousands = function (dollars) { return Math.round(Number(dollars || 0) / 1000); };
 
   /* ───────────────── Floor plan schematic generation ───────────────── */
   // Packs a row of rooms into the available width using relative weights.
@@ -1137,7 +1138,7 @@
     }).join('');
 
     return '<article class="community group flex flex-col overflow-hidden rounded-xl border border-ink/10 bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:shadow-lift" ' +
-      'data-city="' + esc(c.city) + '" data-price="' + Math.round(c.fromPrice / 1000) + '" data-beds="' + (c.beds || 3) + '">' +
+      'data-city="' + esc(c.city) + '" data-price="' + thousands(c.fromPrice) + '" data-beds="' + (c.beds || 3) + '">' +
       '<div class="ph relative aspect-[16/10] overflow-hidden">' +
         media(c.photos, c.name + ' community') +
         '<span class="absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ' + tone + '">' + esc(c.status) + '</span>' +
@@ -1145,7 +1146,7 @@
       '<div class="flex flex-1 flex-col p-5">' +
         '<h3 class="font-display text-xl font-bold text-ink">' + esc(c.name) + '</h3>' +
         '<p class="mt-1 text-sm text-slate7">' + esc(c.place) + ' &middot; ' + esc(c.market) + '</p>' +
-        '<p class="mt-4 font-display text-lg font-extrabold text-ink">From ' + usd(Math.round(c.fromPrice / 1000)) + '</p>' +
+        '<p class="mt-4 font-display text-lg font-extrabold text-ink">From ' + usd(c.fromPrice) + '</p>' +
         '<p class="text-xs font-medium uppercase tracking-wide text-slate7/80">' + esc(c.lots) + ' lots</p>' +
         '<ul class="mt-4 flex flex-wrap gap-2 text-[12px] font-medium text-slate7">' + amenities + '</ul>' +
         '<a href="#contact" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition group-hover:text-bronze">Tour ' + esc(c.name) +
@@ -1157,7 +1158,7 @@
   function cardFor(p) {
     return '' +
       '<article class="plan group flex flex-col overflow-hidden rounded-xl border border-ink/10 bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:shadow-lift" ' +
-        'data-city="' + p.comm.city + '" data-price="' + p.price + '" data-beds="' + p.beds + '">' +
+        'data-city="' + esc(p.comm.city) + '" data-price="' + thousands(p.price) + '" data-beds="' + p.beds + '">' +
         '<div class="ph relative aspect-[16/10] overflow-hidden">' +
           media(p.photos, p.name + ' elevation') +
           '<span class="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-ink ring-1 ring-gold/50">' + esc(p.status) + '</span>' +

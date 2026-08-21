@@ -231,6 +231,25 @@ test.describe('the site reads what the admin writes', () => {
     await expect(page.locator('#panel-single')).toContainText('$999,000');
   });
 
+  // Caught end to end: $361,500 was displayed as $362,000 because prices were
+  // carried in thousands. On a listing, the price shown must be the real price.
+  test('prices are shown exactly, not rounded to the nearest thousand', async ({ page }) => {
+    await page.route('**/data/properties.json', route => route.fulfill({
+      status: 200, contentType: 'application/json',
+      body: JSON.stringify({
+        communities: [Object.assign({}, SAMPLE.communities[0], { fromPrice: 389950 })],
+        homes: [Object.assign({}, SAMPLE.homes[0], { price: 361500 })],
+      }),
+    }));
+    await page.goto('/index.html');
+    await expect(page.locator('#panel-single .plan')).toContainText('$361,500');
+    await expect(page.locator('#panel-single .plan')).not.toContainText('$362,000');
+    await expect(page.locator('.community')).toContainText('$389,950');
+
+    // The filter still works off round thousands.
+    await expect(page.locator('#panel-single .plan')).toHaveAttribute('data-price', '362');
+  });
+
   test('a photo on a record replaces the placeholder art', async ({ page }) => {
     await page.route('**/data/properties.json', route => route.fulfill({
       status: 200, contentType: 'application/json',
