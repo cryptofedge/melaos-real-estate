@@ -1,0 +1,66 @@
+# Editing the website
+
+**Where:** https://cryptofedge.github.io/melaos-real-estate/admin.html
+
+Bookmark it. It is not linked from the public site and search engines are told to
+ignore it, but it is a public URL — the protection is that nothing works without a
+token that can write to the repository.
+
+## First time: get your token (about two minutes)
+
+Each brother makes his own. Never share one — the commit history records who changed
+what, which is the point.
+
+1. Sign in to GitHub, then open
+   **github.com/settings/personal-access-tokens/new**
+2. Name it something like "Melao's website" and pick an expiry you are comfortable with.
+3. **Repository access** → *Only select repositories* → `melaos-real-estate`
+4. **Permissions → Repository permissions** → **Contents: Read and write**.
+   Nothing else. That token can then edit this website and nothing else on GitHub.
+5. Generate, copy, paste it into the admin page. GitHub shows it once.
+
+Tick "keep me signed in" on your own phone or laptop. Leave it unticked on anything
+shared.
+
+If a token leaks, delete it on GitHub and make a new one — that instantly stops it
+working.
+
+## Day to day
+
+**Edit a listing.** Click *Edit* on any card, change what you need, press *Done*.
+
+**Add photos.** Open a listing, choose *Add photos*, pick as many as you like. They
+upload one by one. Phone photos are 3–8 MB each; the page resizes them to 1600px and
+compresses before uploading, so they land at roughly 200–400 KB. The **first photo is
+the one shown on the card** — remove and re-add to change the order.
+
+**Add a home or community.** Buttons at the top right. New listings need at minimum a
+name, a price and a square footage to look right.
+
+**Delete.** Open the listing, *Delete this listing*, confirm.
+
+**Publish.** Nothing is live until you press **Publish changes**. The site updates about
+a minute later. Photos upload immediately, but they do not appear on the site until you
+publish.
+
+## Things worth knowing
+
+- **Two people editing at once.** If someone else publishes while you have the page
+  open, your publish is refused rather than silently overwriting them. Reload and redo
+  your change — annoying, but it never loses their work.
+- **Everything is reversible.** Every change is a commit. Nothing is ever truly gone;
+  ask for anything to be restored.
+- **Photos are public the moment they upload**, before you publish. Do not upload
+  anything you would not want seen.
+- **Don't put anything private in a listing.** This is a public marketing site — buyer
+  names, phone numbers, and anything about a specific resident do not belong here.
+
+## If something goes wrong
+
+| What you see | What it means |
+| --- | --- |
+| "That token was rejected" | Expired or mistyped. Make a new one. |
+| "That token cannot write to this repository" | Missing **Contents: Read and write**, or the repo was not selected. |
+| "Someone else published while you were editing" | Reload and redo. Their change is safe. |
+| Site looks unchanged after publishing | Give it a minute, then hard-refresh (Ctrl+Shift+R). |
+| "Our listings could not be loaded" on the public site | The data file is broken or missing — this needs a developer. |
