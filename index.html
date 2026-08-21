@@ -58,6 +58,7 @@
           lift: '0 2px 4px rgba(17,24,39,.05), 0 24px 48px -20px rgba(17,24,39,.28)',
         },
         maxWidth: { shell: '1200px' },
+        screens: { nav: '1340px' },
       },
     },
   };
@@ -156,7 +157,7 @@
 
 <!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
 <header class="sticky top-0 z-50 border-b border-ink/10 bg-white/90 backdrop-blur">
-  <div class="mx-auto flex max-w-shell items-center justify-between gap-6 px-5 py-3.5 lg:px-8">
+  <div class="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-5 py-3.5 lg:px-8">
 
     <a href="#top" class="flex shrink-0 items-center gap-3" aria-label="Melao's Real Estate Development — home">
       <span class="grid h-11 w-11 place-items-center rounded-full bg-ink ring-1 ring-gold/40">
@@ -171,21 +172,21 @@
       </span>
     </a>
 
-    <nav aria-label="Primary" class="hidden xl:block">
-      <ul class="flex items-center gap-5 whitespace-nowrap text-[14px] font-medium text-slate7 2xl:gap-7 2xl:text-[15px]">
+    <nav aria-label="Primary" class="hidden nav:block">
+      <ul class="flex items-center gap-5 whitespace-nowrap text-[14px] font-medium text-slate7">
         <li><a class="py-2 transition-colors hover:text-gold" href="#communities">Communities</a></li>
         <li><a class="py-2 transition-colors hover:text-gold" href="#floorplans">Available Floor Plans</a></li>
         <li><a class="py-2 transition-colors hover:text-gold" href="#custom">Custom Builds</a></li>
         <li><a class="py-2 transition-colors hover:text-gold" href="#about">About Us</a></li>
         <li><a class="py-2 transition-colors hover:text-gold" href="#process">Warranty &amp; Process</a></li>
+        <li><a class="py-2 font-semibold text-gold transition-colors hover:text-ink" href="status.html">Resident Portal</a></li>
       </ul>
     </nav>
 
     <div class="flex items-center gap-2">
-      <a href="status.html" class="hidden whitespace-nowrap rounded-md border border-ink/15 px-3.5 py-2.5 text-sm font-semibold text-slate7 transition hover:border-gold hover:text-gold xl:inline-block">Resident Portal</a>
       <a href="#contact" class="hidden whitespace-nowrap rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate7 sm:inline-block">Schedule a Tour</a>
       <button id="navToggle" type="button" aria-expanded="false" aria-controls="mobileDrawer"
-              class="grid h-11 w-11 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-gold hover:text-gold xl:hidden">
+              class="grid h-11 w-11 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-gold hover:text-gold nav:hidden">
         <span class="sr-only">Open navigation menu</span>
         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       </button>
@@ -194,9 +195,9 @@
 </header>
 
 <!-- Mobile drawer -->
-<div id="navScrim" hidden class="fixed inset-0 z-[60] bg-ink/50 backdrop-blur-sm xl:hidden"></div>
+<div id="navScrim" hidden class="fixed inset-0 z-[60] bg-ink/50 backdrop-blur-sm nav:hidden"></div>
 <aside id="mobileDrawer" hidden role="dialog" aria-modal="true" aria-label="Site navigation"
-       class="fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-sm flex-col bg-white shadow-lift xl:hidden">
+       class="fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-sm flex-col bg-white shadow-lift nav:hidden">
   <div class="flex items-center justify-between border-b border-ink/10 px-5 py-4">
     <span class="font-display text-sm font-extrabold uppercase tracking-[.16em] text-ink">Menu</span>
     <button id="navClose" type="button" class="grid h-10 w-10 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-gold hover:text-gold">
@@ -1475,7 +1476,7 @@
     a.addEventListener('click', closeDrawer);
   });
   window.addEventListener('resize', function () {
-    if (window.innerWidth >= 1280 && !drawer.hidden) closeDrawer();
+    if (window.innerWidth >= 1340 && !drawer.hidden) closeDrawer();
   });
 
   /* ────────────────────── Floor plan modal ────────────────────── */

@@ -218,7 +218,8 @@ test.describe('layout', () => {
   // 1024 and 1152 are where the header broke when the Resident Portal button
   // was added: too many items to fit before the nav collapses to the drawer.
   for (const [label, width] of [['mobile', 375], ['tablet', 768], ['small laptop', 1024],
-                                ['laptop', 1152], ['desktop', 1280], ['wide', 1440]]) {
+                                ['laptop', 1152], ['desktop', 1280], ['nav breakpoint', 1340],
+                                ['wide', 1440]]) {
     test(`no horizontal overflow at ${label}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto('/index.html');
@@ -228,7 +229,8 @@ test.describe('layout', () => {
     });
   }
 
-  for (const width of [1024, 1152, 1280, 1440]) {
+  // 1339/1340 straddle the custom breakpoint where the desktop nav appears.
+  for (const width of [1024, 1152, 1280, 1339, 1340, 1440, 1600]) {
     test(`header stays on one line at ${width}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 600 });
       await page.goto('/index.html');
@@ -236,6 +238,17 @@ test.describe('layout', () => {
       expect(h, 'a wrapped header grows past ~80px').toBeLessThan(90);
     });
   }
+
+  test('nav collapses to the drawer below 1340 and expands above it', async ({ page }) => {
+    await page.setViewportSize({ width: 1339, height: 700 });
+    await page.goto('/index.html');
+    await expect(page.locator('nav[aria-label="Primary"]')).toBeHidden();
+    await expect(page.locator('#navToggle')).toBeVisible();
+
+    await page.setViewportSize({ width: 1340, height: 700 });
+    await expect(page.locator('nav[aria-label="Primary"]')).toBeVisible();
+    await expect(page.locator('#navToggle')).toBeHidden();
+  });
 
   test('mobile drawer opens, traps and closes', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });

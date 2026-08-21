@@ -13,7 +13,7 @@ Open the file in a browser and it runs.
 
 | Section | Notes |
 | --- | --- |
-| Header | Brand mark + wordmark, primary nav, "Schedule a Tour" CTA, mobile drawer under 1024px |
+| Header | Brand mark + wordmark, primary nav, "Schedule a Tour" CTA, drawer nav under 1340px |
 | Hero | Headline, subhead, trust stats, and a quick filter bar (city / price / beds) |
 | Communities | Six master-planned neighborhoods with status badges, lot sizes and amenities |
 | Floor plans | **40 homes** across three tabs — 14 single-story, 16 two-story, 10 custom spec |
@@ -22,12 +22,12 @@ Open the file in a browser and it runs.
 | About | Company story, homeowner testimonials, energy and warranty certifications |
 | Contact | Private tour booking form with client-side validation |
 | Site health | Live status panel — runs checks in-browser, shows recent CI runs |
+| Footer | Equal Housing Opportunity, Texas disclosures, sitemap, social links |
 
 Plus `status.html`, the **resident portal**: unit lookup, live 1-2-10 warranty countdowns,
 a seasonal upkeep checklist that persists per unit, service history, and intake for
-maintenance requests, complaints and questions (each routed with its own categories and
-reference prefix).
-| Footer | Equal Housing Opportunity, Texas disclosures, sitemap, social links |
+maintenance requests, complaints and questions — each routed with its own categories and
+reference prefix (MR / CX / QA).
 
 ## Interactivity
 
@@ -126,8 +126,8 @@ page cannot render without:
   plans, closes on Escape and returns focus to the trigger.
 - **Contact form** rejects empty and malformed input with `aria-invalid`, and confirms a
   valid submission.
-- **Layout** never scrolls sideways at 375, 768 or 1280px; the mobile drawer opens and
-  closes.
+- **Layout** never scrolls sideways at seven widths from 375 to 1600, the header never
+  wraps to a second line, and the nav swaps to the drawer at exactly 1340px.
 - **Accessibility floor**: one `h1`, every control labelled, every image has `alt`, and
   every internal anchor resolves to a real element.
 - **Maintenance panel** runs its checks when scrolled into view and reports healthy.
