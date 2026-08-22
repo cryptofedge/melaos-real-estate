@@ -6,6 +6,37 @@ Bookmark it. It is not linked from the public site and search engines are told t
 ignore it, but it is a public URL — the protection is that nothing works without a
 token that can write to the repository.
 
+## Adding your brothers
+
+Each brother needs a GitHub account. There is no way around that with how this is
+built — the website's storage *is* GitHub, and it only knows how to recognise GitHub
+accounts. Inviting by email does not skip it; it just makes the signup easy.
+
+Signing up is free and takes about two minutes: an email address, a username, a
+password. They never have to understand GitHub or use it for anything else. After the
+one-time setup they only ever open the admin page.
+
+**Send the invite** (Melao does this once per brother):
+
+1. Go to
+   **github.com/cryptofedge/melaos-real-estate/settings/access**
+2. Click **Add people**
+3. Type his **email address** and send it
+
+**He accepts:**
+
+4. He gets an email from GitHub. He clicks the link.
+5. If he has no account, GitHub walks him through making one — email, username,
+   password, confirm the email. Then it returns him to the invitation.
+6. He clicks **Accept invitation**.
+
+**Then he makes his token** using the steps below, and he is done forever.
+
+If you would rather your brothers never see GitHub at all, that is possible, but it
+needs a small server behind the website with its own email-and-password logins. That
+is a different setup from the one we built — worth doing if GitHub signup turns out to
+be a real obstacle for them, not worth doing pre-emptively.
+
 ## First time: get your token (about two minutes)
 
 Each brother makes his own. Never share one — the commit history records who changed
