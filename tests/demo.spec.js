@@ -58,6 +58,7 @@ test.describe('the demo is fully usable', () => {
 
   test('a home can be edited and the change shows', async ({ page }) => {
     await page.locator('[data-edit="demo-1"]').click();
+    await expect(page.locator('#dialog')).toBeVisible();
     await expect(page.locator('#dlgTitle')).toHaveText('14 Sample Oak Lane');
     await page.fill('#f-rent', '1975');
     await page.locator('#dlgSave').click();
@@ -66,6 +67,7 @@ test.describe('the demo is fully usable', () => {
 
   test('a home can be added', async ({ page }) => {
     await page.locator('#addHome').click();
+    await expect(page.locator('#dialog')).toBeVisible();
     await page.fill('#f-title', '99 New Street');
     await page.fill('#f-rent', '1700');
     await page.locator('#dlgSave').click();
@@ -91,6 +93,7 @@ test.describe('the demo cannot change anything real', () => {
   test('publishing explains itself instead of committing', async ({ page }) => {
     const calls = await forbidGitHub(page);
     await page.locator('[data-edit="demo-1"]').click();
+    await expect(page.locator('#dialog')).toBeVisible();
     await page.fill('#f-rent', '1');
     await page.locator('#dlgSave').click();
     await page.locator('#publish').click();

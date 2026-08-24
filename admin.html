@@ -137,7 +137,11 @@
      its own content, so on a narrow screen the form grows past the box and
      covers the footer, putting the Done button out of reach. */
   .dialog form { flex:1; min-height:0; overflow-y:auto; padding:1.25rem 1.5rem; }
-  .dialog .dfoot { flex-shrink:0; }
+  /* The footer holds Done and Cancel. Even if the form above it ever overflows,
+     the footer must stay on top and clickable — a Done button you cannot press
+     is the difference between saving your work and losing it. */
+  .dialog .dfoot { flex-shrink:0; position:relative; z-index:2; background:var(--cloud); }
+  .dialog .dhead { flex-shrink:0; position:relative; z-index:2; background:#fff; }
   .icon-btn { display:grid; place-items:center; width:40px; height:40px; border-radius:.375rem;
               border:1px solid var(--line); background:#fff; cursor:pointer; color:var(--ink); }
   .icon-btn:hover { border-color:var(--gold); color:var(--bronze); }
