@@ -18,6 +18,7 @@ test.describe('opening the demo', () => {
     const calls = await forbidGitHub(page);
     await page.goto('/admin.html?demo=1');
     await expect(page.locator('#editor')).toBeVisible();
+    await expect(page.locator('#panel-homes article')).toHaveCount(3);
     await expect(page.locator('#signIn')).toBeHidden();
     await expect(page.locator('#demoBanner')).toBeVisible();
     expect(calls, 'the demo must not call GitHub').toEqual([]);
@@ -52,6 +53,7 @@ test.describe('the demo is fully usable', () => {
     await forbidGitHub(page);
     await page.goto('/admin.html?demo=1');
     await expect(page.locator('#editor')).toBeVisible();
+    await expect(page.locator('#panel-homes article')).toHaveCount(3);
   });
 
   test('a home can be edited and the change shows', async ({ page }) => {
@@ -83,6 +85,7 @@ test.describe('the demo cannot change anything real', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/admin.html?demo=1');
     await expect(page.locator('#editor')).toBeVisible();
+    await expect(page.locator('#panel-homes article')).toHaveCount(3);
   });
 
   test('publishing explains itself instead of committing', async ({ page }) => {
