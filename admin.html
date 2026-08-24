@@ -124,10 +124,14 @@
   .dialog { position:fixed; inset:0; z-index:50; display:flex; align-items:flex-end;
             justify-content:center; padding:0; }
   @media (min-width:640px){ .dialog { align-items:center; padding:1.5rem; } }
-  .dialog .box { background:#fff; width:100%; max-width:42rem; max-height:92vh;
+  /* On a phone this is a full-screen sheet, not a floating card. A fixed height
+     means the middle scrolls and the footer cannot be pushed anywhere. */
+  .dialog .box { background:#fff; width:100%; height:100%; max-width:42rem;
                  display:flex; flex-direction:column; overflow:hidden;
-                 border-radius:1rem 1rem 0 0; box-shadow:0 25px 50px -12px rgba(0,0,0,.35); }
-  @media (min-width:640px){ .dialog .box { border-radius:1rem; } }
+                 border-radius:0; box-shadow:0 25px 50px -12px rgba(0,0,0,.35); }
+  @media (min-width:640px){
+    .dialog .box { height:auto; max-height:92vh; border-radius:1rem; }
+  }
   .dialog .dhead, .dialog .dfoot { display:flex; align-items:center; gap:1rem;
                                    padding:1rem 1.5rem; }
   .dialog .dhead { border-bottom:1px solid var(--line); justify-content:space-between; }
