@@ -257,12 +257,32 @@
             data-panel="homes" class="tab">Homes <span style="font-weight:400; opacity:.7">(0)</span></button>
     <button role="tab" id="tab-communities" aria-controls="panel-communities" aria-selected="false"
             tabindex="-1" data-panel="communities" class="tab">Areas <span style="font-weight:400; opacity:.7">(0)</span></button>
+    <button role="tab" id="tab-tickets" aria-controls="panel-tickets" aria-selected="false"
+            tabindex="-1" data-panel="tickets" class="tab">Tenant requests <span style="font-weight:400; opacity:.7">(0)</span></button>
     <button role="tab" id="tab-promos" aria-controls="panel-promos" aria-selected="false"
             tabindex="-1" data-panel="promos" class="tab">Promotions <span style="font-weight:400; opacity:.7">(0)</span></button>
   </div>
 
   <div id="panel-homes" role="tabpanel" aria-labelledby="tab-homes" class="grid"></div>
   <div id="panel-communities" role="tabpanel" aria-labelledby="tab-communities" hidden class="grid"></div>
+
+  <div id="panel-tickets" role="tabpanel" aria-labelledby="tab-tickets" hidden>
+    <div class="head" style="margin-top:1.5rem">
+      <div>
+        <h2 style="font-size:1.1rem">Maintenance and complaints</h2>
+        <p class="tiny muted" style="margin:.25rem 0 0">
+          What current tenants have reported. Open ones first.
+        </p>
+      </div>
+      <div class="actions">
+        <label class="check" style="align-items:center">
+          <input id="showClosed" type="checkbox" /> <span class="small">Show closed</span>
+        </label>
+        <button id="addTicket" type="button" class="btn">Log a request</button>
+      </div>
+    </div>
+    <div id="ticketList"></div>
+  </div>
 
   <div id="panel-promos" role="tabpanel" aria-labelledby="tab-promos" hidden>
     <section class="panel" style="margin-top:1.5rem">
@@ -321,6 +341,7 @@
   const BRANCH = 'main';
   const DATA   = 'data/properties.json';
   const PROMOS = 'data/promotions.json';
+  const TICKETS = 'data/tickets.json';
   const API    = 'https://api.github.com';
   const KEY    = 'melaos.admin.token';
 
@@ -331,6 +352,7 @@
 
   let token = '', data = null, sha = null, dirty = false, editing = null;
   let promos = null, promoSha = null;
+  let tickets = null, ticketSha = null;
   let demo = false;
 
   /* Sample portfolio for showing the tool to someone without a token. Kept
@@ -345,7 +367,7 @@
         ],
         homes: [
           { id: 'demo-1', title: '14 Sample Oak Lane', listingType: 'rent', availability: 'available',
-            city: 'houston', area: 'Katy', rent: 1850, price: 0, beds: 3, baths: 2, sqft: 1642,
+            city: 'houston', area: 'Katy', rent: 1850, rentYear: 20400, price: 0, beds: 3, baths: 2, sqft: 1642,
             availableFrom: '', description: 'Fenced yard, two-car garage, new AC.', photos: [] },
           { id: 'demo-2', title: '22 Example Ridge Drive', listingType: 'rent', availability: 'occupied',
             city: 'austin', area: 'Round Rock', rent: 2100, price: 0, beds: 4, baths: 2, sqft: 2080,
@@ -353,6 +375,21 @@
           { id: 'demo-3', title: '8 Demo Creek Court', listingType: 'rent', availability: 'available',
             city: 'dfw', area: 'Mansfield', rent: 1650, price: 0, beds: 2, baths: 1, sqft: 1180,
             availableFrom: '', description: 'Single story, pets considered.', photos: [] },
+        ],
+      },
+      tickets: {
+        tickets: [
+          { id: 'demo-t1', tenant: 'María G.', unit: '22 Example Ridge Drive',
+            contact: '555-0100', kind: 'maintenance', category: 'Plumbing',
+            urgency: 'urgent', status: 'open',
+            detail: 'Water leaking under the kitchen sink since last night.',
+            notes: '', created: new Date(Date.now() - 36e5).toISOString() },
+          { id: 'demo-t2', tenant: 'Luis R.', unit: '14 Sample Oak Lane',
+            contact: 'luis@example.com', kind: 'complaint', category: 'Missed appointment',
+            urgency: 'routine', status: 'in progress',
+            detail: 'Technician did not arrive in the booked window.',
+            notes: 'Called back, rebooked for Thursday.',
+            created: new Date(Date.now() - 3 * 864e5).toISOString() },
         ],
       },
       promotions: {
@@ -370,7 +407,8 @@
     demo = true;
     data = seed.properties;
     promos = seed.promotions;
-    sha = null; promoSha = null;
+    tickets = seed.tickets;
+    sha = null; promoSha = null; ticketSha = null;
     dirty = false; pending = {};
     $('signIn').hidden = true;
     $('editor').hidden = false;
@@ -497,11 +535,22 @@
       promos.campaigns = promos.campaigns || [];
       promos.profiles = promos.profiles || {};
 
+      try {
+        const tf = await gh('/repos/' + REPO + '/contents/' + TICKETS + '?ref=' + BRANCH);
+        ticketSha = tf.sha;
+        tickets = JSON.parse(fromB64(tf.content));
+      } catch (e) {
+        tickets = { tickets: [] };
+        ticketSha = null;
+      }
+      tickets.tickets = tickets.tickets || [];
+
       dirty = false;
       pending = {};
       render();
-      log('Loaded ' + data.homes.length + ' homes, ' + data.neighborhoods.length +
-          ' areas and ' + promos.campaigns.length + ' campaigns.');
+      const openCount = tickets.tickets.filter(function (x) { return x.status !== 'closed'; }).length;
+      log('Loaded ' + data.homes.length + ' homes, ' + data.neighborhoods.length + ' areas, ' +
+          openCount + ' open tenant request' + (openCount === 1 ? '' : 's') + '.');
     } catch (ex) {
       log('Could not load properties: ' + ex.message, 'bad');
     }
@@ -562,6 +611,55 @@
       '</div></article>';
   }
 
+  function ticketRow(tk) {
+    const tone = tk.status === 'closed' ? '#047857' : tk.status === 'in progress' ? '#B45309' : '#9A3412';
+    const urgent = tk.urgency === 'urgent';
+    return '<article class="panel" style="margin-top:1rem; border-left:4px solid ' + tone + '">' +
+      '<div style="display:flex; flex-wrap:wrap; gap:.75rem; align-items:baseline; justify-content:space-between">' +
+        '<div>' +
+          '<h3 style="font-size:1rem">' + esc(tk.tenant || 'Tenant') +
+            ' <span class="tiny muted" style="font-weight:400">' + esc(tk.unit || '') + '</span></h3>' +
+          '<p class="tiny muted" style="margin:.25rem 0 0">' +
+            esc(tk.kind || 'maintenance') + ' &middot; ' + esc(tk.category || '') +
+            (urgent ? ' &middot; <strong style="color:#9A3412">URGENT</strong>' : '') +
+            (tk.created ? ' &middot; ' + new Date(tk.created).toLocaleDateString() : '') +
+          '</p>' +
+        '</div>' +
+        '<span class="badge" style="position:static; background:' + tone + '; color:#fff; box-shadow:none">' +
+          esc(tk.status || 'open') + '</span>' +
+      '</div>' +
+      '<p class="small" style="margin:.75rem 0 0">' + esc(tk.detail || '') + '</p>' +
+      (tk.notes ? '<p class="tiny muted" style="margin:.5rem 0 0"><strong>Notes:</strong> ' + esc(tk.notes) + '</p>' : '') +
+      '<div style="margin-top:.75rem; display:flex; gap:.5rem; flex-wrap:wrap">' +
+        '<button type="button" data-edit="' + esc(tk.id) + '" data-kind="ticket" class="btn">Open</button>' +
+        (tk.status !== 'closed'
+          ? '<button type="button" data-close-ticket="' + esc(tk.id) + '" class="btn">Mark done</button>'
+          : '') +
+        (tk.contact ? '<a class="btn" href="' + (/@/.test(tk.contact) ? 'mailto:' : 'tel:') + esc(tk.contact) + '">Contact</a>' : '') +
+      '</div></article>';
+  }
+
+  function renderTickets() {
+    const showClosed = $('showClosed') && $('showClosed').checked;
+    const rows = tickets.tickets
+      .slice()
+      .filter(function (tk) { return showClosed || tk.status !== 'closed'; })
+      // Urgent first, then newest.
+      .sort(function (a, b) {
+        const rank = function (x) { return x.urgency === 'urgent' ? 0 : x.urgency === 'priority' ? 1 : 2; };
+        if (rank(a) !== rank(b)) return rank(a) - rank(b);
+        return String(b.created || '').localeCompare(String(a.created || ''));
+      });
+
+    $('ticketList').innerHTML = rows.length
+      ? rows.map(ticketRow).join('')
+      : '<p class="panel small muted" style="margin-top:1rem">Nothing outstanding. ' +
+        'Tenant reports arrive here from the tenant portal and the bot.</p>';
+
+    const open = tickets.tickets.filter(function (x) { return x.status !== 'closed'; }).length;
+    $('tab-tickets').querySelector('span').textContent = '(' + open + ')';
+  }
+
   function render() {
     $('panel-homes').innerHTML = data.homes.map(function (h) { return card(h, 'home'); }).join('');
     $('panel-communities').innerHTML = data.neighborhoods.map(function (a) { return card(a, 'area'); }).join('');
@@ -569,6 +667,7 @@
     $('tab-homes').querySelector('span').textContent = '(' + data.homes.length + ')';
     $('tab-communities').querySelector('span').textContent = '(' + data.neighborhoods.length + ')';
     $('tab-promos').querySelector('span').textContent = '(' + promos.campaigns.length + ')';
+    renderTickets();
 
     ['facebook', 'instagram', 'tiktok', 'googleBusiness'].forEach(function (k) {
       const el = $('p' + k.charAt(0).toUpperCase() + k.slice(1).replace('Business', ''));
@@ -607,6 +706,7 @@
       ['city', 'City', 'select', ['austin', 'dfw', 'houston', 'sanantonio']],
       ['area', 'Neighborhood', 'text'],
       ['rent', 'Monthly rent (dollars)', 'number'],
+      ['rentYear', 'Yearly rent (dollars, optional)', 'number'],
       ['price', 'Sale price (only if for sale)', 'number'],
       ['beds', 'Bedrooms', 'number'],
       ['baths', 'Bathrooms', 'number'],
@@ -619,6 +719,17 @@
       ['city', 'City', 'select', ['austin', 'dfw', 'houston', 'sanantonio']],
       ['note', 'Note', 'textarea'],
     ],
+    ticket: [
+      ['tenant', 'Tenant name', 'text'],
+      ['unit', 'Home / address', 'text'],
+      ['contact', 'Phone or email', 'text'],
+      ['kind', 'Type', 'select', ['maintenance', 'complaint', 'question']],
+      ['category', 'Category', 'text'],
+      ['urgency', 'Urgency', 'select', ['routine', 'priority', 'urgent']],
+      ['status', 'Status', 'select', ['open', 'in progress', 'closed']],
+      ['detail', 'What was reported', 'textarea'],
+      ['notes', 'Internal notes', 'textarea'],
+    ],
     campaign: [
       ['platform', 'Platform', 'select', ['meta', 'google', 'tiktok']],
       ['dailyBudget', 'Budget per day (dollars)', 'number'],
@@ -630,8 +741,9 @@
 
   function openDialog(kind, item) {
     editing = { kind: kind, item: item };
-    $('dlgTitle').textContent = item.title || item.name ||
-      (kind === 'home' ? 'New home' : kind === 'area' ? 'New area' : 'New campaign');
+    $('dlgTitle').textContent = item.title || item.name || item.tenant ||
+      (kind === 'home' ? 'New home' : kind === 'area' ? 'New area'
+        : kind === 'ticket' ? 'Log a tenant request' : 'New campaign');
 
     const rows = FIELDS[kind].map(function (f) {
       const key = f[0], label = f[1], type = f[2], options = f[3];
@@ -662,7 +774,8 @@
         '</figure>';
     }).join('');
 
-    $('dlgForm').innerHTML = rows +
+    const showPhotos = kind === 'home' || kind === 'area';
+    $('dlgForm').innerHTML = rows + (!showPhotos ? '' :
       '<div style="border-top:1px solid var(--line); padding-top:1.25rem; margin-top:.5rem">' +
         '<p class="lbl">Photos</p>' +
         '<div id="photoGrid" class="photos">' + photos + '</div>' +
@@ -674,9 +787,9 @@
           'phone or laptop, then uploaded when you press Publish. Nothing leaves this device until then. ' +
           'The first photo is the one shown on the card.</p>' +
         '<p id="photoLog" role="status" aria-live="polite" class="small muted" style="margin-top:.5rem"></p>' +
-      '</div>';
+      '</div>');
 
-    $('photoInput').addEventListener('change', onPhotos);
+    if ($('photoInput')) $('photoInput').addEventListener('change', onPhotos);
     $('dlgForm').querySelectorAll('[data-drop]').forEach(function (b) {
       b.addEventListener('click', function () {
         const removed = item.photos.splice(Number(b.dataset.drop), 1)[0];
@@ -720,7 +833,7 @@
       else item[key] = el.value.trim();
     });
     if (!item.id) {
-      const label = item.title || item.name || item.platform || 'untitled';
+      const label = item.title || item.name || item.tenant || item.platform || 'untitled';
       item.id = String(label).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
         + '-' + Math.random().toString(36).slice(2, 6);
       listFor(kind).push(item);
@@ -734,6 +847,7 @@
   function listFor(kind) {
     return kind === 'home' ? data.homes
       : kind === 'area' ? data.neighborhoods
+      : kind === 'ticket' ? tickets.tickets
       : promos.campaigns;
   }
 
@@ -771,6 +885,26 @@
   $('addCommunity').addEventListener('click', function () {
     openDialog('area', { name: '', city: 'austin', note: '' });
   });
+  $('addTicket').addEventListener('click', function () {
+    openDialog('ticket', { tenant: '', unit: '', contact: '', kind: 'maintenance',
+      category: '', urgency: 'routine', status: 'open', detail: '', notes: '',
+      created: new Date().toISOString() });
+  });
+
+  $('showClosed').addEventListener('change', renderTickets);
+
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-close-ticket]');
+    if (!btn) return;
+    const tk = tickets.tickets.filter(function (x) { return x.id === btn.dataset.closeTicket; })[0];
+    if (!tk) return;
+    tk.status = 'closed';
+    tk.closed = new Date().toISOString();
+    dirty = true;
+    render();
+    log('Marked done. Press "Publish changes" to save it.');
+  });
+
   $('addCampaign').addEventListener('click', function () {
     openDialog('campaign', { platform: 'meta', dailyBudget: 20, days: 7, message: '', status: 'draft' });
   });

@@ -367,6 +367,8 @@
     // Where submissions are POSTed as JSON. Leave empty and the form falls back
     // to opening the resident's email client with everything filled in, so
     // nothing is lost while the backend is being built.
+    // The bot's /api/ticket endpoint, e.g. https://melaos-bot.onrender.com/api/ticket
+    // Empty falls back to the resident's own email client.
     endpoint: '',
 
     // Used for the email fallback, and shown as the contact address.
@@ -701,14 +703,17 @@
     const ref = prefix + '-' + new Date().getFullYear() + '-' +
       String(Math.floor(Math.random() * 9000) + 1000);
 
+    // Shape matches the bot's /api/ticket handler, so a report lands straight
+    // in the backend's "Tenant requests" tab and pings the owner on WhatsApp.
     const payload = {
       reference: ref,
-      type: type,
+      kind: type === 'Complaint' ? 'complaint' : type === 'Question' ? 'question' : 'maintenance',
       name: name.value.trim(),
       email: email.value.trim(),
       unit: unit.value.trim(),
       category: cat.value,
-      urgency: $('rUrgency').value,
+      urgency: /Urgent/i.test($('rUrgency').value) ? 'urgent'
+        : /Priority/i.test($('rUrgency').value) ? 'priority' : 'routine',
       detail: detail.value.trim(),
       mayEnter: $('rAccess').checked,
       submitted: new Date().toISOString(),

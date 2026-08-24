@@ -50,6 +50,10 @@ const HELP = [
   'AREAS',
   '• *area add Katy, houston*',
   '',
+  'TENANTS',
+  '• *tickets* — repairs and complaints waiting',
+  '• *done 2* — mark one finished',
+  '',
   'ADVERTISING',
   '• *promo* — what is running',
   '• *campaign meta 20 7 Nice 3 bed in Katy* — $20/day for 7 days',
@@ -93,6 +97,9 @@ export async function handle({ cfg, store, sessions, ads }, msg) {
 
   switch (verb) {
     case 'status':   return statusReply(cfg, ads);
+    case 'tickets':
+    case 'reports':  return listTickets(store, cfg, rest[0]);
+    case 'done':     return closeTicket(store, cfg, args[0]);
     case 'list':     return listHomes(store, cfg, rest[0]);
     case 'add':      return startAdd(sessions, from);
     case 'rent':     return setField(store, cfg, args[0], 'rent', parseMoney(args.slice(1).join(' ')), money);
@@ -432,6 +439,50 @@ async function campaignCommand({ cfg, store, ads }, args) {
     '',
     'Add the keys on the setup page and I will be able to launch it for you.',
   ].join('\n');
+}
+
+/* ─────────────────────── Tenant reports ─────────────────────── */
+
+const TICKETS = 'data/tickets.json';
+
+async function listTickets(store, cfg, which) {
+  const { data } = await store.readJson(cfg, TICKETS);
+  const all = data.tickets || [];
+  const list = which === 'all' ? all : all.filter((t) => t.status !== 'closed');
+
+  if (!list.length) return which === 'all' ? 'No reports at all yet.' : 'Nothing outstanding. All quiet.';
+
+  const rank = (t) => (t.urgency === 'urgent' ? 0 : t.urgency === 'priority' ? 1 : 2);
+  const sorted = list.slice().sort((a, b) => rank(a) - rank(b) ||
+    String(b.created || '').localeCompare(String(a.created || '')));
+
+  return `*Tenant reports* (${list.length})
+
+` + sorted.map((t) => {
+    const n = all.indexOf(t) + 1;
+    const mark = t.urgency === 'urgent' ? '🚨 ' : '';
+    return `${n}. ${mark}*${t.tenant}* — ${t.unit || '—'}
+` +
+      `   ${t.kind} · ${t.category || '—'} · ${t.status}
+` +
+      `   ${String(t.detail || '').slice(0, 120)}`;
+  }).join('\n\n') + '\n\nSend *done 2* to close one.';
+}
+
+async function closeTicket(store, cfg, ref) {
+  let who = '';
+  const result = await store.update(cfg, TICKETS, (data) => {
+    const list = data.tickets || [];
+    const i = Number(ref) - 1;
+    if (!list[i]) return false;
+    list[i].status = 'closed';
+    list[i].closed = new Date().toISOString();
+    who = list[i].tenant;
+    return data;
+  }, 'Close a tenant report from WhatsApp');
+
+  if (!result) return 'I could not find that report. Send *tickets* to see the numbers.';
+  return `Closed the report from *${who}*.`;
 }
 
 /* ─────────────────────────── Status ─────────────────────────── */

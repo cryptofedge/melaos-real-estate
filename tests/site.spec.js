@@ -30,8 +30,8 @@ test.describe('with no listings yet', () => {
 
   test('invites contact instead of showing an empty page', async ({ page }) => {
     await expect(page.locator('#emptyState')).toBeVisible();
-    await expect(page.locator('#emptyState')).toContainText(/message us/i);
-    await expect(page.locator('#filterStatus')).toContainText(/No homes listed/i);
+    await expect(page.locator('#emptyState')).toContainText(/escríbanos/i);
+    await expect(page.locator('#filterStatus')).toContainText(/no hay casas publicadas/i);
   });
 
   test('the empty state still offers WhatsApp', async ({ page }) => {
@@ -52,7 +52,7 @@ test.describe('with listings', () => {
 
     await page.locator('#tab-occupied').click();
     await expect(page.locator('#panel-occupied .home')).toHaveCount(1);
-    await expect(page.locator('#panel-occupied')).toContainText('Rented');
+    await expect(page.locator('#panel-occupied')).toContainText('Rentada');
   });
 
   test('the for-sale tab stays hidden while selling is off', async ({ page }) => {
@@ -83,7 +83,7 @@ test.describe('with listings', () => {
     await page.locator('[data-home="a1"]').click();
     await expect(page.locator('#planModal')).toBeVisible();
     await expect(page.locator('#planTitle')).toHaveText('1428 Cypress Grove Ln');
-    await expect(page.locator('#planStats')).toContainText('$1,850/mo');
+    await expect(page.locator('#planStats')).toContainText('$1,850/mes');
     const href = decodeURIComponent(await page.locator('#planWhatsApp').getAttribute('href'));
     expect(href).toContain('1428 Cypress Grove Ln');
   });
@@ -132,7 +132,7 @@ test.describe('enquiry form', () => {
 
   test('needs a name, phone, city and consent', async ({ page }) => {
     await page.locator('#tourForm button[type="submit"]').click();
-    await expect(page.locator('#formStatus')).toContainText(/check the highlighted/i);
+    await expect(page.locator('#formStatus')).toContainText(/Revise los campos/i);
     await expect(page.locator('#cName')).toBeFocused();
   });
 
@@ -142,7 +142,7 @@ test.describe('enquiry form', () => {
     await page.selectOption('#cLocation', 'Houston');
     await page.check('#cConsent');
     await page.locator('#tourForm button[type="submit"]').click();
-    await expect(page.locator('#formStatus')).toContainText(/Thanks Jordan/);
+    await expect(page.locator('#formStatus')).toContainText(/Gracias Jordan/);
     await expect(page.locator('#formStatus a[href*="wa.me"]')).toBeVisible();
   });
 
@@ -176,7 +176,7 @@ test.describe('page health', () => {
   test('says so if listings cannot be loaded', async ({ page }) => {
     await page.route('**/data/properties.json', r => r.abort());
     await page.goto('/index.html');
-    await expect(page.locator('#filterStatus')).toContainText(/could not be loaded/i);
+    await expect(page.locator('#filterStatus')).toContainText(/No se pudieron cargar/i);
   });
 
   for (const [label, width] of [['mobile', 375], ['tablet', 768], ['laptop', 1152],
@@ -209,5 +209,79 @@ test.describe('page health', () => {
       [...document.querySelectorAll('a[href^="#"]')].map(a => a.getAttribute('href'))
         .filter(h => h !== '#' && !document.querySelector(h)));
     expect(broken).toEqual([]);
+  });
+});
+
+test.describe('language', () => {
+  test.beforeEach(async ({ page }) => { await serve(page, SAMPLE); await page.goto('/index.html'); });
+
+  test('Spanish is what a first-time visitor gets', async ({ page }) => {
+    await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+    await expect(page.locator('h1')).toContainText('¿Busca una casa para rentar?');
+    await expect(page.locator('[data-lang-toggle]').first()).toHaveText('English');
+  });
+
+  test('the toggle switches the whole page, including cards', async ({ page }) => {
+    await page.locator('[data-lang-toggle]').first().click();
+
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page.locator('h1')).toContainText('Looking for a house to rent?');
+    await expect(page.locator('#panel-available')).toContainText('/mo');
+    await expect(page.locator('#panel-available')).toContainText('Available');
+    await expect(page.locator('#filterStatus')).toContainText(/Showing all/);
+    await expect(page.locator('[data-lang-toggle]').first()).toHaveText('Español');
+  });
+
+  test('it switches back', async ({ page }) => {
+    const toggle = page.locator('[data-lang-toggle]').first();
+    await toggle.click();
+    await toggle.click();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+    await expect(page.locator('h1')).toContainText('¿Busca');
+  });
+
+  test('the choice is remembered', async ({ page }) => {
+    await page.locator('[data-lang-toggle]').first().click();
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page.locator('h1')).toContainText('Looking for');
+  });
+
+  test('form errors follow the language', async ({ page }) => {
+    await page.locator('[data-lang-toggle]').first().click();
+    await page.locator('#tourForm button[type="submit"]').click();
+    await expect(page.locator('#formStatus')).toContainText(/check the highlighted/i);
+    await expect(page.locator('#cNameErr')).toContainText(/enter your name/i);
+  });
+});
+
+test.describe('rent by month and by year', () => {
+  const withYear = {
+    publish: { rent: true },
+    neighborhoods: [],
+    homes: [Object.assign({}, SAMPLE.homes[0], { rent: 1850, rentYear: 20400 })],
+  };
+
+  test('shows the yearly price beside the monthly one', async ({ page }) => {
+    await serve(page, withYear);
+    await page.goto('/index.html');
+    await expect(page.locator('#panel-available .home')).toContainText('$1,850');
+    await expect(page.locator('#panel-available .home')).toContainText('$20,400');
+  });
+
+  test('the detail view lists both', async ({ page }) => {
+    await serve(page, withYear);
+    await page.goto('/index.html');
+    await page.locator('[data-home="a1"]').click();
+    await expect(page.locator('#planStats')).toContainText('$1,850/mes');
+    await expect(page.locator('#planStats')).toContainText('$20,400');
+  });
+
+  test('a home without a yearly price shows only the monthly one', async ({ page }) => {
+    await serve(page, SAMPLE);
+    await page.goto('/index.html');
+    const card = page.locator('#panel-available .home');
+    await expect(card).toContainText('$1,850');
+    await expect(card).not.toContainText('/año');
   });
 });

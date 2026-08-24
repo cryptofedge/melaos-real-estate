@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="es" class="scroll-smooth">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Melao's Real Estate Development — Homes for Rent in Texas</title>
-<meta name="description" content="Well-kept houses for rent across Austin, Dallas-Fort Worth, Houston and San Antonio. Straight answers, fair terms, and repairs that actually get done." />
+<title>Melao's Real Estate Development — Casas en Renta en Texas</title>
+<meta name="description" content="Casas en renta bien cuidadas en Austin, Dallas-Fort Worth, Houston y San Antonio. Precios claros, sin cobros sorpresa, y reparaciones que sí se hacen." />
 <meta name="theme-color" content="#F7F4EE" />
 <link rel="icon" href="assets/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="assets/favicon.png" />
@@ -12,18 +12,19 @@
 <meta property="og:site_name" content="Melao's Real Estate Development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://cryptofedge.github.io/melaos-real-estate/" />
-<meta property="og:title" content="Homes for Rent — Melao's Real Estate Development" />
-<meta property="og:description" content="Well-kept houses for rent across Austin, Dallas-Fort Worth, Houston and San Antonio." />
+<meta property="og:title" content="Casas en Renta — Melao's Real Estate Development" />
+<meta property="og:description" content="Casas en renta bien cuidadas en Austin, Dallas–Fort Worth, Houston y San Antonio." />
 <meta property="og:image" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-card.png" />
 <meta property="og:image:secure_url" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-card.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Melao's Real Estate Development — homes for rent in Texas" />
-<meta property="og:locale" content="en_US" />
+<meta property="og:image:alt" content="Melao's Real Estate Development — casas en renta en Texas" />
+<meta property="og:locale" content="es_US" />
+<meta property="og:locale:alternate" content="en_US" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Homes for Rent — Melao's Real Estate Development" />
-<meta name="twitter:description" content="Well-kept houses for rent across Texas." />
+<meta name="twitter:title" content="Casas en Renta — Melao's Real Estate Development" />
+<meta name="twitter:description" content="Casas en renta bien cuidadas por todo Texas." />
 <meta name="twitter:image" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-card.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,16 +36,8 @@
     theme: {
       extend: {
         colors: {
-          // Warmer and plainer than the original: paper instead of stark white,
-          // ink for text, and gold kept for small accents only.
-          paper:  '#F7F4EE',
-          cream:  '#FFFDF9',
-          ink:    '#1C1917',
-          slate7: '#44403C',
-          gold:   '#C5A059',
-          bronze: '#7A6234',
-          leaf:   '#2F6F4E',
-          brick:  '#9A3412',
+          paper:  '#F7F4EE', cream: '#FFFDF9', ink: '#1C1917', slate7: '#44403C',
+          gold:   '#C5A059', bronze: '#7A6234', leaf: '#2F6F4E', brick: '#9A3412',
           line:   '#E7E1D6',
         },
         fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
@@ -59,7 +52,6 @@
   :focus-visible { outline: 2px solid #7A6234; outline-offset: 2px; border-radius: 4px; }
   [hidden] { display: none !important; }
   .no-scroll { overflow: hidden; }
-  /* Photo placeholder while a listing has no picture yet. */
   .ph { background: linear-gradient(160deg, #EFE9DE 0%, #E5DCCC 100%); }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -69,9 +61,8 @@
 </head>
 <body id="top" class="bg-paper font-sans text-ink antialiased">
 
-<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white">Skip to main content</a>
+<a href="#main" data-i18n="skip" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white">Ir al contenido</a>
 
-<!-- ═══════════════════════ SVG SPRITE ═══════════════════════ -->
 <svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="gilt" x1="0" y1="0" x2=".85" y2="1">
@@ -104,11 +95,11 @@
   </defs>
 </svg>
 
-<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<!-- ═══════════════════════ ENCABEZADO ═══════════════════════ -->
 <header class="sticky top-0 z-50 border-b border-line bg-cream/95 backdrop-blur">
-  <div class="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-5 py-3.5 lg:px-8">
+  <div class="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-3.5 lg:px-8">
 
-    <a href="#top" class="flex shrink-0 items-center gap-3" aria-label="Melao's Real Estate Development — home">
+    <a href="#top" class="flex shrink-0 items-center gap-3" aria-label="Melao's Real Estate Development">
       <span class="grid h-11 w-11 place-items-center rounded-full bg-ink">
         <img src="assets/logo.svg" alt="" class="h-6 w-6 object-contain"
              onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
@@ -116,28 +107,28 @@
       </span>
       <span class="leading-tight">
         <span class="block text-[15px] font-bold tracking-tight">MELAO&rsquo;S</span>
-        <span class="block text-[10px] font-semibold uppercase tracking-[.14em] text-bronze">Homes for Rent</span>
+        <span data-i18n="brand.tagline" class="block text-[10px] font-semibold uppercase tracking-[.14em] text-bronze">Casas en Renta</span>
       </span>
     </a>
 
-    <nav aria-label="Primary" class="hidden nav:block">
-      <ul class="flex items-center gap-6 whitespace-nowrap text-[15px] font-medium text-slate7">
-        <li><a class="py-2 hover:text-bronze" href="#homes">Homes for Rent</a></li>
-        <li><a class="py-2 hover:text-bronze" href="#areas">Where We Rent</a></li>
-        <li><a class="py-2 hover:text-bronze" href="#how">How It Works</a></li>
-        <li><a class="py-2 hover:text-bronze" href="#about">About Us</a></li>
-        <li><a class="py-2 font-semibold text-bronze hover:text-ink" href="status.html">Current Tenants</a></li>
+    <nav aria-label="Principal" class="hidden nav:block">
+      <ul class="flex items-center gap-5 whitespace-nowrap text-[15px] font-medium text-slate7">
+        <li><a class="py-2 hover:text-bronze" href="#homes" data-i18n="nav.homes">Casas en Renta</a></li>
+        <li><a class="py-2 hover:text-bronze" href="#areas" data-i18n="nav.areas">Dónde Rentamos</a></li>
+        <li><a class="py-2 hover:text-bronze" href="#how" data-i18n="nav.how">Cómo Funciona</a></li>
+        <li><a class="py-2 hover:text-bronze" href="#about" data-i18n="nav.about">Nosotros</a></li>
+        <li><a class="py-2 font-semibold text-bronze hover:text-ink" href="status.html" data-i18n="nav.tenants">Inquilinos</a></li>
       </ul>
     </nav>
 
     <div class="flex items-center gap-2">
-      <a id="waHeader" href="#" class="hidden items-center gap-2 whitespace-nowrap rounded-lg bg-leaf px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-leaf/90 sm:inline-flex">
-        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
-        WhatsApp us
-      </a>
+      <button type="button" data-lang-toggle
+              class="rounded-lg border border-line px-3 py-2.5 text-sm font-semibold text-slate7 transition hover:border-bronze hover:text-bronze">English</button>
+      <a id="waHeader" href="#" data-i18n="cta.whatsapp"
+         class="hidden items-center gap-2 whitespace-nowrap rounded-lg bg-leaf px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-leaf/90 sm:inline-flex">Escríbenos</a>
       <button id="navToggle" type="button" aria-expanded="false" aria-controls="mobileDrawer"
               class="grid h-11 w-11 place-items-center rounded-lg border border-line text-ink transition hover:border-bronze nav:hidden">
-        <span class="sr-only">Open menu</span>
+        <span class="sr-only" data-i18n="nav.open">Abrir menú</span>
         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       </button>
     </div>
@@ -145,74 +136,75 @@
 </header>
 
 <div id="navScrim" hidden class="fixed inset-0 z-[60] bg-ink/50 nav:hidden"></div>
-<aside id="mobileDrawer" hidden role="dialog" aria-modal="true" aria-label="Menu"
+<aside id="mobileDrawer" hidden role="dialog" aria-modal="true" aria-label="Menú"
        class="fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-sm flex-col bg-cream shadow-2xl nav:hidden">
   <div class="flex items-center justify-between border-b border-line px-5 py-4">
-    <span class="text-sm font-bold uppercase tracking-[.14em]">Menu</span>
+    <span class="text-sm font-bold uppercase tracking-[.14em]" data-i18n="nav.menu">Menú</span>
     <button id="navClose" type="button" class="grid h-10 w-10 place-items-center rounded-lg border border-line">
-      <span class="sr-only">Close menu</span>
+      <span class="sr-only" data-i18n="nav.close">Cerrar menú</span>
       <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
     </button>
   </div>
-  <nav aria-label="Mobile" class="flex-1 overflow-y-auto px-3 py-4">
+  <nav aria-label="Móvil" class="flex-1 overflow-y-auto px-3 py-4">
     <ul class="space-y-1 text-[17px] font-medium text-slate7">
-      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#homes">Homes for Rent</a></li>
-      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#areas">Where We Rent</a></li>
-      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#how">How It Works</a></li>
-      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#about">About Us</a></li>
-      <li><a class="block rounded-lg px-3 py-3 font-semibold text-bronze hover:bg-paper" href="status.html">Current Tenants</a></li>
+      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#homes" data-i18n="nav.homes">Casas en Renta</a></li>
+      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#areas" data-i18n="nav.areas">Dónde Rentamos</a></li>
+      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#how" data-i18n="nav.how">Cómo Funciona</a></li>
+      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#about" data-i18n="nav.about">Nosotros</a></li>
+      <li><a class="block rounded-lg px-3 py-3 font-semibold text-bronze hover:bg-paper" href="status.html" data-i18n="nav.tenants">Inquilinos</a></li>
     </ul>
   </nav>
   <div class="border-t border-line p-5">
-    <a id="waDrawer" href="#" class="block rounded-lg bg-leaf px-5 py-3 text-center text-sm font-semibold text-white">Message us on WhatsApp</a>
+    <a id="waDrawer" href="#" data-i18n="cta.whatsappLong" class="block rounded-lg bg-leaf px-5 py-3 text-center text-sm font-semibold text-white">Escríbenos por WhatsApp</a>
     <a id="telDrawer" href="#" class="mt-3 block text-center text-sm font-medium text-slate7"></a>
+    <button type="button" data-lang-toggle class="mt-3 w-full rounded-lg border border-line px-4 py-2.5 text-sm font-semibold text-slate7">English</button>
   </div>
 </aside>
 
 <main id="main">
 
-<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<!-- ═══════════════════════ PORTADA ═══════════════════════ -->
 <section class="bg-cream">
   <div class="mx-auto grid max-w-shell gap-10 px-5 py-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14 lg:px-8 lg:py-16">
     <div>
-      <p class="inline-flex items-center gap-2 rounded-full bg-paper px-3.5 py-1.5 text-[13px] font-semibold text-bronze">
-        Renting across Texas since 2009
+      <p data-i18n="hero.badge" class="inline-flex items-center gap-2 rounded-full bg-paper px-3.5 py-1.5 text-[13px] font-semibold text-bronze">
+        Rentando en todo Texas desde 2009
       </p>
-      <h1 class="mt-5 text-[34px] font-bold leading-[1.12] tracking-tight sm:text-5xl">
-        Looking for a house to rent?
+      <h1 data-i18n="hero.title" class="mt-5 text-[34px] font-bold leading-[1.12] tracking-tight sm:text-5xl">
+        ¿Busca una casa para rentar?
       </h1>
-      <p class="mt-4 max-w-xl text-[17px] leading-relaxed text-slate7">
-        We rent clean, well-kept houses in Austin, Dallas&ndash;Fort Worth, Houston and San Antonio.
-        Clear prices, no surprise fees, and repairs that actually get done.
+      <p data-i18n="hero.body" class="mt-4 max-w-xl text-[17px] leading-relaxed text-slate7">
+        Rentamos casas limpias y bien cuidadas en Austin, Dallas&ndash;Fort Worth, Houston y San Antonio.
+        Precios claros, sin cobros sorpresa, y reparaciones que sí se hacen.
       </p>
 
       <div class="mt-7 flex flex-wrap items-center gap-3">
-        <a href="#homes" class="rounded-lg bg-ink px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate7">See available homes</a>
+        <a href="#homes" data-i18n="hero.see" class="rounded-lg bg-ink px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate7">Ver casas disponibles</a>
         <a id="waHero" href="#" class="inline-flex items-center gap-2 rounded-lg bg-leaf px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-leaf/90">
           <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
-          Ask on WhatsApp
+          <span data-i18n="hero.ask">Pregunte por WhatsApp</span>
         </a>
       </div>
       <p class="mt-3 text-sm text-slate7">
-        Message us any time &mdash; <a id="waNumber" class="font-semibold text-bronze underline underline-offset-4" href="#"></a>. We answer fast.
+        <span data-i18n="hero.anytime">Escríbanos cuando quiera &mdash;</span>
+        <a id="waNumber" class="font-semibold text-bronze underline underline-offset-4" href="#"></a><span data-i18n="hero.fast">. Contestamos rápido.</span>
       </p>
     </div>
 
     <div class="ph overflow-hidden rounded-2xl ring-1 ring-line">
-      <svg viewBox="0 0 320 200" class="h-full w-full" role="img" aria-label="Illustration of a single-family rental house"><use href="#artHouse" /></svg>
+      <svg viewBox="0 0 320 200" class="h-full w-full" role="img" aria-label="Ilustración de una casa en renta"><use href="#artHouse" /></svg>
     </div>
   </div>
 
-  <!-- Filter -->
   <div class="mx-auto max-w-shell px-5 pb-12 lg:px-8">
-    <form id="quickFilter" class="rounded-2xl border border-line bg-paper p-4 sm:p-5" aria-label="Find a rental">
+    <form id="quickFilter" class="rounded-2xl border border-line bg-paper p-4 sm:p-5" aria-label="Buscar casa">
       <fieldset>
-        <legend class="mb-3 text-sm font-bold">Find a home</legend>
+        <legend data-i18n="filter.legend" class="mb-3 text-sm font-bold">Encuentre una casa</legend>
         <div class="grid gap-3 md:grid-cols-4">
           <div>
-            <label for="fCity" class="mb-1.5 block text-xs font-semibold text-slate7">City</label>
+            <label for="fCity" data-i18n="filter.city" class="mb-1.5 block text-xs font-semibold text-slate7">Ciudad</label>
             <select id="fCity" class="w-full rounded-lg border border-line bg-cream px-3 py-3 text-sm">
-              <option value="">All cities</option>
+              <option value="" data-i18n="filter.allCities">Todas las ciudades</option>
               <option value="austin">Austin</option>
               <option value="dfw">Dallas&ndash;Fort Worth</option>
               <option value="houston">Houston</option>
@@ -220,27 +212,27 @@
             </select>
           </div>
           <div>
-            <label for="fPrice" class="mb-1.5 block text-xs font-semibold text-slate7">Monthly rent</label>
+            <label for="fPrice" data-i18n="filter.rent" class="mb-1.5 block text-xs font-semibold text-slate7">Renta mensual</label>
             <select id="fPrice" class="w-full rounded-lg border border-line bg-cream px-3 py-3 text-sm">
-              <option value="">Any rent</option>
-              <option value="0-1500">Under $1,500</option>
-              <option value="1500-2000">$1,500 &ndash; $2,000</option>
-              <option value="2000-2500">$2,000 &ndash; $2,500</option>
-              <option value="2500-99999">$2,500+</option>
+              <option value="" data-i18n="filter.anyRent">Cualquier renta</option>
+              <option value="0-1500" data-i18n="filter.under">Menos de $1,500</option>
+              <option value="1500-2000" data-i18n="filter.r1">$1,500 &ndash; $2,000</option>
+              <option value="2000-2500" data-i18n="filter.r2">$2,000 &ndash; $2,500</option>
+              <option value="2500-99999" data-i18n="filter.r3">$2,500+</option>
             </select>
           </div>
           <div>
-            <label for="fBeds" class="mb-1.5 block text-xs font-semibold text-slate7">Bedrooms</label>
+            <label for="fBeds" data-i18n="filter.beds" class="mb-1.5 block text-xs font-semibold text-slate7">Recámaras</label>
             <select id="fBeds" class="w-full rounded-lg border border-line bg-cream px-3 py-3 text-sm">
-              <option value="">Any size</option>
-              <option value="2">2+ bedrooms</option>
-              <option value="3">3+ bedrooms</option>
-              <option value="4">4+ bedrooms</option>
+              <option value="" data-i18n="filter.anySize">Cualquier tamaño</option>
+              <option value="2" data-i18n="filter.b2">2+ recámaras</option>
+              <option value="3" data-i18n="filter.b3">3+ recámaras</option>
+              <option value="4" data-i18n="filter.b4">4+ recámaras</option>
             </select>
           </div>
           <div class="flex items-end gap-2">
-            <button type="submit" class="flex-1 rounded-lg bg-bronze px-5 py-3 text-sm font-semibold text-white transition hover:bg-ink">Search</button>
-            <button type="reset" class="rounded-lg border border-line px-4 py-3 text-sm font-semibold text-slate7">Reset</button>
+            <button type="submit" data-i18n="filter.search" class="flex-1 rounded-lg bg-bronze px-5 py-3 text-sm font-semibold text-white transition hover:bg-ink">Buscar</button>
+            <button type="reset" data-i18n="filter.reset" class="rounded-lg border border-line px-4 py-3 text-sm font-semibold text-slate7">Limpiar</button>
           </div>
         </div>
         <p id="filterStatus" role="status" aria-live="polite" class="mt-3 text-sm text-slate7"></p>
@@ -249,27 +241,27 @@
   </div>
 </section>
 
-<!-- ═══════════════════════ HOMES ═══════════════════════ -->
+<!-- ═══════════════════════ CASAS ═══════════════════════ -->
 <section id="homes" class="scroll-mt-24 py-14 lg:py-20">
   <div class="mx-auto max-w-shell px-5 lg:px-8">
-    <h2 class="text-3xl font-bold tracking-tight">Homes for rent</h2>
-    <p class="mt-2 max-w-2xl text-[17px] text-slate7">
-      Available now, plus homes that are rented today so you can see what tends to come up.
+    <h2 data-i18n="homes.title" class="text-3xl font-bold tracking-tight">Casas en renta</h2>
+    <p data-i18n="homes.body" class="mt-2 max-w-2xl text-[17px] text-slate7">
+      Disponibles ahora, y también las que están rentadas hoy para que vea qué suele desocuparse.
     </p>
 
     <div class="mt-8 border-b border-line">
-      <div role="tablist" aria-label="Availability" class="-mb-px flex flex-wrap gap-1">
+      <div role="tablist" aria-label="Disponibilidad" class="-mb-px flex flex-wrap gap-1">
         <button role="tab" id="tab-available" aria-controls="panel-available" aria-selected="true" data-tab="available"
                 class="tab rounded-t-lg border-b-2 border-bronze px-4 py-3 text-sm font-semibold text-ink">
-          Available now <span class="ml-1 text-xs font-normal text-slate7">(0)</span>
+          <span data-i18n="homes.available">Disponibles ahora</span> <span class="ml-1 text-xs font-normal text-slate7">(0)</span>
         </button>
         <button role="tab" id="tab-occupied" aria-controls="panel-occupied" aria-selected="false" tabindex="-1" data-tab="occupied"
                 class="tab rounded-t-lg border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-slate7 hover:text-ink">
-          Currently rented <span class="ml-1 text-xs font-normal text-slate7">(0)</span>
+          <span data-i18n="homes.occupied">Rentadas ahora</span> <span class="ml-1 text-xs font-normal text-slate7">(0)</span>
         </button>
         <button role="tab" id="tab-sale" hidden aria-controls="panel-sale" aria-selected="false" tabindex="-1" data-tab="sale"
                 class="tab rounded-t-lg border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-slate7 hover:text-ink">
-          For sale <span class="ml-1 text-xs font-normal text-slate7">(0)</span>
+          <span data-i18n="homes.forSale">En venta</span> <span class="ml-1 text-xs font-normal text-slate7">(0)</span>
         </button>
       </div>
     </div>
@@ -279,200 +271,204 @@
     <div id="panel-sale" role="tabpanel" aria-labelledby="tab-sale" tabindex="0" hidden class="panel mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
 
     <div id="emptyState" hidden class="mt-8 rounded-2xl border border-dashed border-line bg-cream px-6 py-14 text-center">
-      <p class="text-lg font-semibold">Nothing listed here right now</p>
-      <p class="mx-auto mt-2 max-w-md text-slate7">
-        Homes come up often and the good ones go fast. Message us and we will tell you what is
-        opening up before it goes online.
+      <p data-i18n="empty.title" class="text-lg font-semibold">Ahora mismo no hay nada publicado aquí</p>
+      <p data-i18n="empty.body" class="mx-auto mt-2 max-w-md text-slate7">
+        Seguido se desocupan casas y las buenas se van rápido. Escríbanos y le avisamos
+        qué se va a desocupar antes de que salga publicado.
       </p>
       <a id="waEmpty" href="#" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-leaf px-6 py-3.5 text-sm font-semibold text-white">
         <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
-        Tell us what you need
+        <span data-i18n="empty.cta">Díganos qué necesita</span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════ AREAS ═══════════════════════ -->
+<!-- ═══════════════════════ ZONAS ═══════════════════════ -->
 <section id="areas" class="scroll-mt-24 bg-cream py-14 lg:py-20">
   <div class="mx-auto max-w-shell px-5 lg:px-8">
-    <h2 class="text-3xl font-bold tracking-tight">Where we rent</h2>
-    <p class="mt-2 max-w-2xl text-[17px] text-slate7">The areas we know well and keep houses in.</p>
+    <h2 data-i18n="areas.title" class="text-3xl font-bold tracking-tight">Dónde rentamos</h2>
+    <p data-i18n="areas.body" class="mt-2 max-w-2xl text-[17px] text-slate7">Las zonas que conocemos bien y donde tenemos casas.</p>
     <div id="areaGrid" class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"></div>
-    <p id="noAreas" hidden class="mt-8 rounded-2xl border border-dashed border-line px-6 py-10 text-center text-slate7">
-      Areas will show here once they are added.
+    <p id="noAreas" hidden data-i18n="areas.none" class="mt-8 rounded-2xl border border-dashed border-line px-6 py-10 text-center text-slate7">
+      Las zonas aparecerán aquí cuando se agreguen.
     </p>
   </div>
 </section>
 
-<!-- ═══════════════════════ HOW IT WORKS ═══════════════════════ -->
+<!-- ═══════════════════════ CÓMO FUNCIONA ═══════════════════════ -->
 <section id="how" class="scroll-mt-24 py-14 lg:py-20">
   <div class="mx-auto max-w-shell px-5 lg:px-8">
-    <h2 class="text-3xl font-bold tracking-tight">How renting with us works</h2>
-    <p class="mt-2 max-w-2xl text-[17px] text-slate7">Four steps, no runaround.</p>
+    <h2 data-i18n="how.title" class="text-3xl font-bold tracking-tight">Cómo es rentar con nosotros</h2>
+    <p data-i18n="how.body" class="mt-2 max-w-2xl text-[17px] text-slate7">Cuatro pasos, sin vueltas.</p>
 
     <ol class="mt-10 grid gap-6 md:grid-cols-4">
       <li class="rounded-2xl border border-line bg-cream p-6">
         <span class="grid h-11 w-11 place-items-center rounded-full bg-paper text-lg font-bold text-bronze">1</span>
-        <h3 class="mt-4 text-lg font-bold">See the house</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate7">Message us and we will set up a time. Same week, usually same day.</p>
+        <h3 data-i18n="how.s1.t" class="mt-4 text-lg font-bold">Vea la casa</h3>
+        <p data-i18n="how.s1.b" class="mt-2 text-sm leading-relaxed text-slate7">Escríbanos y le agendamos una hora. La misma semana, casi siempre el mismo día.</p>
       </li>
       <li class="rounded-2xl border border-line bg-cream p-6">
         <span class="grid h-11 w-11 place-items-center rounded-full bg-paper text-lg font-bold text-bronze">2</span>
-        <h3 class="mt-4 text-lg font-bold">Apply</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate7">Simple application. We tell you exactly what we look at, and what the fees are, before you pay anything.</p>
+        <h3 data-i18n="how.s2.t" class="mt-4 text-lg font-bold">Aplique</h3>
+        <p data-i18n="how.s2.b" class="mt-2 text-sm leading-relaxed text-slate7">Solicitud sencilla. Le decimos exactamente qué revisamos y cuánto cuesta antes de que pague nada.</p>
       </li>
       <li class="rounded-2xl border border-line bg-cream p-6">
         <span class="grid h-11 w-11 place-items-center rounded-full bg-paper text-lg font-bold text-bronze">3</span>
-        <h3 class="mt-4 text-lg font-bold">Sign and pay</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate7">Lease in plain language. Deposit and first month, nothing hidden.</p>
+        <h3 data-i18n="how.s3.t" class="mt-4 text-lg font-bold">Firme y pague</h3>
+        <p data-i18n="how.s3.b" class="mt-2 text-sm leading-relaxed text-slate7">Contrato en palabras claras. Depósito y primer mes, nada escondido.</p>
       </li>
       <li class="rounded-2xl border border-line bg-cream p-6">
         <span class="grid h-11 w-11 place-items-center rounded-full bg-paper text-lg font-bold text-bronze">4</span>
-        <h3 class="mt-4 text-lg font-bold">Move in</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate7">Keys, and a number that answers when something breaks.</p>
+        <h3 data-i18n="how.s4.t" class="mt-4 text-lg font-bold">Múdese</h3>
+        <p data-i18n="how.s4.b" class="mt-2 text-sm leading-relaxed text-slate7">Las llaves, y un número que sí contesta cuando algo se descompone.</p>
       </li>
     </ol>
   </div>
 </section>
 
-<!-- ═══════════════════════ ABOUT ═══════════════════════ -->
+<!-- ═══════════════════════ NOSOTROS ═══════════════════════ -->
 <section id="about" class="scroll-mt-24 bg-cream py-14 lg:py-20">
   <div class="mx-auto grid max-w-shell gap-10 px-5 lg:grid-cols-2 lg:gap-14 lg:px-8">
     <div>
-      <h2 class="text-3xl font-bold tracking-tight">About us</h2>
-      <p class="mt-4 text-[17px] leading-relaxed text-slate7">
-        Melao&rsquo;s is a family business. We own and look after the houses we rent, so when you call
-        about a problem you are talking to the people who can fix it &mdash; not a call center.
+      <h2 data-i18n="about.title" class="text-3xl font-bold tracking-tight">Nosotros</h2>
+      <p data-i18n="about.p1" class="mt-4 text-[17px] leading-relaxed text-slate7">
+        Melao&rsquo;s es un negocio familiar. Las casas que rentamos son nuestras y nosotros las cuidamos,
+        así que cuando llama por un problema habla con quien lo puede resolver, no con un call center.
       </p>
-      <p class="mt-4 text-[17px] leading-relaxed text-slate7">
-        We are not the biggest landlord in Texas. We are the one that picks up the phone.
+      <p data-i18n="about.p2" class="mt-4 text-[17px] leading-relaxed text-slate7">
+        No somos los dueños más grandes de Texas. Somos los que contestan el teléfono.
       </p>
       <a id="waAbout" href="#" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-leaf px-6 py-3.5 text-sm font-semibold text-white">
         <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
-        Talk to us
+        <span data-i18n="about.cta">Hable con nosotros</span>
       </a>
     </div>
 
     <ul class="grid gap-4 sm:grid-cols-2">
       <li class="rounded-2xl border border-line bg-paper p-5">
-        <h3 class="font-bold">Repairs get done</h3>
-        <p class="mt-1.5 text-sm leading-relaxed text-slate7">Report it from your phone. Emergencies same day.</p>
+        <h3 data-i18n="about.c1.t" class="font-bold">Las reparaciones se hacen</h3>
+        <p data-i18n="about.c1.b" class="mt-1.5 text-sm leading-relaxed text-slate7">Repórtelas desde su teléfono. Emergencias el mismo día.</p>
       </li>
       <li class="rounded-2xl border border-line bg-paper p-5">
-        <h3 class="font-bold">No surprise fees</h3>
-        <p class="mt-1.5 text-sm leading-relaxed text-slate7">What you are quoted is what you pay.</p>
+        <h3 data-i18n="about.c2.t" class="font-bold">Sin cobros sorpresa</h3>
+        <p data-i18n="about.c2.b" class="mt-1.5 text-sm leading-relaxed text-slate7">Lo que le cotizamos es lo que paga.</p>
       </li>
       <li class="rounded-2xl border border-line bg-paper p-5">
-        <h3 class="font-bold">Straight answers</h3>
-        <p class="mt-1.5 text-sm leading-relaxed text-slate7">If a house will not work for you, we will say so.</p>
+        <h3 data-i18n="about.c3.t" class="font-bold">Respuestas directas</h3>
+        <p data-i18n="about.c3.b" class="mt-1.5 text-sm leading-relaxed text-slate7">Si una casa no le sirve, se lo decimos.</p>
       </li>
       <li class="rounded-2xl border border-line bg-paper p-5">
-        <h3 class="font-bold">Fair housing</h3>
-        <p class="mt-1.5 text-sm leading-relaxed text-slate7">Everyone gets the same terms and the same process.</p>
+        <h3 data-i18n="about.c4.t" class="font-bold">Vivienda justa</h3>
+        <p data-i18n="about.c4.b" class="mt-1.5 text-sm leading-relaxed text-slate7">Todos reciben las mismas condiciones y el mismo proceso.</p>
       </li>
     </ul>
   </div>
 </section>
 
-<!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+<!-- ═══════════════════════ CONTACTO ═══════════════════════ -->
 <section id="contact" class="scroll-mt-24 py-14 lg:py-20">
   <div class="mx-auto max-w-shell px-5 lg:px-8">
     <div class="overflow-hidden rounded-2xl border border-line bg-cream">
       <div class="grid lg:grid-cols-[.85fr_1.15fr]">
         <div class="border-b border-line bg-paper p-8 lg:border-b-0 lg:border-r">
-          <h2 class="text-2xl font-bold tracking-tight">Ask about a home</h2>
-          <p class="mt-3 text-[15px] leading-relaxed text-slate7">
-            Fastest way to reach us is WhatsApp. Send a message and we will answer with what is
-            available, what it costs, and when you can see it.
+          <h2 data-i18n="contact.title" class="text-2xl font-bold tracking-tight">Pregunte por una casa</h2>
+          <p data-i18n="contact.body" class="mt-3 text-[15px] leading-relaxed text-slate7">
+            La forma más rápida es WhatsApp. Mándenos un mensaje y le contestamos qué hay disponible,
+            cuánto cuesta y cuándo la puede ver.
           </p>
           <a id="waContact" href="#" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-leaf px-6 py-3.5 text-sm font-semibold text-white sm:w-auto">
             <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
-            Message on WhatsApp
+            <span data-i18n="cta.whatsappLong">Escríbenos por WhatsApp</span>
           </a>
           <p class="mt-4 text-sm text-slate7">
-            Or call <a id="telContact" class="font-semibold text-bronze underline underline-offset-4" href="#"></a><br />
-            Mon&ndash;Sat 8am&ndash;7pm
+            <span data-i18n="contact.or">O llame al</span>
+            <a id="telContact" class="font-semibold text-bronze underline underline-offset-4" href="#"></a><br />
+            <span data-i18n="contact.hours">Lun&ndash;Sáb 8am&ndash;7pm</span>
           </p>
         </div>
 
         <div class="p-8">
-          <p class="mb-5 text-sm font-semibold">Prefer we contact you? Leave your details.</p>
+          <p data-i18n="contact.prefer" class="mb-5 text-sm font-semibold">¿Prefiere que le llamemos? Déjenos sus datos.</p>
           <form id="tourForm" novalidate class="space-y-4">
             <div class="grid gap-4 sm:grid-cols-2">
               <div>
-                <label for="cName" class="mb-1.5 block text-xs font-semibold text-slate7">Your name <span class="text-brick">*</span></label>
+                <label for="cName" class="mb-1.5 block text-xs font-semibold text-slate7"><span data-i18n="form.name">Su nombre</span> <span class="text-brick">*</span></label>
                 <input id="cName" type="text" autocomplete="name" required aria-required="true" aria-describedby="cNameErr"
+                       data-i18n-attr="placeholder:form.namePh"
                        class="w-full rounded-lg border border-line px-3.5 py-3 text-sm" placeholder="Jordan Alvarez" />
-                <p id="cNameErr" hidden class="mt-1.5 text-xs font-medium text-brick">Please enter your name.</p>
+                <p id="cNameErr" hidden data-i18n="form.nameErr" class="mt-1.5 text-xs font-medium text-brick">Escriba su nombre por favor.</p>
               </div>
               <div>
-                <label for="cPhone" class="mb-1.5 block text-xs font-semibold text-slate7">Phone <span class="text-brick">*</span></label>
+                <label for="cPhone" class="mb-1.5 block text-xs font-semibold text-slate7"><span data-i18n="form.phone">Teléfono</span> <span class="text-brick">*</span></label>
                 <input id="cPhone" type="tel" autocomplete="tel" inputmode="tel" required aria-required="true" aria-describedby="cPhoneErr"
                        class="w-full rounded-lg border border-line px-3.5 py-3 text-sm" placeholder="(432) 606-9495" />
-                <p id="cPhoneErr" hidden class="mt-1.5 text-xs font-medium text-brick">Please enter a phone number we can reach you on.</p>
+                <p id="cPhoneErr" hidden data-i18n="form.phoneErr" class="mt-1.5 text-xs font-medium text-brick">Déjenos un teléfono donde localizarlo.</p>
               </div>
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2">
               <div>
-                <label for="cEmail" class="mb-1.5 block text-xs font-semibold text-slate7">Email</label>
+                <label for="cEmail" data-i18n="form.email" class="mb-1.5 block text-xs font-semibold text-slate7">Correo</label>
                 <input id="cEmail" type="email" autocomplete="email" aria-describedby="cEmailErr"
-                       class="w-full rounded-lg border border-line px-3.5 py-3 text-sm" placeholder="you@email.com" />
-                <p id="cEmailErr" hidden class="mt-1.5 text-xs font-medium text-brick">That email does not look right.</p>
+                       data-i18n-attr="placeholder:form.emailPh"
+                       class="w-full rounded-lg border border-line px-3.5 py-3 text-sm" placeholder="usted@correo.com" />
+                <p id="cEmailErr" hidden data-i18n="form.emailErr" class="mt-1.5 text-xs font-medium text-brick">Ese correo no se ve bien.</p>
               </div>
               <div>
-                <label for="cLocation" class="mb-1.5 block text-xs font-semibold text-slate7">City <span class="text-brick">*</span></label>
+                <label for="cLocation" class="mb-1.5 block text-xs font-semibold text-slate7"><span data-i18n="form.city">Ciudad</span> <span class="text-brick">*</span></label>
                 <select id="cLocation" required aria-required="true" aria-describedby="cLocationErr"
                         class="w-full rounded-lg border border-line bg-cream px-3.5 py-3 text-sm">
-                  <option value="">Choose a city</option>
+                  <option value="" data-i18n="form.chooseCity">Escoja una ciudad</option>
                   <option>Austin</option>
                   <option>Dallas&ndash;Fort Worth</option>
                   <option>Houston</option>
                   <option>San Antonio</option>
                 </select>
-                <p id="cLocationErr" hidden class="mt-1.5 text-xs font-medium text-brick">Please choose a city.</p>
+                <p id="cLocationErr" hidden data-i18n="form.cityErr" class="mt-1.5 text-xs font-medium text-brick">Escoja una ciudad por favor.</p>
               </div>
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2">
               <div>
-                <label for="cBudget" class="mb-1.5 block text-xs font-semibold text-slate7">Monthly budget</label>
+                <label for="cBudget" data-i18n="form.budget" class="mb-1.5 block text-xs font-semibold text-slate7">Presupuesto mensual</label>
                 <select id="cBudget" class="w-full rounded-lg border border-line bg-cream px-3.5 py-3 text-sm">
-                  <option value="">Not sure yet</option>
-                  <option>Under $1,500</option>
-                  <option>$1,500 &ndash; $2,000</option>
-                  <option>$2,000 &ndash; $2,500</option>
-                  <option>$2,500+</option>
+                  <option value="" data-i18n="form.notSure">Todavía no sé</option>
+                  <option data-i18n="filter.under">Menos de $1,500</option>
+                  <option data-i18n="filter.r1">$1,500 &ndash; $2,000</option>
+                  <option data-i18n="filter.r2">$2,000 &ndash; $2,500</option>
+                  <option data-i18n="filter.r3">$2,500+</option>
                 </select>
               </div>
               <div>
-                <label for="cTimeline" class="mb-1.5 block text-xs font-semibold text-slate7">When do you need it?</label>
+                <label for="cTimeline" data-i18n="form.when" class="mb-1.5 block text-xs font-semibold text-slate7">¿Para cuándo la necesita?</label>
                 <select id="cTimeline" class="w-full rounded-lg border border-line bg-cream px-3.5 py-3 text-sm">
-                  <option value="">Not sure yet</option>
-                  <option>Right away</option>
-                  <option>Within a month</option>
-                  <option>1 &ndash; 3 months</option>
-                  <option>Just looking</option>
+                  <option value="" data-i18n="form.notSure">Todavía no sé</option>
+                  <option data-i18n="form.now">De inmediato</option>
+                  <option data-i18n="form.month">Dentro de un mes</option>
+                  <option data-i18n="form.months">1 &ndash; 3 meses</option>
+                  <option data-i18n="form.looking">Solo estoy viendo</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label for="cMessage" class="mb-1.5 block text-xs font-semibold text-slate7">Anything else?</label>
+              <label for="cMessage" data-i18n="form.else" class="mb-1.5 block text-xs font-semibold text-slate7">¿Algo más?</label>
               <textarea id="cMessage" rows="3" class="w-full rounded-lg border border-line px-3.5 py-3 text-sm"
-                        placeholder="Three bedrooms, fenced yard, near a school, we have a dog&hellip;"></textarea>
+                        data-i18n-attr="placeholder:form.elsePh"
+                        placeholder="Tres recámaras, patio cercado, cerca de una escuela, tenemos un perro&hellip;"></textarea>
             </div>
 
             <div class="flex items-start gap-3">
               <input id="cConsent" type="checkbox" required aria-required="true" aria-describedby="cConsentErr"
                      class="mt-0.5 h-4 w-4 rounded border-line" />
               <label for="cConsent" class="text-sm leading-relaxed text-slate7">
-                You can contact me about renting a home. <span class="text-brick">*</span>
+                <span data-i18n="form.consent">Pueden contactarme sobre rentar una casa.</span> <span class="text-brick">*</span>
               </label>
             </div>
-            <p id="cConsentErr" hidden class="-mt-2 text-xs font-medium text-brick">Please tick the box so we can reply.</p>
+            <p id="cConsentErr" hidden data-i18n="form.consentErr" class="-mt-2 text-xs font-medium text-brick">Marque la casilla para poder contestarle.</p>
 
-            <button type="submit" class="w-full rounded-lg bg-ink px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate7 sm:w-auto">Send</button>
+            <button type="submit" data-i18n="form.send" class="w-full rounded-lg bg-ink px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate7 sm:w-auto">Enviar</button>
             <p id="formStatus" role="status" aria-live="polite" class="text-sm font-medium text-slate7"></p>
           </form>
         </div>
@@ -482,7 +478,7 @@
 </section>
 </main>
 
-<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<!-- ═══════════════════════ PIE ═══════════════════════ -->
 <footer class="border-t border-line bg-cream pt-12">
   <div class="mx-auto max-w-shell px-5 lg:px-8">
     <div class="grid gap-8 pb-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -493,57 +489,58 @@
           </span>
           <span class="leading-tight">
             <span class="block text-[15px] font-bold">MELAO&rsquo;S</span>
-            <span class="block text-[10px] font-semibold uppercase tracking-[.14em] text-bronze">Homes for Rent</span>
+            <span data-i18n="brand.tagline" class="block text-[10px] font-semibold uppercase tracking-[.14em] text-bronze">Casas en Renta</span>
           </span>
         </div>
-        <p class="mt-4 text-sm leading-relaxed text-slate7">
-          Family-run rentals across Texas. We own the houses we rent and look after them ourselves.
+        <p data-i18n="footer.blurb" class="mt-4 text-sm leading-relaxed text-slate7">
+          Rentas familiares por todo Texas. Las casas que rentamos son nuestras y nosotros las cuidamos.
         </p>
         <div id="socialLinks" class="mt-5 flex flex-wrap gap-2"></div>
       </div>
 
-      <nav aria-label="Homes">
-        <h2 class="text-sm font-bold">Homes</h2>
+      <nav aria-label="Casas">
+        <h2 data-i18n="footer.homes" class="text-sm font-bold">Casas</h2>
         <ul class="mt-4 space-y-2.5 text-sm text-slate7">
-          <li><a href="#homes" class="hover:text-bronze">Available now</a></li>
-          <li><a href="#homes" class="hover:text-bronze">Currently rented</a></li>
-          <li><a href="#areas" class="hover:text-bronze">Where we rent</a></li>
-          <li><a href="#how" class="hover:text-bronze">How it works</a></li>
+          <li><a href="#homes" class="hover:text-bronze" data-i18n="footer.availableNow">Disponibles ahora</a></li>
+          <li><a href="#homes" class="hover:text-bronze" data-i18n="footer.rented">Rentadas ahora</a></li>
+          <li><a href="#areas" class="hover:text-bronze" data-i18n="nav.areas">Dónde rentamos</a></li>
+          <li><a href="#how" class="hover:text-bronze" data-i18n="nav.how">Cómo funciona</a></li>
         </ul>
       </nav>
 
-      <nav aria-label="Tenants">
-        <h2 class="text-sm font-bold">Tenants</h2>
+      <nav aria-label="Inquilinos">
+        <h2 data-i18n="footer.tenants" class="text-sm font-bold">Inquilinos</h2>
         <ul class="mt-4 space-y-2.5 text-sm text-slate7">
-          <li><a href="status.html" class="hover:text-bronze">Tenant portal</a></li>
-          <li><a href="status.html#request" class="hover:text-bronze">Report a repair</a></li>
-          <li><a href="status.html#request" class="hover:text-bronze">Make a complaint</a></li>
+          <li><a href="status.html" class="hover:text-bronze" data-i18n="footer.portal">Portal de inquilinos</a></li>
+          <li><a href="status.html#request" class="hover:text-bronze" data-i18n="footer.repair">Reportar una reparación</a></li>
+          <li><a href="status.html#request" class="hover:text-bronze" data-i18n="footer.complaint">Poner una queja</a></li>
         </ul>
       </nav>
 
-      <nav aria-label="Contact">
-        <h2 class="text-sm font-bold">Contact</h2>
+      <nav aria-label="Contacto">
+        <h2 data-i18n="footer.contact" class="text-sm font-bold">Contacto</h2>
         <ul class="mt-4 space-y-2.5 text-sm text-slate7">
-          <li><a id="waFooter" href="#" class="font-semibold text-leaf hover:underline">WhatsApp us</a></li>
+          <li><a id="waFooter" href="#" class="font-semibold text-leaf hover:underline" data-i18n="cta.whatsapp">Escríbenos</a></li>
           <li><a id="telFooter" href="#" class="hover:text-bronze"></a></li>
-          <li><a href="#contact" class="hover:text-bronze">Send us your details</a></li>
+          <li><a href="#contact" class="hover:text-bronze" data-i18n="footer.details">Déjenos sus datos</a></li>
         </ul>
       </nav>
     </div>
 
     <div class="border-t border-line py-7">
       <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:gap-8">
-        <svg viewBox="0 0 48 48" class="h-11 w-11 shrink-0 text-slate7" role="img" aria-label="Equal Housing Opportunity">
+        <svg viewBox="0 0 48 48" class="h-11 w-11 shrink-0 text-slate7" role="img" aria-label="Igualdad de Oportunidad en la Vivienda">
           <path d="M24 8 6 20h4v18h28V20h4L24 8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
           <path d="M16 28h16M16 34h16M20 22h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
         <p class="text-xs leading-relaxed text-slate7">
-          <strong>Equal Housing Opportunity.</strong>
-          We rent in accordance with federal, state and local fair housing law. We do not refuse to
-          rent, or set different terms, because of race, color, religion, sex, disability, familial
-          status or national origin.
-          Rents, availability, deposits and terms are subject to change and are not a contract.
-          Photographs may show a similar home. Applicant screening criteria are available on request.
+          <strong data-i18n="footer.eho">Igualdad de Oportunidad en la Vivienda.</strong>
+          <span data-i18n="footer.legal">Rentamos conforme a las leyes federales, estatales y locales de vivienda justa.
+          No negamos la renta ni imponemos condiciones distintas por raza, color, religión, sexo,
+          discapacidad, situación familiar u origen nacional.
+          Las rentas, la disponibilidad, los depósitos y las condiciones pueden cambiar y no constituyen
+          un contrato. Las fotos pueden mostrar una casa similar. Los criterios de selección de
+          solicitantes están disponibles si los pide.</span>
         </p>
       </div>
     </div>
@@ -551,15 +548,15 @@
     <div class="flex flex-col items-center justify-between gap-3 border-t border-line py-6 text-xs text-slate7 sm:flex-row">
       <p>&copy; <span id="year">2026</span> Melao&rsquo;s Real Estate Development.</p>
       <ul class="flex flex-wrap justify-center gap-x-5 gap-y-2">
-        <li><a href="#" class="hover:text-bronze">Privacy</a></li>
-        <li><a href="#" class="hover:text-bronze">Terms</a></li>
-        <li><a href="#" class="hover:text-bronze">Accessibility</a></li>
+        <li><a href="#" class="hover:text-bronze" data-i18n="footer.privacy">Privacidad</a></li>
+        <li><a href="#" class="hover:text-bronze" data-i18n="footer.terms">Términos</a></li>
+        <li><a href="#" class="hover:text-bronze" data-i18n="footer.access">Accesibilidad</a></li>
       </ul>
     </div>
   </div>
 </footer>
 
-<!-- ═══════════════════════ DETAIL MODAL ═══════════════════════ -->
+<!-- ═══════════════════════ DETALLE ═══════════════════════ -->
 <div id="planScrim" hidden class="fixed inset-0 z-[80] bg-ink/60"></div>
 <div id="planModal" hidden role="dialog" aria-modal="true" aria-labelledby="planTitle"
      class="fixed inset-0 z-[90] flex items-end justify-center p-0 sm:items-center sm:p-6">
@@ -571,7 +568,7 @@
         <p id="planSub" class="mt-1 text-sm text-slate7"></p>
       </div>
       <button id="planClose" type="button" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-line">
-        <span class="sr-only">Close</span>
+        <span class="sr-only" data-i18n="modal.close">Cerrar</span>
         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
       </button>
     </div>
@@ -581,32 +578,29 @@
       <p id="planDesc" class="mt-5 text-[15px] leading-relaxed text-slate7"></p>
     </div>
     <div class="flex flex-col gap-3 border-t border-line bg-paper px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-      <p class="text-sm text-slate7">Want to see it?</p>
+      <p data-i18n="modal.wantSee" class="text-sm text-slate7">¿La quiere ver?</p>
       <a id="planWhatsApp" href="#" class="inline-flex items-center justify-center gap-2 rounded-lg bg-leaf px-5 py-3 text-sm font-semibold text-white">
         <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
-        Ask about this home
+        <span data-i18n="modal.ask">Pregunte por esta casa</span>
       </a>
     </div>
   </div>
 </div>
 
+<script src="assets/i18n.js"></script>
 <script>
 (function () {
   'use strict';
 
-  /* ══════════════════════════════════════════════════════════════════════
-     CONFIGURATION
-     ══════════════════════════════════════════════════════════════════════ */
   const CONFIG = {
-    // Business WhatsApp, answered by the AI agent. Digits only, country code first.
     whatsapp: '14326069495',
     phoneDisplay: '(432) 606-9495',
-    // POST target for enquiries. Empty falls back to a prefilled email.
     endpoint: '',
     salesEmail: 'rentals@melaosdevelopment.com',
   };
 
   const $ = (id) => document.getElementById(id);
+  const t = (key, es) => I18N.t(key, es);
   const esc = (v) => String(v == null ? '' : v)
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -614,28 +608,23 @@
   const waLink = (msg) => 'https://wa.me/' + CONFIG.whatsapp +
     (msg ? '?text=' + encodeURIComponent(msg) : '');
 
-  /* Every WhatsApp button on the page, wired from one number. */
-  [['waHeader', ''], ['waHero', 'Hi, I am looking for a house to rent.'],
-   ['waEmpty', 'Hi, do you have anything coming up for rent?'],
-   ['waAbout', 'Hi, I have a question about renting.'],
-   ['waContact', 'Hi, I am looking for a house to rent.'],
-   ['waDrawer', 'Hi, I am looking for a house to rent.'],
-   ['waFooter', '']].forEach(function (pair) {
-    const el = $(pair[0]);
-    if (el) { el.href = waLink(pair[1]); el.rel = 'noopener'; el.target = '_blank'; }
-  });
-  ['waNumber'].forEach(function (id) {
-    const el = $(id);
-    if (el) { el.href = waLink(''); el.textContent = CONFIG.phoneDisplay; el.target = '_blank'; el.rel = 'noopener'; }
-  });
-  ['telContact', 'telFooter', 'telDrawer'].forEach(function (id) {
-    const el = $(id);
-    if (el) { el.href = 'tel:+' + CONFIG.whatsapp; el.textContent = CONFIG.phoneDisplay; }
-  });
+  function wireWhatsApp() {
+    const ask = t('wa.looking', 'Hola, estoy buscando una casa para rentar.');
+    [['waHeader', ''], ['waHero', ask], ['waAbout', ask], ['waContact', ask], ['waDrawer', ask],
+     ['waEmpty', t('wa.upcoming', 'Hola, ¿tienen algo que se vaya a desocupar?')],
+     ['waFooter', '']].forEach(function (pair) {
+      const el = $(pair[0]);
+      if (el) { el.href = waLink(pair[1]); el.rel = 'noopener'; el.target = '_blank'; }
+    });
+    const num = $('waNumber');
+    if (num) { num.href = waLink(''); num.textContent = CONFIG.phoneDisplay; num.target = '_blank'; num.rel = 'noopener'; }
+    ['telContact', 'telFooter', 'telDrawer'].forEach(function (id) {
+      const el = $(id);
+      if (el) { el.href = 'tel:+' + CONFIG.whatsapp; el.textContent = CONFIG.phoneDisplay; }
+    });
+  }
 
-  /* ───────────────────────── Data ───────────────────────── */
   let HOMES = [], AREAS = [], PUBLISH = { rent: true, sale: false, build: false };
-
   const CITY_LABEL = { austin: 'Austin', dfw: 'Dallas–Fort Worth',
                        houston: 'Houston', sanantonio: 'San Antonio' };
 
@@ -649,29 +638,34 @@
   function homeCard(h) {
     const occupied = h.availability === 'occupied';
     const forSale = h.listingType === 'sale';
-    const price = forSale ? usd(h.price) : usd(h.rent) + '<span class="text-sm font-normal text-slate7">/mo</span>';
+    const price = forSale ? usd(h.price)
+      : usd(h.rent) + '<span class="text-sm font-normal text-slate7">/' + t('card.perMonth', 'mes') + '</span>';
+    const yearly = (!forSale && h.rentYear)
+      ? '<p class="text-xs font-medium text-bronze">' + t('card.orYear', 'o') + ' ' + usd(h.rentYear) +
+        '/' + t('card.perYear', 'año') + '</p>'
+      : '';
     const badge = occupied
-      ? '<span class="absolute left-3 top-3 rounded-full bg-ink/85 px-2.5 py-1 text-[11px] font-semibold text-white">Rented</span>'
-      : '<span class="absolute left-3 top-3 rounded-full bg-leaf px-2.5 py-1 text-[11px] font-semibold text-white">Available</span>';
+      ? '<span class="absolute left-3 top-3 rounded-full bg-ink/85 px-2.5 py-1 text-[11px] font-semibold text-white">' + t('card.rented', 'Rentada') + '</span>'
+      : '<span class="absolute left-3 top-3 rounded-full bg-leaf px-2.5 py-1 text-[11px] font-semibold text-white">' + t('card.available', 'Disponible') + '</span>';
     const when = occupied
-      ? (h.availableFrom ? 'Free from ' + esc(h.availableFrom) : 'Currently rented')
-      : (h.availableFrom ? 'Move in ' + esc(h.availableFrom) : 'Available now');
+      ? (h.availableFrom ? t('card.freeFrom', 'Libre desde') + ' ' + esc(h.availableFrom) : t('card.rentedNow', 'Rentada ahora'))
+      : (h.availableFrom ? t('card.moveIn', 'Entrega') + ' ' + esc(h.availableFrom) : t('card.availableNow', 'Disponible ahora'));
 
     return '<article class="home flex flex-col overflow-hidden rounded-2xl border border-line bg-cream shadow-soft" ' +
       'data-city="' + esc(h.city) + '" data-price="' + (forSale ? Math.round((h.price || 0) / 1000) : (h.rent || 0)) + '" data-beds="' + (h.beds || 0) + '">' +
-      '<div class="ph relative aspect-[16/10] overflow-hidden">' + photoBlock(h.photos, h.title || 'Rental home') + badge + '</div>' +
+      '<div class="ph relative aspect-[16/10] overflow-hidden">' + photoBlock(h.photos, h.title || 'Casa') + badge + '</div>' +
       '<div class="flex flex-1 flex-col p-5">' +
         '<h3 class="text-lg font-bold">' + esc(h.title) + '</h3>' +
         '<p class="mt-0.5 text-sm text-slate7">' + esc(h.area || '') + (h.city ? ' &middot; ' + esc(CITY_LABEL[h.city] || h.city) : '') + '</p>' +
-        '<p class="mt-3 text-xl font-bold">' + price + '</p>' +
+        '<p class="mt-3 text-xl font-bold">' + price + '</p>' + yearly +
         '<p class="text-xs font-medium text-slate7">' + when + '</p>' +
         '<dl class="mt-4 grid grid-cols-3 gap-2 border-t border-line pt-4 text-sm">' +
-          '<div><dt class="text-xs text-slate7">Beds</dt><dd class="font-semibold">' + (h.beds || '—') + '</dd></div>' +
-          '<div><dt class="text-xs text-slate7">Baths</dt><dd class="font-semibold">' + (h.baths || '—') + '</dd></div>' +
-          '<div><dt class="text-xs text-slate7">Sq ft</dt><dd class="font-semibold">' + (h.sqft ? Number(h.sqft).toLocaleString('en-US') : '—') + '</dd></div>' +
+          '<div><dt class="text-xs text-slate7">' + t('card.beds', 'Recámaras') + '</dt><dd class="font-semibold">' + (h.beds || '—') + '</dd></div>' +
+          '<div><dt class="text-xs text-slate7">' + t('card.baths', 'Baños') + '</dt><dd class="font-semibold">' + (h.baths || '—') + '</dd></div>' +
+          '<div><dt class="text-xs text-slate7">' + t('card.sqft', 'Pies²') + '</dt><dd class="font-semibold">' + (h.sqft ? Number(h.sqft).toLocaleString('en-US') : '—') + '</dd></div>' +
         '</dl>' +
         '<button type="button" data-home="' + esc(h.id) + '" class="mt-5 rounded-lg border border-line px-4 py-2.5 text-sm font-semibold transition hover:border-bronze hover:text-bronze">' +
-          'See details<span class="sr-only"> for ' + esc(h.title) + '</span></button>' +
+          t('card.details', 'Ver detalles') + '<span class="sr-only"> ' + esc(h.title) + '</span></button>' +
       '</div></article>';
   }
 
@@ -681,11 +675,10 @@
       '<h3 class="text-lg font-bold">' + esc(a.name) + '</h3>' +
       '<p class="mt-1 text-sm text-slate7">' + esc(CITY_LABEL[a.city] || a.city) + '</p>' +
       (a.note ? '<p class="mt-3 text-sm leading-relaxed text-slate7">' + esc(a.note) + '</p>' : '') +
-      '<p class="mt-4 text-sm font-semibold text-bronze">' + count + ' available</p>' +
+      '<p class="mt-4 text-sm font-semibold text-bronze">' + count + ' ' + t('card.availableCount', 'disponibles') + '</p>' +
       '</article>';
   }
 
-  /* ───────────────────────── Render ───────────────────────── */
   const panels = { available: $('panel-available'), occupied: $('panel-occupied'), sale: $('panel-sale') };
 
   function bucket(h) {
@@ -695,25 +688,20 @@
 
   function renderAll() {
     const visible = HOMES.filter(function (h) {
-      const t = h.listingType || 'rent';
-      return PUBLISH[t === 'build' ? 'build' : t] !== false;
+      const type = h.listingType || 'rent';
+      return PUBLISH[type === 'build' ? 'build' : type] !== false;
     });
-
     Object.keys(panels).forEach(function (k) {
       panels[k].innerHTML = visible.filter(function (h) { return bucket(h) === k; }).map(homeCard).join('');
     });
-
     $('areaGrid').innerHTML = AREAS.map(areaCard).join('');
     $('noAreas').hidden = AREAS.length > 0;
 
-    // The "for sale" tab only exists once selling is switched on and has stock.
     const saleCount = visible.filter(function (h) { return bucket(h) === 'sale'; }).length;
     $('tab-sale').hidden = !(PUBLISH.sale || PUBLISH.build) || saleCount === 0;
-
     applyFilters();
   }
 
-  /* ───────────────────────── Filters ───────────────────────── */
   const fCity = $('fCity'), fPrice = $('fPrice'), fBeds = $('fBeds');
 
   function matches(el) {
@@ -738,21 +726,25 @@
     ['available', 'occupied', 'sale'].forEach(function (k) {
       const tab = $('tab-' + k);
       if (!tab) return;
-      const badge = tab.querySelector('span');
+      const badge = tab.querySelectorAll('span')[1];
       const n = panels[k].querySelectorAll('.home:not([hidden])').length;
       if (badge) badge.textContent = '(' + n + ')';
     });
 
-    const openPanel = Object.keys(panels).filter(function (k) { return !panels[k].hidden; })[0];
-    const inPanel = openPanel ? panels[openPanel].querySelectorAll('.home:not([hidden])').length : 0;
+    const openKey = Object.keys(panels).filter(function (k) { return !panels[k].hidden; })[0];
+    const inPanel = openKey ? panels[openKey].querySelectorAll('.home:not([hidden])').length : 0;
     $('emptyState').hidden = inPanel > 0;
 
     const filtered = fCity.value || fPrice.value || fBeds.value;
     $('filterStatus').textContent = HOMES.length === 0
-      ? 'No homes listed online right now — message us and we will tell you what is coming up.'
+      ? t('status.none', 'Ahora mismo no hay casas publicadas — escríbanos y le decimos qué viene.')
       : filtered
-        ? shown + (shown === 1 ? ' home matches' : ' homes match') + ' what you are looking for.'
-        : 'Showing all ' + HOMES.length + (HOMES.length === 1 ? ' home.' : ' homes.');
+        ? shown + ' ' + (shown === 1
+            ? t('status.matchOne', 'casa coincide con lo que busca.')
+            : t('status.matchMany', 'casas coinciden con lo que busca.'))
+        : (HOMES.length === 1
+            ? t('status.allOne', 'Mostrando 1 casa.')
+            : t('status.allMany', 'Mostrando las {n} casas.').replace('{n}', HOMES.length));
   }
 
   $('quickFilter').addEventListener('submit', function (e) {
@@ -763,18 +755,17 @@
   $('quickFilter').addEventListener('reset', function () { setTimeout(applyFilters, 0); });
   [fCity, fPrice, fBeds].forEach(function (el) { el.addEventListener('change', applyFilters); });
 
-  /* ───────────────────────── Tabs ───────────────────────── */
   const tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
   function selectTab(tab, focus) {
-    tabs.forEach(function (t) {
-      const on = t === tab;
-      t.setAttribute('aria-selected', String(on));
-      t.tabIndex = on ? 0 : -1;
-      t.classList.toggle('border-bronze', on);
-      t.classList.toggle('text-ink', on);
-      t.classList.toggle('border-transparent', !on);
-      t.classList.toggle('text-slate7', !on);
-      panels[t.dataset.tab].hidden = !on;
+    tabs.forEach(function (x) {
+      const on = x === tab;
+      x.setAttribute('aria-selected', String(on));
+      x.tabIndex = on ? 0 : -1;
+      x.classList.toggle('border-bronze', on);
+      x.classList.toggle('text-ink', on);
+      x.classList.toggle('border-transparent', !on);
+      x.classList.toggle('text-slate7', !on);
+      panels[x.dataset.tab].hidden = !on;
     });
     if (focus) tab.focus();
     applyFilters();
@@ -785,7 +776,7 @@
       const map = { ArrowRight: 1, ArrowLeft: -1, Home: 'first', End: 'last' };
       if (!(e.key in map)) return;
       e.preventDefault();
-      const shown = tabs.filter(function (t) { return !t.hidden; });
+      const shown = tabs.filter(function (x) { return !x.hidden; });
       const at = shown.indexOf(tab);
       const next = map[e.key] === 'first' ? shown[0]
         : map[e.key] === 'last' ? shown[shown.length - 1]
@@ -794,7 +785,6 @@
     });
   });
 
-  /* ───────────────────── Dialogs ───────────────────── */
   const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
   let openDialog = null, lastFocused = null;
 
@@ -807,7 +797,6 @@
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
-
   function openPanel(panel, scrim, trigger) {
     lastFocused = trigger || document.activeElement;
     scrim.hidden = false; panel.hidden = false;
@@ -841,8 +830,8 @@
     const h = HOMES.filter(function (x) { return x.id === id; })[0];
     if (!h) return;
     const forSale = h.listingType === 'sale';
-    $('planEyebrow').textContent = h.availability === 'occupied' ? 'Currently rented'
-      : forSale ? 'For sale' : 'Available';
+    $('planEyebrow').textContent = h.availability === 'occupied' ? t('modal.rented', 'Rentada ahora')
+      : forSale ? t('modal.forSale', 'En venta') : t('modal.available', 'Disponible');
     $('planTitle').textContent = h.title;
     $('planSub').textContent = [h.area, CITY_LABEL[h.city] || h.city].filter(Boolean).join(' · ');
     $('planDesc').textContent = h.description || '';
@@ -859,20 +848,24 @@
         '</dt><dd class="mt-0.5 text-lg font-bold">' + v + '</dd></div>';
     };
     $('planStats').innerHTML =
-      stat(forSale ? 'Price' : 'Rent', forSale ? usd(h.price) : usd(h.rent) + '/mo') +
-      stat('Bedrooms', h.beds || '—') +
-      stat('Bathrooms', h.baths || '—') +
-      stat('Square feet', h.sqft ? Number(h.sqft).toLocaleString('en-US') : '—');
+      stat(forSale ? t('modal.price', 'Precio') : t('modal.rent', 'Renta'),
+           forSale ? usd(h.price) : usd(h.rent) + '/' + t('card.perMonth', 'mes')) +
+      (!forSale && h.rentYear
+        ? stat(t('modal.rentYear', 'Renta anual'), usd(h.rentYear) + '/' + t('card.perYear', 'año'))
+        : '') +
+      stat(t('modal.beds', 'Recámaras'), h.beds || '—') +
+      stat(t('modal.baths', 'Baños'), h.baths || '—') +
+      stat(t('modal.sqft', 'Pies²'), h.sqft ? Number(h.sqft).toLocaleString('en-US') : '—');
 
-    $('planWhatsApp').href = waLink('Hi, I am interested in ' + h.title +
-      (h.area ? ' in ' + h.area : '') + '. Is it still available?');
+    $('planWhatsApp').href = waLink(t('wa.interested', 'Hola, me interesa') + ' ' + h.title +
+      (h.area ? ' (' + h.area + ')' : '') + '. ' + t('wa.stillAvailable', '¿Todavía está disponible?'));
     openPanel(modal, modalScrim, trigger);
   }
   function closeModal() { closePanel(modal, modalScrim); }
 
   document.addEventListener('click', function (e) {
-    const t = e.target.closest('[data-home]');
-    if (t) openHome(t.dataset.home, t);
+    const target = e.target.closest('[data-home]');
+    if (target) openHome(target.dataset.home, target);
   });
   $('planClose').addEventListener('click', closeModal);
   modalScrim.addEventListener('click', closeModal);
@@ -881,7 +874,6 @@
     trap(e);
   });
 
-  /* ───────────────────────── Enquiry form ───────────────────────── */
   const form = $('tourForm'), status = $('formStatus');
   function flag(input, errId, bad) {
     $(errId).hidden = !bad;
@@ -910,7 +902,7 @@
     const first = badName ? name : badPhone ? phone : badEmail ? email : badCity ? city : badConsent ? consent : null;
     if (first) {
       status.className = 'text-sm font-medium text-brick';
-      status.textContent = 'Please check the highlighted boxes.';
+      status.textContent = t('form.fix', 'Revise los campos marcados por favor.');
       first.focus();
       return;
     }
@@ -923,58 +915,68 @@
     const firstName = payload.name.split(' ')[0];
 
     function mailto(p) {
-      const body = ['Rental enquiry', '', 'Name:     ' + p.name, 'Phone:    ' + p.phone,
-        'Email:    ' + (p.email || '-'), 'City:     ' + p.city,
-        'Budget:   ' + (p.budget || 'Not sure'), 'When:     ' + (p.timeline || 'Not sure'),
+      const body = ['Solicitud de renta', '', 'Nombre:     ' + p.name, 'Teléfono:   ' + p.phone,
+        'Correo:     ' + (p.email || '-'), 'Ciudad:     ' + p.city,
+        'Presupuesto:' + (p.budget || '-'), 'Cuándo:     ' + (p.timeline || '-'),
         '', p.message].join(String.fromCharCode(10));
       return 'mailto:' + CONFIG.salesEmail +
-        '?subject=' + encodeURIComponent('Rental enquiry - ' + p.name + ' - ' + p.city) +
+        '?subject=' + encodeURIComponent('Renta - ' + p.name + ' - ' + p.city) +
         '&body=' + encodeURIComponent(body);
     }
 
     if (CONFIG.endpoint) {
       status.className = 'text-sm font-medium text-slate7';
-      status.textContent = 'Sending' + String.fromCharCode(8230);
+      status.textContent = t('form.sending', 'Enviando…');
       fetch(CONFIG.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload) })
         .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); })
         .then(function () {
           status.className = 'text-sm font-medium text-ink';
-          status.textContent = 'Thanks ' + firstName + ', we will call you back. For a faster answer, message us on WhatsApp.';
+          status.textContent = t('form.thanks', 'Gracias') + ' ' + firstName + '.';
           form.reset();
         })
         .catch(function (err) {
           status.className = 'text-sm font-medium text-brick';
-          status.textContent = 'That did not send (' + err.message + '). ';
+          status.textContent = t('form.failed', 'No se pudo enviar') + ' (' + err.message + '). ';
           status.insertAdjacentHTML('beforeend',
-            '<a class="font-semibold text-leaf underline" href="' + waLink('Hi, I sent a form but it failed.') + '" target="_blank" rel="noopener">Message us on WhatsApp instead</a>.');
+            '<a class="font-semibold text-leaf underline" href="' + waLink('') + '" target="_blank" rel="noopener">' +
+            t('form.waInstead', 'Escríbanos por WhatsApp') + '</a>.');
         });
       return;
     }
 
     status.className = 'text-sm font-medium text-ink';
-    status.textContent = 'Thanks ' + firstName + '. ';
+    status.textContent = t('form.thanks', 'Gracias') + ' ' + firstName + '. ';
     status.insertAdjacentHTML('beforeend',
-      '<a class="font-semibold text-leaf underline" href="' + waLink('Hi, I am looking for a house to rent in ' + payload.city + '.') +
-      '" target="_blank" rel="noopener">Send it now on WhatsApp</a> for the fastest answer, or ' +
-      '<a class="font-semibold text-bronze underline" href="' + mailto(payload) + '">email it</a>.');
+      '<a class="font-semibold text-leaf underline" href="' +
+      waLink(t('wa.looking', 'Hola, estoy buscando una casa para rentar en ') + payload.city) +
+      '" target="_blank" rel="noopener">' + t('form.sendNow', 'Mándelo ahora por WhatsApp') + '</a> ' +
+      t('form.forFastest', 'para la respuesta más rápida, o') + ' <a class="font-semibold text-bronze underline" href="' +
+      mailto(payload) + '">' + t('form.emailIt', 'mándelo por correo') + '</a>.');
     form.reset();
   });
 
-  /* ───────────────────────── Social links ───────────────────────── */
   function renderSocial(profiles) {
     const map = { facebook: 'Facebook', instagram: 'Instagram', tiktok: 'TikTok',
                   youtube: 'YouTube', googleBusiness: 'Google' };
-    const html = Object.keys(map).filter(function (k) { return profiles && profiles[k]; })
+    $('socialLinks').innerHTML = Object.keys(map)
+      .filter(function (k) { return profiles && profiles[k]; })
       .map(function (k) {
         return '<a href="' + esc(profiles[k]) + '" target="_blank" rel="noopener" ' +
           'class="rounded-lg border border-line px-3 py-2 text-xs font-semibold text-slate7 hover:border-bronze hover:text-bronze">' +
           map[k] + '</a>';
       }).join('');
-    $('socialLinks').innerHTML = html;
   }
 
-  /* ───────────────────────── Load ───────────────────────── */
+  // Re-render anything built in script when the language changes.
+  document.addEventListener('languagechange', function () {
+    wireWhatsApp();
+    if (HOMES.length || AREAS.length) renderAll(); else applyFilters();
+  });
+
+  I18N.init();
+  wireWhatsApp();
+
   fetch('data/properties.json', { cache: 'no-store' })
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (d) {
@@ -985,13 +987,13 @@
     })
     .catch(function (err) {
       $('emptyState').hidden = false;
-      $('filterStatus').textContent = 'Listings could not be loaded (' + err.message + ').';
+      $('filterStatus').textContent = t('status.failed', 'No se pudieron cargar las casas') + ' (' + err.message + ').';
     });
 
   fetch('data/promotions.json', { cache: 'no-store' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (p) { if (p) renderSocial(p.profiles); })
-    .catch(function () { /* social links are optional */ });
+    .catch(function () { /* opcional */ });
 
   $('year').textContent = new Date().getFullYear();
 })();

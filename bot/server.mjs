@@ -185,6 +185,81 @@ const server = createServer(async (req, res) => {
       return json(res, 200, { ok: true, ready: readiness(merged) });
     }
 
+    /* ── Tenant portal posts maintenance requests and complaints here ──── */
+    if (req.method === 'POST' && url.pathname === '/api/ticket') {
+      // Public by necessity: tenants are not signed in. Kept safe by accepting
+      // only a fixed shape, capping the size, and never echoing anything back.
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      const body = await readBody(req);
+      if (body.length > 8000) return json(res, 413, { error: 'Too long' });
+
+      let form;
+      try { form = JSON.parse(body || '{}'); } catch { return json(res, 400, { error: 'Bad request' }); }
+
+      const clean = (v, max) => String(v == null ? '' : v).slice(0, max).trim();
+      const ticket = {
+        id: 't-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5),
+        reference: clean(form.reference, 24),
+        tenant: clean(form.name, 80),
+        unit: clean(form.unit, 120),
+        contact: clean(form.email || form.phone, 120),
+        kind: ['maintenance', 'complaint', 'question'].includes(form.kind) ? form.kind : 'maintenance',
+        category: clean(form.category, 80),
+        urgency: ['routine', 'priority', 'urgent'].includes(form.urgency) ? form.urgency : 'routine',
+        status: 'open',
+        detail: clean(form.detail, 4000),
+        notes: '',
+        created: new Date().toISOString(),
+      };
+
+      if (!ticket.tenant || !ticket.detail) {
+        return json(res, 400, { error: 'Name and description are required' });
+      }
+
+      try {
+        await update(cfg, 'data/tickets.json', (d) => {
+          d.tickets = d.tickets || [];
+          d.tickets.push(ticket);
+          return d;
+        }, `Tenant ${ticket.kind} from the portal`);
+      } catch (err) {
+        console.error('[bot] could not save ticket:', err.message);
+        return json(res, 502, { error: 'Could not save that. Please call us.' });
+      }
+
+      // Tell the owner straight away — an urgent repair should not wait for
+      // someone to happen to open the admin page.
+      const owner = (cfg.whatsapp.allowedNumbers || [])[0];
+      if (owner && cfg.whatsapp.accessToken) {
+        const flag = ticket.urgency === 'urgent' ? '\u{1F6A8} URGENTE\n\n' : '';
+        sendText(cfg, owner,
+          `${flag}Nuevo reporte de inquilino
+
+` +
+          `${ticket.tenant} — ${ticket.unit}
+` +
+          `${ticket.kind} · ${ticket.category}
+
+` +
+          `${ticket.detail}
+
+` +
+          `Contacto: ${ticket.contact || '—'}`
+        ).catch((e) => console.error('[bot] could not notify owner:', e.message));
+      }
+
+      return json(res, 200, { ok: true, reference: ticket.reference || ticket.id });
+    }
+
+    if (req.method === 'OPTIONS' && url.pathname === '/api/ticket') {
+      res.writeHead(204, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      });
+      return res.end();
+    }
+
     // Sends a test message so the client can confirm WhatsApp works.
     if (req.method === 'POST' && url.pathname === '/api/test-whatsapp') {
       if (!hasSession(req)) return json(res, 401, { error: 'Sign in first.' });

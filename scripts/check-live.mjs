@@ -38,7 +38,9 @@ try {
 }
 
 check('page is not an error stub', html.length > 20_000, `${html.length} bytes`);
-check('rental sections are present', /Homes for rent/i.test(html));
+check('rental sections are present', /Casas en renta/i.test(html));
+check('Spanish is the default', /<html lang="es"/.test(html));
+check('the language toggle shipped', /data-lang-toggle/.test(html));
 check('availability tabs shipped',
   ['panel-available', 'panel-occupied', 'panel-sale'].every(id => html.includes(id)));
 check('the WhatsApp number is wired in', /wa\.me\/14326069495|14326069495/.test(html));
@@ -86,7 +88,7 @@ for (const url of assets) {
 }
 
 // ── the data the site renders from ───────────────────────────────────────────
-for (const file of ['data/properties.json', 'data/promotions.json']) {
+for (const file of ['data/properties.json', 'data/promotions.json', 'data/tickets.json']) {
   try {
     const res = await get(`${BASE}${file}`);
     const body = await res.json();
