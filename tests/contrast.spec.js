@@ -80,7 +80,7 @@ test('the resident portal meets AA contrast, dashboard included', async ({ page 
 
 test('the complaint path meets AA contrast', async ({ page }) => {
   await page.goto('/status.html');
-  await page.getByRole('radio', { name: 'Complaint' }).check();
+  await page.getByRole('radio', { name: 'Queja' }).check();
   await expect(page.locator('#complaintNote')).toBeVisible();
   const failures = await page.evaluate(findFailures);
   expect(failures, `${failures.length} element(s) below AA`).toEqual([]);

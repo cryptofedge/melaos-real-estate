@@ -34,8 +34,8 @@ test.describe('opening the demo', () => {
 
   test('says plainly that nothing is saved', async ({ page }) => {
     await page.goto('/admin.html?demo=1');
-    await expect(page.locator('#demoBanner')).toContainText(/nothing is saved/i);
-    await expect(page.locator('#demoBanner')).toContainText(/not affected/i);
+    await expect(page.locator('#demoBanner')).toContainText(/nada se guarda/i);
+    await expect(page.locator('#demoBanner')).toContainText(/no se toca/i);
   });
 
   test('shows sample properties, not the real portfolio', async ({ page }) => {
@@ -93,7 +93,7 @@ test.describe('the demo cannot change anything real', () => {
     await page.locator('#publish').click();
 
     await expect(page.locator('#log')).toContainText(/demo/i);
-    await expect(page.locator('#log')).toContainText(/nothing is published/i);
+    await expect(page.locator('#log')).toContainText(/no se publica/i);
     expect(calls, 'publish must not reach GitHub in demo mode').toEqual([]);
   });
 

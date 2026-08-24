@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Property Admin — Melao's Real Estate Development</title>
+<title>Administración — Melao's Real Estate Development</title>
 <meta name="robots" content="noindex, nofollow" />
 <meta name="theme-color" content="#111827" />
 <link rel="icon" href="assets/favicon.png" type="image/png" />
@@ -163,12 +163,13 @@
   <div class="shell">
     <div class="brand">
       <span class="mark"><img src="assets/logo.svg" alt="" /></span>
-      <span><b>MELAO&rsquo;S</b><span>Property Admin</span></span>
+      <span><b>MELAO&rsquo;S</b><span data-i18n="adm.tagline">Administración</span></span>
     </div>
     <div class="topbar-actions">
+      <button type="button" data-lang-toggle class="btn">English</button>
       <span id="who" hidden class="small muted"></span>
-      <button id="signOut" hidden type="button" class="btn">Sign out</button>
-      <a href="index.html" class="small" style="font-weight:600">View site &rarr;</a>
+      <button id="signOut" hidden type="button" class="btn" data-i18n="adm.signOut">Salir</button>
+      <a href="index.html" class="small" style="font-weight:600" data-i18n="adm.viewSite">Ver el sitio &rarr;</a>
     </div>
   </div>
 </header>
@@ -177,7 +178,7 @@
 
 <!-- ═══════════════════════ SIGN IN ═══════════════════════ -->
 <section id="signIn">
-  <h1 style="font-size:1.9rem">Sign in to edit properties</h1>
+  <h1 style="font-size:1.9rem" data-i18n="adm.signInTitle">Entre para editar las propiedades</h1>
   <p class="muted" style="max-width:42rem">
     Changes are saved straight into the website&rsquo;s repository, so every edit is recorded
     under your own name and can be undone. You need a GitHub access token to do that.
@@ -185,7 +186,7 @@
 
   <form id="tokenForm" class="panel stack" style="max-width:36rem; margin-top:2rem" novalidate>
     <div>
-      <label class="lbl" for="token">GitHub access token</label>
+      <label class="lbl" for="token" data-i18n="adm.token">Token de acceso de GitHub</label>
       <input id="token" type="password" class="field mono" autocomplete="off"
              spellcheck="false" placeholder="github_pat_..." aria-describedby="tokenErr" />
       <p id="tokenErr" hidden class="err" style="margin:.5rem 0 0"></p>
@@ -198,16 +199,16 @@
       </span>
     </label>
 
-    <button type="submit" class="btn btn-primary">Sign in</button>
+    <button type="submit" class="btn btn-primary" data-i18n="adm.signIn">Entrar</button>
   </form>
 
   <div class="panel" style="max-width:36rem; margin-top:1.25rem">
-    <h2>Just looking?</h2>
+    <h2 data-i18n="adm.justLooking">¿Solo quiere ver?</h2>
     <p class="small muted" style="margin:.5rem 0 1rem">
       Open a demo with sample properties. Everything works &mdash; editing, photos,
       campaigns &mdash; but nothing is saved and the real website is never touched.
     </p>
-    <button id="tryDemo" type="button" class="btn">Open the demo</button>
+    <button id="tryDemo" type="button" class="btn" data-i18n="adm.openDemo">Abrir la demostración</button>
   </div>
 
   <details class="panel" style="max-width:44rem; margin-top:1.5rem">
@@ -233,20 +234,21 @@
 <section id="editor" hidden>
   <div id="demoBanner" hidden style="background:#FEF3C7; border:1px solid #FCD34D;
        border-radius:.75rem; padding:1rem 1.25rem; margin-bottom:1.5rem;">
-    <strong>Demo mode.</strong> These are made-up properties. Change anything you like &mdash;
-    nothing is saved and the live website is not affected.
-    <button id="exitDemo" type="button" class="btn" style="margin-left:.75rem">Leave demo</button>
+    <strong data-i18n="adm.demoBanner">Modo demostración.</strong>
+    <span data-i18n="adm.demoBody">Son propiedades inventadas. Cambie lo que quiera: nada se guarda
+    y el sitio real no se toca.</span>
+    <button id="exitDemo" type="button" class="btn" data-i18n="adm.leaveDemo" style="margin-left:.75rem">Salir de la demostración</button>
   </div>
 
   <div class="head">
     <div>
-      <h1 style="font-size:1.9rem">Properties</h1>
+      <h1 style="font-size:1.9rem" data-i18n="adm.properties">Propiedades</h1>
       <p id="dirtyNote" class="small muted" style="margin:.5rem 0 0">Everything is published.</p>
     </div>
     <div class="actions">
-      <button id="addHome" type="button" class="btn">Add a home</button>
-      <button id="addCommunity" type="button" class="btn">Add a community</button>
-      <button id="publish" type="button" class="btn btn-gold" disabled>Publish changes</button>
+      <button id="addHome" type="button" class="btn" data-i18n="adm.addHome">Agregar casa</button>
+      <button id="addCommunity" type="button" class="btn" data-i18n="adm.addArea">Agregar zona</button>
+      <button id="publish" type="button" class="btn btn-gold" disabled data-i18n="adm.publish">Publicar cambios</button>
     </div>
   </div>
 
@@ -254,13 +256,13 @@
 
   <div class="tabs" role="tablist" aria-label="What to edit">
     <button role="tab" id="tab-homes" aria-controls="panel-homes" aria-selected="true"
-            data-panel="homes" class="tab">Homes <span style="font-weight:400; opacity:.7">(0)</span></button>
+            data-panel="homes" class="tab"><span data-i18n="adm.tabHomes">Casas</span> <span style="font-weight:400; opacity:.7">(0)</span></button>
     <button role="tab" id="tab-communities" aria-controls="panel-communities" aria-selected="false"
-            tabindex="-1" data-panel="communities" class="tab">Areas <span style="font-weight:400; opacity:.7">(0)</span></button>
+            tabindex="-1" data-panel="communities" class="tab"><span data-i18n="adm.tabAreas">Zonas</span> <span style="font-weight:400; opacity:.7">(0)</span></button>
     <button role="tab" id="tab-tickets" aria-controls="panel-tickets" aria-selected="false"
-            tabindex="-1" data-panel="tickets" class="tab">Tenant requests <span style="font-weight:400; opacity:.7">(0)</span></button>
+            tabindex="-1" data-panel="tickets" class="tab"><span data-i18n="adm.tabTickets">Reportes de inquilinos</span> <span style="font-weight:400; opacity:.7">(0)</span></button>
     <button role="tab" id="tab-promos" aria-controls="panel-promos" aria-selected="false"
-            tabindex="-1" data-panel="promos" class="tab">Promotions <span style="font-weight:400; opacity:.7">(0)</span></button>
+            tabindex="-1" data-panel="promos" class="tab"><span data-i18n="adm.tabPromos">Promociones</span> <span style="font-weight:400; opacity:.7">(0)</span></button>
   </div>
 
   <div id="panel-homes" role="tabpanel" aria-labelledby="tab-homes" class="grid"></div>
@@ -269,7 +271,7 @@
   <div id="panel-tickets" role="tabpanel" aria-labelledby="tab-tickets" hidden>
     <div class="head" style="margin-top:1.5rem">
       <div>
-        <h2 style="font-size:1.1rem">Maintenance and complaints</h2>
+        <h2 style="font-size:1.1rem" data-i18n="adm.ticketsTitle">Reparaciones y quejas</h2>
         <p class="tiny muted" style="margin:.25rem 0 0">
           What current tenants have reported. Open ones first.
         </p>
@@ -278,7 +280,7 @@
         <label class="check" style="align-items:center">
           <input id="showClosed" type="checkbox" /> <span class="small">Show closed</span>
         </label>
-        <button id="addTicket" type="button" class="btn">Log a request</button>
+        <button id="addTicket" type="button" class="btn" data-i18n="adm.logRequest">Registrar reporte</button>
       </div>
     </div>
     <div id="ticketList"></div>
@@ -286,7 +288,7 @@
 
   <div id="panel-promos" role="tabpanel" aria-labelledby="tab-promos" hidden>
     <section class="panel" style="margin-top:1.5rem">
-      <h2 style="font-size:1.1rem">Social profiles</h2>
+      <h2 style="font-size:1.1rem" data-i18n="adm.social">Redes sociales</h2>
       <p class="tiny muted" style="margin:.25rem 0 1rem">These appear in the website footer.</p>
       <div class="row two">
         <div><label class="lbl" for="pFacebook">Facebook</label><input id="pFacebook" class="field" placeholder="https://facebook.com/..." /></div>
@@ -303,8 +305,8 @@
     </section>
 
     <div class="head" style="margin-top:2rem">
-      <h2 style="font-size:1.1rem">Campaigns</h2>
-      <button id="addCampaign" type="button" class="btn">New campaign</button>
+      <h2 style="font-size:1.1rem" data-i18n="adm.campaigns">Campañas</h2>
+      <button id="addCampaign" type="button" class="btn" data-i18n="adm.newCampaign">Nueva campaña</button>
     </div>
     <div id="campaignGrid" class="grid"></div>
   </div>
@@ -318,21 +320,22 @@
     <div class="dhead">
       <h2 id="dlgTitle" style="font-size:1.25rem"></h2>
       <button id="dlgClose" type="button" class="icon-btn">
-        <span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Close</span>
+        <span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" data-i18n="adm.close">Cerrar</span>
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
     <form id="dlgForm" novalidate></form>
     <div class="dfoot">
-      <button id="dlgDelete" type="button" class="btn-link">Delete this listing</button>
+      <button id="dlgDelete" type="button" class="btn-link" data-i18n="adm.delete">Borrar</button>
       <div style="display:flex; gap:.5rem">
-        <button id="dlgCancel" type="button" class="btn">Cancel</button>
-        <button id="dlgSave" type="button" class="btn btn-primary">Done</button>
+        <button id="dlgCancel" type="button" class="btn" data-i18n="adm.cancel">Cancelar</button>
+        <button id="dlgSave" type="button" class="btn btn-primary" data-i18n="adm.done">Listo</button>
       </div>
     </div>
   </div>
 </div>
 
+<script src="assets/i18n.js"></script>
 <script>
 (function () {
   'use strict';
@@ -346,6 +349,7 @@
   const KEY    = 'melaos.admin.token';
 
   const $ = (id) => document.getElementById(id);
+  const t = (k, es) => I18N.t(k, es);
   const esc = (v) => String(v == null ? '' : v)
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -496,6 +500,8 @@
     }
   });
 
+  document.addEventListener('languagechange', function () { if (data) render(); });
+
   $('tryDemo').addEventListener('click', startDemo);
   $('exitDemo').addEventListener('click', function () {
     location.href = location.pathname;
@@ -566,7 +572,7 @@
     if (photos && photos.length) {
       return '<img src="' + esc(srcFor(photos[0])) + '" alt="" loading="lazy" />';
     }
-    return '<span class="none">No photo</span>';
+    return '<span class="none">' + t('adm.noPhoto', 'Sin foto') + '</span>';
   }
 
   const commName = (id) => {
@@ -578,17 +584,17 @@
     if (kind === 'campaign') {
       return '<article class="card"><div class="body">' +
         '<h3>' + esc(item.platform) + '</h3>' +
-        '<p class="tiny muted" style="margin:.25rem 0 0">' + money(item.dailyBudget) + '/day for ' +
-          (item.days || 0) + ' days &middot; ' + esc(item.status || 'draft') + '</p>' +
+        '<p class="tiny muted" style="margin:.25rem 0 0">' + money(item.dailyBudget) + t('adm.perDay','/día por') + ' ' +
+          (item.days || 0) + ' ' + t('adm.days','días') + ' &middot; ' + esc(item.status || 'draft') + '</p>' +
         '<p class="small" style="margin:.5rem 0 0">' + esc((item.message || '').slice(0, 90)) + '</p>' +
-        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="campaign" class="btn">Edit</button>' +
+        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="campaign" class="btn">' + t('adm.edit','Editar') + '</button>' +
         '</div></article>';
     }
     if (kind === 'area') {
       return '<article class="card"><div class="body">' +
         '<h3>' + esc(item.name) + '</h3>' +
         '<p class="tiny muted" style="margin:.25rem 0 0">' + esc(item.city || '') + '</p>' +
-        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="area" class="btn">Edit</button>' +
+        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="area" class="btn">' + t('adm.edit','Editar') + '</button>' +
         '</div></article>';
     }
 
@@ -599,15 +605,15 @@
     const state = item.availability === 'occupied' ? 'Rented' : 'Available';
     return '<article class="card">' +
       '<div class="thumb">' + thumb(photos) +
-        '<span class="badge">' + photos.length + ' photo' + (photos.length === 1 ? '' : 's') + '</span>' +
-        (waiting ? '<span class="pending">' + waiting + ' not yet published</span>' : '') +
+        '<span class="badge">' + photos.length + ' ' + (photos.length === 1 ? t('adm.photo','foto') : t('adm.photos','fotos')) + '</span>' +
+        (waiting ? '<span class="pending">' + waiting + ' ' + t('adm.notPublished','sin publicar') + '</span>' : '') +
       '</div>' +
       '<div class="body">' +
         '<h3>' + esc(item.title) + '</h3>' +
         '<p class="tiny muted" style="margin:.25rem 0 0">' + esc(item.area || '') + ' &middot; ' +
           esc(item.city || '') + ' &middot; ' + state + '</p>' +
         '<p class="small" style="margin:.5rem 0 0; font-weight:600">' + price + '</p>' +
-        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="home" class="btn">Edit</button>' +
+        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="home" class="btn">' + t('adm.edit','Editar') + '</button>' +
       '</div></article>';
   }
 
@@ -631,11 +637,11 @@
       '<p class="small" style="margin:.75rem 0 0">' + esc(tk.detail || '') + '</p>' +
       (tk.notes ? '<p class="tiny muted" style="margin:.5rem 0 0"><strong>Notes:</strong> ' + esc(tk.notes) + '</p>' : '') +
       '<div style="margin-top:.75rem; display:flex; gap:.5rem; flex-wrap:wrap">' +
-        '<button type="button" data-edit="' + esc(tk.id) + '" data-kind="ticket" class="btn">Open</button>' +
+        '<button type="button" data-edit="' + esc(tk.id) + '" data-kind="ticket" class="btn">' + t('adm.open','Abrir') + '</button>' +
         (tk.status !== 'closed'
-          ? '<button type="button" data-close-ticket="' + esc(tk.id) + '" class="btn">Mark done</button>'
+          ? '<button type="button" data-close-ticket="' + esc(tk.id) + '" class="btn">' + t('adm.markDone','Marcar hecho') + '</button>'
           : '') +
-        (tk.contact ? '<a class="btn" href="' + (/@/.test(tk.contact) ? 'mailto:' : 'tel:') + esc(tk.contact) + '">Contact</a>' : '') +
+        (tk.contact ? '<a class="btn" href="' + (/@/.test(tk.contact) ? 'mailto:' : 'tel:') + esc(tk.contact) + '">' + t('adm.contact', 'Contactar') + '</a>' : '') +
       '</div></article>';
   }
 
@@ -653,20 +659,21 @@
 
     $('ticketList').innerHTML = rows.length
       ? rows.map(ticketRow).join('')
-      : '<p class="panel small muted" style="margin-top:1rem">Nothing outstanding. ' +
-        'Tenant reports arrive here from the tenant portal and the bot.</p>';
+      : '<p class="panel small muted" style="margin-top:1rem">' +
+        t('adm.nothingOutstanding',
+          'Nada pendiente. Los reportes de inquilinos llegan aquí desde el portal y el bot.') + '</p>';
 
     const open = tickets.tickets.filter(function (x) { return x.status !== 'closed'; }).length;
-    $('tab-tickets').querySelector('span').textContent = '(' + open + ')';
+    $('tab-tickets').querySelectorAll('span')[1].textContent = '(' + open + ')';
   }
 
   function render() {
     $('panel-homes').innerHTML = data.homes.map(function (h) { return card(h, 'home'); }).join('');
     $('panel-communities').innerHTML = data.neighborhoods.map(function (a) { return card(a, 'area'); }).join('');
     $('campaignGrid').innerHTML = promos.campaigns.map(function (c) { return card(c, 'campaign'); }).join('');
-    $('tab-homes').querySelector('span').textContent = '(' + data.homes.length + ')';
-    $('tab-communities').querySelector('span').textContent = '(' + data.neighborhoods.length + ')';
-    $('tab-promos').querySelector('span').textContent = '(' + promos.campaigns.length + ')';
+    $('tab-homes').querySelectorAll('span')[1].textContent = '(' + data.homes.length + ')';
+    $('tab-communities').querySelectorAll('span')[1].textContent = '(' + data.neighborhoods.length + ')';
+    $('tab-promos').querySelectorAll('span')[1].textContent = '(' + promos.campaigns.length + ')';
     renderTickets();
 
     ['facebook', 'instagram', 'tiktok', 'googleBusiness'].forEach(function (k) {
@@ -678,8 +685,8 @@
     $('publish').disabled = !changed;
     const waiting = Object.keys(pending).length;
     $('dirtyNote').textContent = changed
-      ? 'You have unpublished changes' + (waiting ? ', including ' + waiting + ' photo' + (waiting === 1 ? '' : 's') + ' not yet uploaded' : '') + '.'
-      : 'Everything is published.';
+      ? t('adm.unpublished','Tiene cambios sin publicar') + (waiting ? ', including ' + waiting + ' photo' + (waiting === 1 ? '' : 's') + ' not yet uploaded' : '') + '.'
+      : t('adm.published','Todo está publicado.');
     $('dirtyNote').className = 'small' + (changed ? '' : ' muted');
     $('dirtyNote').style.fontWeight = changed ? '600' : '400';
     $('dirtyNote').style.color = changed ? 'var(--bronze)' : '';
@@ -975,7 +982,8 @@
   /* ─────────────────────────── Publish ─────────────────────────── */
   $('publish').addEventListener('click', async function () {
     if (demo) {
-      log('This is the demo — nothing is published. On the real one this would go live in about a minute.', 'good');
+      log(t('adm.demoPublish',
+        'Esto es la demostración: no se publica nada. En el real, esto saldría en línea en un minuto.'), 'good');
       return;
     }
     if (!dirty && !hasPending()) return;
@@ -1013,6 +1021,8 @@
   });
 
   /* ─────────────────────── Resume a session ─────────────────────── */
+  I18N.init();
+
   (async function () {
     // A ?demo=1 link opens the demo directly, so it can be shared with someone
     // who should never be handed a token.

@@ -110,6 +110,11 @@ try {
     return (statusHtml.match(re) || [])[1] || '';
   };
 
+  check('portal is in Spanish', /Su casa y su contrato/.test(statusHtml));
+  check('portal has the language toggle', /data-lang-toggle/.test(statusHtml));
+  check('portal no longer mentions a construction warranty',
+    !/1-2-10|structural warranty/i.test(statusHtml));
+
   for (const prop of ['og:title', 'og:url', 'og:image']) {
     check(`status ${prop} is absolute or set`,
       prop === 'og:title' ? sMeta(prop).length > 0 : /^https:\/\//.test(sMeta(prop)),

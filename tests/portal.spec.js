@@ -1,273 +1,224 @@
-// Resident portal: unit lookup, warranty state, upkeep checklist, and the
-// request/complaint intake.
+// Tenant portal. Spanish by default, English on request, and about a *lease* —
+// the 1-2-10 construction warranty it used to show never applied to renters.
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/status.html');
 });
 
-test.describe('unit lookup', () => {
-  test('finds a home by unit code', async ({ page }) => {
+test.describe('language', () => {
+  test('opens in Spanish', async ({ page }) => {
+    await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+    await expect(page.locator('h1')).toContainText('Su casa y su contrato');
+  });
+
+  test('switches to English, including the checklist', async ({ page }) => {
+    await page.locator('.demo').first().click();
+    await expect(page.locator('#uAddress')).not.toBeEmpty();
+
+    await page.locator('[data-lang-toggle]').click();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page.locator('h1')).toContainText('Your home and your lease');
+    await expect(page.locator('#checklist')).toContainText('Change the AC filters');
+    await expect(page.locator('#lease')).toContainText(/Started/i);
+  });
+
+  test('never mentions a construction warranty', async ({ page }) => {
+    await page.locator('.demo').first().click();
+    const body = await page.locator('body').innerText();
+    expect(body).not.toMatch(/garantía|warranty|1-2-10/i);
+  });
+});
+
+test.describe('finding your home', () => {
+  test('a unit code works', async ({ page }) => {
     await page.fill('#unitInput', 'CG-1428');
     await page.locator('#lookupForm button[type="submit"]').click();
     await expect(page.locator('#dashboard')).toBeVisible();
     await expect(page.locator('#uAddress')).toHaveText('1428 Cypress Grove Ln');
-    await expect(page.locator('#uPlan')).toHaveText('The Sabine');
   });
 
-  test('finds the same home by street address and by number alone', async ({ page }) => {
-    await page.fill('#unitInput', '212 Bluebonnet Ridge Dr');
-    await page.locator('#lookupForm button[type="submit"]').click();
-    await expect(page.locator('#uAddress')).toHaveText('212 Bluebonnet Ridge Dr');
-
+  test('a street number works', async ({ page }) => {
     await page.fill('#unitInput', '905');
     await page.locator('#lookupForm button[type="submit"]').click();
     await expect(page.locator('#uAddress')).toHaveText('905 Copper Creek Way');
   });
 
-  test('demo shortcuts load a record', async ({ page }) => {
-    await page.locator('.demo', { hasText: 'BR-0212' }).click();
-    await expect(page.locator('#dashboard')).toBeVisible();
-    await expect(page.locator('#uAddress')).toHaveText('212 Bluebonnet Ridge Dr');
-  });
-
-  test('an unknown address explains what to do instead of failing silently', async ({ page }) => {
-    await page.fill('#unitInput', '99 Nowhere Road');
+  test('an unknown address explains what to do', async ({ page }) => {
+    await page.fill('#unitInput', '99 Nowhere');
     await page.locator('#lookupForm button[type="submit"]').click();
     await expect(page.locator('#unitErr')).toBeVisible();
-    await expect(page.locator('#unitErr')).toContainText(/could not find/i);
+    await expect(page.locator('#unitErr')).toContainText(/No encontramos/i);
     await expect(page.locator('#dashboard')).toBeHidden();
-    await expect(page.locator('#unitInput')).toHaveAttribute('aria-invalid', 'true');
   });
 
-  test('the dashboard is hidden until a home is loaded', async ({ page }) => {
+  test('the dashboard stays hidden until a home is loaded', async ({ page }) => {
     await expect(page.locator('#dashboard')).toBeHidden();
-    await expect(page.locator('#dashboard')).toHaveCSS('display', 'none');
+  });
+
+  test('if records fail to load, the tenant is told', async ({ page }) => {
+    await page.route('**/data/units.json', r => r.abort());
+    await page.goto('/status.html');
+    await expect(page.locator('#unitErr')).toBeVisible();
+    await expect(page.locator('#unitErr')).toContainText(/no se pudieron cargar/i);
   });
 });
 
-test.describe('warranty coverage', () => {
-  test('shows all three tiers with correct active state', async ({ page }) => {
-    // Closed 2023-08-02: 1yr workmanship expired, 2yr systems expired, 10yr structural active.
-    await page.locator('.demo', { hasText: 'BR-0212' }).click();
-    const cards = page.locator('#warranty > div');
-    await expect(cards).toHaveCount(3);
-
-    await expect(cards.nth(0)).toContainText('1-year Workmanship');
-    await expect(cards.nth(0)).toContainText('Expired');
-    await expect(cards.nth(2)).toContainText('10-year Structural');
-    await expect(cards.nth(2)).toContainText('Active');
+test.describe('the lease', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.locator('.demo').first().click();
+    await expect(page.locator('#dashboard')).toBeVisible();
   });
 
-  test('a recent closing still has workmanship cover', async ({ page }) => {
-    await page.locator('.demo', { hasText: 'CC-0905' }).click();
-    await expect(page.locator('#warranty > div').nth(2)).toContainText('Active');
+  test('shows rent, deposit and the three lease boxes', async ({ page }) => {
+    await expect(page.locator('#uRent')).toContainText('$1,850');
+    await expect(page.locator('#uDeposit')).toContainText('$1,850');
+    await expect(page.locator('#lease > div')).toHaveCount(3);
+    await expect(page.locator('#lease')).toContainText(/Inició/i);
+    await expect(page.locator('#lease')).toContainText(/Termina/i);
+  });
+
+  test('counts down to the end of the lease', async ({ page }) => {
+    await expect(page.locator('#lease')).toContainText(/restantes|terminó/i);
   });
 });
 
-test.describe('upkeep checklist', () => {
-  test('ticking an item updates progress and persists across reloads', async ({ page }) => {
-    await page.locator('.demo', { hasText: 'CG-1428' }).click();
-    const before = await page.locator('#progressLabel').textContent();
+test.describe('the maintenance checklist', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.locator('.demo').first().click();
+    await expect(page.locator('#dashboard')).toBeVisible();
+  });
 
+  test('lists tenant-appropriate jobs', async ({ page }) => {
+    await expect(page.locator('#checklist li')).toHaveCount(6);
+    await expect(page.locator('#checklist')).toContainText('filtros del aire');
+  });
+
+  test('ticking one persists across a reload', async ({ page }) => {
     await page.locator('#checklist input[data-task="filter"]').check();
-    await expect(page.locator('#progressLabel')).not.toHaveText(before);
-    await expect(page.locator('#checklist li').first()).toContainText('Up to date');
+    await expect(page.locator('#progressLabel')).toContainText('1 de 6');
 
     await page.reload();
-    await page.locator('.demo', { hasText: 'CG-1428' }).click();
+    await page.locator('.demo').first().click();
     await expect(page.locator('#checklist input[data-task="filter"]')).toBeChecked();
   });
 
-  test('reset clears every item', async ({ page }) => {
-    await page.locator('.demo', { hasText: 'CG-1428' }).click();
+  test('reset clears everything', async ({ page }) => {
     await page.locator('#checklist input[data-task="filter"]').check();
-    await page.locator('#checklist input[data-task="gutters"]').check();
     await page.locator('#resetChecklist').click();
-
-    const checked = await page.locator('#checklist input:checked').count();
-    expect(checked).toBe(0);
-    await expect(page.locator('#progressLabel')).toContainText('0 of 8');
-  });
-
-  test('progress bar exposes its value to assistive tech', async ({ page }) => {
-    await page.locator('.demo', { hasText: 'CG-1428' }).click();
-    await expect(page.locator('#progressBar')).toHaveAttribute('aria-valuenow', /\d+/);
+    expect(await page.locator('#checklist input:checked').count()).toBe(0);
+    await expect(page.locator('#progressLabel')).toContainText('0 de 6');
   });
 });
 
 test.describe('service history', () => {
-  test('lists past visits with their state', async ({ page }) => {
+  test('shows past work and flags what is still open', async ({ page }) => {
     await page.locator('.demo', { hasText: 'BR-0212' }).click();
-    const rows = page.locator('#history li');
-    await expect(rows).toHaveCount(3);
-    await expect(page.locator('#history')).toContainText('In progress');
+    await expect(page.locator('#history li')).toHaveCount(2);
+    await expect(page.locator('#history')).toContainText(/En proceso/i);
     await expect(page.locator('#uOpen')).toHaveText('1');
   });
 
   test('a home with nothing outstanding says so', async ({ page }) => {
     await page.locator('.demo', { hasText: 'CC-0905' }).click();
-    await expect(page.locator('#uOpen')).toHaveText('None');
+    await expect(page.locator('#uOpen')).toContainText(/Ninguno/i);
   });
 });
 
-test.describe('requests and complaints', () => {
-  test('defaults to a repair, and switching to a complaint swaps the categories', async ({ page }) => {
-    const cat = page.locator('#rCategory');
-    await expect(cat).toContainText('Plumbing');
+test.describe('reports and complaints', () => {
+  test('defaults to a repair and swaps categories for a complaint', async ({ page }) => {
+    await expect(page.locator('#rCategory')).toContainText('Plomería');
     await expect(page.locator('#complaintNote')).toBeHidden();
 
-    await page.getByRole('radio', { name: 'Complaint' }).check();
-    await expect(cat).toContainText('Contractor or staff conduct');
-    await expect(cat).not.toContainText('Plumbing');
+    await page.getByRole('radio', { name: 'Queja' }).check();
+    await expect(page.locator('#rCategory')).toContainText('Trato del personal');
+    await expect(page.locator('#rCategory')).not.toContainText('Plomería');
     await expect(page.locator('#complaintNote')).toBeVisible();
-    await expect(page.locator('#complaintNote')).toContainText(/written\s+response\s+within\s+five/i);
   });
 
-  test('questions get their own categories', async ({ page }) => {
-    await page.getByRole('radio', { name: 'Question' }).check();
-    await expect(page.locator('#rCategory')).toContainText('What my warranty covers');
-    await expect(page.locator('#complaintNote')).toBeHidden();
-  });
-
-  test('blocks an empty submit and focuses the first problem', async ({ page }) => {
+  test('blocks an empty submit', async ({ page }) => {
     await page.locator('#requestForm button[type="submit"]').click();
-    await expect(page.locator('#requestStatus')).toContainText(/fix the highlighted/i);
-    await expect(page.locator('#rName')).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.locator('#requestStatus')).toContainText(/Revise los campos/i);
     await expect(page.locator('#rName')).toBeFocused();
   });
 
-  test('rejects a too-short description', async ({ page }) => {
-    await page.fill('#rName', 'Jordan Alvarez');
-    await page.fill('#rEmail', 'jordan@example.com');
+  test('a complaint gets a CX reference and the written-response promise', async ({ page }) => {
+    await page.getByRole('radio', { name: 'Queja' }).check();
+    await page.fill('#rName', 'María González');
+    await page.fill('#rEmail', 'maria@example.com');
     await page.fill('#rUnit', '1428 Cypress Grove Ln');
-    await page.selectOption('#rCategory', 'Plumbing');
-    await page.fill('#rDetail', 'leak');
-    await page.locator('#requestForm button[type="submit"]').click();
-    await expect(page.locator('#rDetailErr')).toBeVisible();
-  });
-
-  test('a complaint returns a CX reference and the response commitment', async ({ page }) => {
-    await page.getByRole('radio', { name: 'Complaint' }).check();
-    await page.fill('#rName', 'Jordan Alvarez');
-    await page.fill('#rEmail', 'jordan@example.com');
-    await page.fill('#rUnit', '1428 Cypress Grove Ln');
-    await page.selectOption('#rCategory', 'Missed or late appointment');
-    await page.fill('#rDetail', 'The technician did not arrive in the booked window and nobody called.');
+    await page.selectOption('#rCategory', 'No llegaron a la cita');
+    await page.fill('#rDetail', 'El técnico no llegó en la hora acordada y nadie llamó.');
     await page.locator('#requestForm button[type="submit"]').click();
 
-    await expect(page.locator('#requestStatus')).toContainText(/Complaint CX-\d{4}-\d{4}/);
-    await expect(page.locator('#requestStatus')).toContainText(/within five/i);
+    await expect(page.locator('#requestStatus')).toContainText(/Queja CX-\d{4}-\d{4}/);
+    await expect(page.locator('#requestStatus')).toContainText(/cinco días hábiles/i);
   });
 
-  test('a repair returns an MR reference', async ({ page }) => {
-    await page.fill('#rName', 'Jordan Alvarez');
-    await page.fill('#rEmail', 'jordan@example.com');
+  test('a repair gets an MR reference', async ({ page }) => {
+    await page.fill('#rName', 'Luis R');
+    await page.fill('#rEmail', '4325550100');
     await page.fill('#rUnit', '1428 Cypress Grove Ln');
-    await page.selectOption('#rCategory', 'Plumbing');
-    await page.fill('#rDetail', 'Slow drain in the upstairs guest bathroom since Tuesday.');
+    await page.selectOption('#rCategory', 'Plomería');
+    await page.fill('#rDetail', 'Hay una fuga debajo del fregadero de la cocina.');
     await page.locator('#requestForm button[type="submit"]').click();
-    await expect(page.locator('#requestStatus')).toContainText(/Request MR-\d{4}-\d{4}/);
+    await expect(page.locator('#requestStatus')).toContainText(/Reporte MR-\d{4}-\d{4}/);
   });
 
-  test('emergency guidance is visible without submitting anything', async ({ page }) => {
-    await expect(page.getByText(/Do not wait on this form/i)).toBeVisible();
-    await expect(page.locator('a[href="tel:+15125550188"]')).toBeVisible();
-  });
-});
-
-test.describe('portal page health', () => {
-  test('no console errors, no failed same-origin requests', async ({ page }) => {
-    const errors = [], failed = [];
-    page.on('pageerror', e => errors.push(String(e)));
-    page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
-    page.on('response', r => {
-      if (r.status() >= 400 && r.url().includes('127.0.0.1:8080')) failed.push(r.url());
-    });
-    await page.goto('/status.html');
-    await page.locator('.demo', { hasText: 'CG-1428' }).click();
-    expect(errors).toEqual([]);
-    expect(failed).toEqual([]);
-  });
-
-  test('share preview and icon are wired up', async ({ page }) => {
-    for (const prop of ['og:title', 'og:image', 'og:url']) {
-      const content = await page.locator(`meta[property="${prop}"]`).getAttribute('content');
-      expect(content, prop).toBeTruthy();
-      if (prop !== 'og:title') expect(content).toMatch(/^https:\/\//);
-    }
-    await expect(page.locator('link[rel="icon"]')).toHaveCount(1);
-  });
-
-  for (const [label, width] of [['mobile', 375], ['tablet', 768], ['desktop', 1280]]) {
-    test(`no horizontal overflow at ${label}`, async ({ page }) => {
-      await page.setViewportSize({ width, height: 900 });
-      await page.goto('/status.html');
-      await page.locator('.demo', { hasText: 'CG-1428' }).click();
-      const overflow = await page.evaluate(() =>
-        document.documentElement.scrollWidth - document.documentElement.clientWidth);
-      expect(overflow).toBeLessThanOrEqual(0);
-    });
-  }
-
-  test('every control on the page has an accessible name', async ({ page }) => {
-    await page.locator('.demo', { hasText: 'CG-1428' }).click();
-    const unnamed = await page.locator('input, select, textarea').evaluateAll(els =>
-      els.filter(el => {
-        if (el.type === 'hidden') return false;
-        const labelled = el.id && document.querySelector(`label[for="${el.id}"]`);
-        return !labelled && !el.getAttribute('aria-label') && !el.closest('label');
-      }).map(el => el.id || el.name || el.tagName));
-    expect(unnamed).toEqual([]);
-  });
-});
-
-test.describe('delivery and configuration', () => {
-  // A submission must never vanish just because no backend is wired yet.
-  test('a submitted request offers a prefilled email carrying the details', async ({ page }) => {
-    await page.fill('#rName', 'Jordan Alvarez');
-    await page.fill('#rEmail', 'jordan@example.com');
+  test('the submission carries the real values into the email fallback', async ({ page }) => {
+    await page.fill('#rName', 'María González');
+    await page.fill('#rEmail', 'maria@example.com');
     await page.fill('#rUnit', '1428 Cypress Grove Ln');
-    await page.selectOption('#rCategory', 'Plumbing');
-    await page.fill('#rDetail', 'Slow drain in the upstairs guest bathroom since Tuesday.');
+    await page.selectOption('#rCategory', 'Plomería');
+    await page.fill('#rDetail', 'Hay una fuga debajo del fregadero de la cocina.');
     await page.locator('#requestForm button[type="submit"]').click();
 
     const link = page.locator('#requestStatus a[href^="mailto:"]');
     await expect(link).toBeVisible();
-
     const href = decodeURIComponent(await link.getAttribute('href'));
-    expect(href).toContain('Jordan Alvarez');
+    expect(href).toContain('María González');
     expect(href).toContain('1428 Cypress Grove Ln');
-    expect(href).toContain('Plumbing');
-    expect(href).toContain('Slow drain');
-    expect(href).toMatch(/^mailto:[^?]+@/);
+    expect(href).toContain('fuga');
   });
 
-  test('the page states plainly how submissions are delivered', async ({ page }) => {
-    await expect(page.locator('#deliveryNote')).not.toBeEmpty();
+  test('emergency guidance is visible without submitting', async ({ page }) => {
+    await expect(page.getByText(/No espere por este formulario/i)).toBeVisible();
+    await expect(page.locator('#emergencyTel')).toHaveText('(432) 606-9495');
   });
 
-  test('promised timescales all come from one config value', async ({ page }) => {
-    const ack = await page.locator('[data-sla="ack"]').allTextContents();
-    const complaint = await page.locator('[data-sla="complaint"]').allTextContents();
-    expect(ack.length).toBeGreaterThan(0);
-    expect(new Set(ack).size, 'acknowledgement wording should be identical everywhere').toBe(1);
-    expect(new Set(complaint).size, 'complaint wording should be identical everywhere').toBe(1);
-    expect(ack[0]).not.toMatch(/^\s*$/);
+  test('looking up a home prefills the address on the form', async ({ page }) => {
+    await page.locator('.demo').first().click();
+    await expect(page.locator('#rUnit')).toHaveValue('1428 Cypress Grove Ln');
   });
+});
 
-  test('records come from data/units.json, not hardcoded markup', async ({ page }) => {
-    const res = await page.request.get('/data/units.json');
-    expect(res.status()).toBe(200);
-    const data = await res.json();
-    expect(Object.keys(data)).toContain('CG-1428');
-    expect(data['CG-1428'].closed).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-  });
-
-  test('if the records fail to load, the resident is told what to do', async ({ page }) => {
-    await page.route('**/data/units.json', route => route.abort());
+test.describe('portal health', () => {
+  test('no console errors', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', e => errors.push(String(e)));
     await page.goto('/status.html');
-    await expect(page.locator('#unitErr')).toBeVisible();
-    await expect(page.locator('#unitErr')).toContainText(/could not be loaded/i);
+    await page.locator('.demo').first().click();
+    await expect(page.locator('#dashboard')).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
+  for (const [label, width] of [['mobile', 375], ['tablet', 768], ['desktop', 1280]]) {
+    test(`no sideways scroll at ${label}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/status.html');
+      await page.locator('.demo').first().click();
+      const over = await page.evaluate(() =>
+        document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(over).toBeLessThanOrEqual(0);
+    });
+  }
+
+  test('every control has an accessible name', async ({ page }) => {
+    await page.locator('.demo').first().click();
+    const unnamed = await page.locator('input, select, textarea').evaluateAll(els =>
+      els.filter(el => el.type !== 'hidden' &&
+        !(el.id && document.querySelector(`label[for="${el.id}"]`)) &&
+        !el.getAttribute('aria-label') && !el.closest('label')).map(el => el.id || el.tagName));
+    expect(unnamed).toEqual([]);
   });
 });

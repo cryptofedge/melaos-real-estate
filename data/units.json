@@ -1,69 +1,63 @@
 {
   "CG-1428": {
     "address": "1428 Cypress Grove Ln",
-    "community": "Cypress Grove",
+    "area": "Katy",
     "city": "Katy, TX 77494",
-    "plan": "The Sabine",
-    "closed": "2024-03-15",
+    "rent": 1850,
+    "deposit": 1850,
+    "leaseStart": "2025-03-01",
+    "leaseEnd": "2026-02-28",
     "history": [
       {
-        "date": "2025-02-18",
-        "type": "11-month warranty walk",
-        "note": "Nine items logged, all closed within two weeks.",
-        "state": "closed"
-      },
-      {
-        "date": "2024-04-20",
-        "type": "30-day orientation",
-        "note": "Two drywall touch-ups completed on site.",
-        "state": "closed"
-      },
-      {
         "date": "2026-07-02",
-        "type": "Request — HVAC",
-        "note": "Upstairs zone not holding set point. Coil cleaned, refrigerant topped.",
+        "type": "Reparación — Aire acondicionado",
+        "note": "Se limpió el serpentín y se cargó refrigerante.",
+        "state": "closed"
+      },
+      {
+        "date": "2025-03-05",
+        "type": "Entrega de la casa",
+        "note": "Inventario firmado. Sin pendientes.",
         "state": "closed"
       }
     ]
   },
   "BR-0212": {
     "address": "212 Bluebonnet Ridge Dr",
-    "community": "Bluebonnet Ridge",
+    "area": "Georgetown",
     "city": "Georgetown, TX 78628",
-    "plan": "The Guadalupe",
-    "closed": "2023-08-02",
+    "rent": 2100,
+    "deposit": 2100,
+    "leaseStart": "2024-09-01",
+    "leaseEnd": "2026-08-31",
     "history": [
       {
-        "date": "2024-07-11",
-        "type": "11-month warranty walk",
-        "note": "Four items logged, all closed.",
-        "state": "closed"
-      },
-      {
-        "date": "2023-09-05",
-        "type": "30-day orientation",
-        "note": "Cabinet door realigned; irrigation head replaced.",
-        "state": "closed"
-      },
-      {
         "date": "2026-08-09",
-        "type": "Request — Irrigation",
-        "note": "Zone 3 not cycling. Controller replaced under systems coverage.",
+        "type": "Reparación — Riego",
+        "note": "Zona 3 no prendía. Se cambió el controlador.",
         "state": "open"
+      },
+      {
+        "date": "2024-09-03",
+        "type": "Entrega de la casa",
+        "note": "Se ajustó una puerta de gabinete.",
+        "state": "closed"
       }
     ]
   },
   "CC-0905": {
     "address": "905 Copper Creek Way",
-    "community": "Copper Creek",
+    "area": "Celina",
     "city": "Celina, TX 75009",
-    "plan": "The Trinity",
-    "closed": "2025-11-20",
+    "rent": 1650,
+    "deposit": 1650,
+    "leaseStart": "2026-01-15",
+    "leaseEnd": "2027-01-14",
     "history": [
       {
-        "date": "2025-12-19",
-        "type": "30-day orientation",
-        "note": "Punch list closed before funding. No open items.",
+        "date": "2026-01-16",
+        "type": "Entrega de la casa",
+        "note": "Todo en orden.",
         "state": "closed"
       }
     ]
