@@ -133,3 +133,45 @@ test.describe('the demo cannot change anything real', () => {
     expect(text).toMatch(/Sample|Example|Demo/);
   });
 });
+
+test.describe('advertising platforms', () => {
+  test.beforeEach(async ({ page }) => {
+    await forbidGitHub(page);
+    await page.goto('/admin.html?demo=1');
+    await expect(page.locator('#panel-homes article')).toHaveCount(3);
+    await page.locator('#tab-promos').click();
+  });
+
+  test('shows Meta, Google Ads and TikTok', async ({ page }) => {
+    await expect(page.locator('#platformGrid article')).toHaveCount(3);
+    const text = await page.locator('#platformGrid').innerText();
+    expect(text).toContain('Meta');
+    expect(text).toContain('Google Ads');
+    expect(text).toContain('TikTok');
+  });
+
+  test('each says whether it is connected', async ({ page }) => {
+    const chips = await page.locator('#platformGrid .badge').allInnerTexts();
+    expect(chips).toHaveLength(3);
+    for (const c of chips) expect(c).toMatch(/SIN CONECTAR/i);
+  });
+
+  test('entering an ad account flips it to connected without losing the caret', async ({ page }) => {
+    await page.fill('#acct-meta', 'act_999');
+    await expect(page.locator('#platformGrid .badge').first()).toHaveText(/CONECTADO/i);
+    expect(await page.evaluate(() => document.activeElement.id)).toBe('acct-meta');
+    await expect(page.locator('#publish')).toBeEnabled();
+  });
+
+  test('Promote opens a campaign already set to that platform', async ({ page }) => {
+    await page.locator('[data-promote="tiktok"]').click();
+    await expect(page.locator('#dialog')).toBeVisible();
+    await expect(page.locator('#f-platform')).toHaveValue('tiktok');
+  });
+
+  test('the platform panel translates', async ({ page }) => {
+    await page.locator('[data-lang-toggle]').click();
+    await page.locator('#tab-promos').click();
+    await expect(page.locator('#platformGrid .badge').first()).toHaveText(/NOT CONNECTED/i);
+  });
+});

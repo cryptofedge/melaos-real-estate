@@ -93,9 +93,13 @@
   .err { color:#b91c1c; font-weight:500; font-size:.875rem; }
   .ok  { color:#047857; font-weight:500; font-size:.875rem; }
 
-  .tabs { display:flex; gap:.25rem; border-bottom:1px solid var(--line); margin:1.5rem 0 0; }
+  /* Four tabs do not fit a phone. Scroll the row sideways rather than squeeze
+     the labels until the last one is unreadable — Promotions was getting lost. */
+  .tabs { display:flex; gap:.25rem; border-bottom:1px solid var(--line); margin:1.5rem 0 0;
+          overflow-x:auto; -webkit-overflow-scrolling:touch; }
   .tab { background:none; border:none; border-bottom:2px solid transparent; padding:.75rem 1rem;
-         font-size:.875rem; font-weight:600; color:var(--slate); cursor:pointer; font-family:inherit; }
+         font-size:.875rem; font-weight:600; color:var(--slate); cursor:pointer;
+         font-family:inherit; flex:0 0 auto; white-space:nowrap; }
   .tab[aria-selected="true"] { border-bottom-color:var(--gold); color:var(--ink); }
 
   .grid { display:grid; gap:1rem; grid-template-columns:1fr; margin-top:1.5rem; }
@@ -314,6 +318,14 @@
         Ad campaigns are created and launched from WhatsApp, or here. API keys live on the bot's
         setup page &mdash; never in this browser, and never in the website.
       </p>
+    </section>
+
+    <section class="panel" style="margin-top:1.25rem">
+      <h2 style="font-size:1.1rem" data-i18n="adm.platforms">Dónde anunciar</h2>
+      <p class="tiny muted" style="margin:.25rem 0 1rem" data-i18n="adm.platformsHelp">
+        Las campañas siempre se crean en pausa, para que nadie gaste dinero sin revisarlas primero.
+      </p>
+      <div id="platformGrid" class="grid" style="margin-top:0"></div>
     </section>
 
     <div class="head" style="margin-top:2rem">
@@ -679,10 +691,82 @@
     $('tab-tickets').querySelectorAll('span')[1].textContent = '(' + open + ')';
   }
 
+  /* The three places he can advertise. Whether each is connected is decided by
+     the bot, which holds the credentials — this only shows the ad account he
+     has told us about and gives him one click to start a campaign there. */
+  const PLATFORMS = [
+    { id: 'meta',   name: 'Meta', sub: 'Facebook & Instagram', field: 'adAccountId', hint: 'act_123456789' },
+    { id: 'google', name: 'Google Ads', sub: '', field: 'customerId', hint: '123-456-7890' },
+    { id: 'tiktok', name: 'TikTok', sub: '', field: 'advertiserId', hint: '' },
+  ];
+
+  function platformCard(pl, accounts) {
+    const acct = accounts[pl.id] || (accounts[pl.id] = {});
+    const value = acct[pl.field] || '';
+    const connected = Boolean(String(value).trim());
+    const live = promos.campaigns.filter(function (c) {
+      return c.platform === pl.id && c.status === 'live';
+    }).length;
+
+    const chipStyle = 'position:static; box-shadow:none; color:#fff; background:' +
+      (connected ? '#047857' : '#9A3412');
+    const chip = '<span class="badge" style="' + chipStyle + '">' +
+      (connected ? t('adm.connected', 'Conectado') : t('adm.notConnected', 'Sin conectar')) + '</span>';
+
+    return '<article class="card"><div class="body">' +
+      '<div style="display:flex; align-items:baseline; justify-content:space-between; gap:.5rem">' +
+        '<h3>' + esc(pl.name) + '</h3>' + chip + '</div>' +
+      (pl.sub ? '<p class="tiny muted" style="margin:.25rem 0 0">' + esc(pl.sub) + '</p>' : '') +
+      '<label class="lbl" style="margin-top:.75rem" for="acct-' + pl.id + '">' +
+        t('adm.accountId', 'Cuenta publicitaria') + '</label>' +
+      '<input id="acct-' + pl.id + '" class="field" data-acct="' + pl.id + '" value="' +
+        esc(value) + '" placeholder="' + esc(pl.hint) + '" />' +
+      '<p class="tiny muted" style="margin:.5rem 0 0">' +
+        (live ? live + ' ' + t('adm.liveNow', 'en marcha') : t('adm.noneRunning', 'Ninguna en marcha')) +
+      '</p>' +
+      '<button type="button" data-promote="' + pl.id + '" class="btn">' +
+        t('adm.promote', 'Promocionar aquí') + '</button>' +
+      '</div></article>';
+  }
+
+  function renderPlatforms() {
+    const accounts = promos.adAccounts || (promos.adAccounts = {});
+    $('platformGrid').innerHTML = PLATFORMS.map(function (pl) {
+      return platformCard(pl, accounts);
+    }).join('');
+
+    $('platformGrid').querySelectorAll('[data-acct]').forEach(function (input) {
+      input.addEventListener('input', function () {
+        const pl = PLATFORMS.filter(function (x) { return x.id === input.dataset.acct; })[0];
+        const value = input.value.trim();
+        accounts[pl.id][pl.field] = value;
+        dirty = true;
+        $('publish').disabled = false;
+
+        // Update this card's chip in place. Re-rendering the whole grid here
+        // would rebuild the input he is typing into and lose the caret.
+        const chip = input.closest('.body').querySelector('.badge');
+        if (chip) {
+          const on = Boolean(value);
+          chip.textContent = on ? t('adm.connected', 'Conectado') : t('adm.notConnected', 'Sin conectar');
+          chip.style.background = on ? '#047857' : '#9A3412';
+        }
+      });
+    });
+
+    $('platformGrid').querySelectorAll('[data-promote]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        openDialog('campaign', { platform: btn.dataset.promote, dailyBudget: 20,
+          days: 7, message: '', status: 'draft' });
+      });
+    });
+  }
+
   function render() {
     $('panel-homes').innerHTML = data.homes.map(function (h) { return card(h, 'home'); }).join('');
     $('panel-communities').innerHTML = data.neighborhoods.map(function (a) { return card(a, 'area'); }).join('');
     $('campaignGrid').innerHTML = promos.campaigns.map(function (c) { return card(c, 'campaign'); }).join('');
+    renderPlatforms();
     $('tab-homes').querySelectorAll('span')[1].textContent = '(' + data.homes.length + ')';
     $('tab-communities').querySelectorAll('span')[1].textContent = '(' + data.neighborhoods.length + ')';
     $('tab-promos').querySelectorAll('span')[1].textContent = '(' + promos.campaigns.length + ')';
