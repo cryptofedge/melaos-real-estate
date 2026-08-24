@@ -38,9 +38,10 @@ try {
 }
 
 check('page is not an error stub', html.length > 20_000, `${html.length} bytes`);
-check('inventory is present', /40 homes you can walk through/.test(html));
-check('all three tab panels shipped',
-  ['panel-single', 'panel-two', 'panel-custom'].every(id => html.includes(id)));
+check('rental sections are present', /Homes for rent/i.test(html));
+check('availability tabs shipped',
+  ['panel-available', 'panel-occupied', 'panel-sale'].every(id => html.includes(id)));
+check('the WhatsApp number is wired in', /wa\.me\/14326069495|14326069495/.test(html));
 
 // ── link previews ─────────────────────────────────────────────────────────────
 const meta = (prop) => {
@@ -81,6 +82,18 @@ for (const url of assets) {
     }
   } catch (err) {
     check(`asset ${url.replace(BASE, '')}`, false, String(err));
+  }
+}
+
+// ── the data the site renders from ───────────────────────────────────────────
+for (const file of ['data/properties.json', 'data/promotions.json']) {
+  try {
+    const res = await get(`${BASE}${file}`);
+    const body = await res.json();
+    check(`${file} is valid JSON`, res.status === 200 && typeof body === 'object',
+      `HTTP ${res.status}`);
+  } catch (err) {
+    check(`${file} is valid JSON`, false, String(err));
   }
 }
 
