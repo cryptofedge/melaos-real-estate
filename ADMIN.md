@@ -6,6 +6,20 @@ Bookmark it. It is not linked from the public site and search engines are told t
 ignore it, but it is a public URL — the protection is that nothing works without a
 token that can write to the repository.
 
+## Showing it to someone
+
+Send them this and they can try everything without a token and without any risk
+of changing the real site:
+
+    https://cryptofedge.github.io/melaos-real-estate/admin.html?demo=1
+
+It opens straight into a demo with three made-up properties. They can edit
+prices, add homes, attach photos and look at the promotions tab. Publish does
+nothing but explain itself, and the page never contacts GitHub at all.
+
+There is also an **Open the demo** button on the sign-in screen, for anyone who
+lands there without the link.
+
 ## Adding your brothers
 
 Each brother needs a GitHub account. There is no way around that with how this is

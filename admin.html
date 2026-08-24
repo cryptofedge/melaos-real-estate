@@ -201,6 +201,15 @@
     <button type="submit" class="btn btn-primary">Sign in</button>
   </form>
 
+  <div class="panel" style="max-width:36rem; margin-top:1.25rem">
+    <h2>Just looking?</h2>
+    <p class="small muted" style="margin:.5rem 0 1rem">
+      Open a demo with sample properties. Everything works &mdash; editing, photos,
+      campaigns &mdash; but nothing is saved and the real website is never touched.
+    </p>
+    <button id="tryDemo" type="button" class="btn">Open the demo</button>
+  </div>
+
   <details class="panel" style="max-width:44rem; margin-top:1.5rem">
     <summary>How to get your token (one time, 2 minutes)</summary>
     <ol style="margin-top:1rem">
@@ -222,6 +231,13 @@
 
 <!-- ═══════════════════════ EDITOR ═══════════════════════ -->
 <section id="editor" hidden>
+  <div id="demoBanner" hidden style="background:#FEF3C7; border:1px solid #FCD34D;
+       border-radius:.75rem; padding:1rem 1.25rem; margin-bottom:1.5rem;">
+    <strong>Demo mode.</strong> These are made-up properties. Change anything you like &mdash;
+    nothing is saved and the live website is not affected.
+    <button id="exitDemo" type="button" class="btn" style="margin-left:.75rem">Leave demo</button>
+  </div>
+
   <div class="head">
     <div>
       <h1 style="font-size:1.9rem">Properties</h1>
@@ -315,6 +331,56 @@
 
   let token = '', data = null, sha = null, dirty = false, editing = null;
   let promos = null, promoSha = null;
+  let demo = false;
+
+  /* Sample portfolio for showing the tool to someone without a token. Kept
+     obviously fictional — no real address, no real phone number. */
+  function demoData() {
+    return {
+      properties: {
+        publish: { rent: true, sale: false, build: false },
+        neighborhoods: [
+          { id: 'katy', name: 'Katy', city: 'houston', note: 'Quiet streets, good schools.' },
+          { id: 'round-rock', name: 'Round Rock', city: 'austin', note: 'Close to the highway.' },
+        ],
+        homes: [
+          { id: 'demo-1', title: '14 Sample Oak Lane', listingType: 'rent', availability: 'available',
+            city: 'houston', area: 'Katy', rent: 1850, price: 0, beds: 3, baths: 2, sqft: 1642,
+            availableFrom: '', description: 'Fenced yard, two-car garage, new AC.', photos: [] },
+          { id: 'demo-2', title: '22 Example Ridge Drive', listingType: 'rent', availability: 'occupied',
+            city: 'austin', area: 'Round Rock', rent: 2100, price: 0, beds: 4, baths: 2, sqft: 2080,
+            availableFrom: 'March', description: 'Corner lot.', photos: [] },
+          { id: 'demo-3', title: '8 Demo Creek Court', listingType: 'rent', availability: 'available',
+            city: 'dfw', area: 'Mansfield', rent: 1650, price: 0, beds: 2, baths: 1, sqft: 1180,
+            availableFrom: '', description: 'Single story, pets considered.', photos: [] },
+        ],
+      },
+      promotions: {
+        profiles: { facebook: 'https://facebook.com/example', instagram: '', tiktok: '', googleBusiness: '' },
+        campaigns: [
+          { id: 'demo-c1', platform: 'meta', dailyBudget: 20, days: 7,
+            message: 'Three bedroom in Katy, available now', status: 'draft' },
+        ],
+      },
+    };
+  }
+
+  function startDemo() {
+    const seed = demoData();
+    demo = true;
+    data = seed.properties;
+    promos = seed.promotions;
+    sha = null; promoSha = null;
+    dirty = false; pending = {};
+    $('signIn').hidden = true;
+    $('editor').hidden = false;
+    $('demoBanner').hidden = false;
+    $('who').hidden = false;
+    $('who').textContent = 'Demo';
+    $('signOut').hidden = true;
+    render();
+    log('Demo loaded. Try editing a home, or open the Promotions tab.');
+  }
 
   // Photos wait here until Publish. Uploading straight away would put them on
   // the public internet before anyone pressed publish, which is not what
@@ -390,6 +456,11 @@
       err.hidden = false;
       err.textContent = ex.message;
     }
+  });
+
+  $('tryDemo').addEventListener('click', startDemo);
+  $('exitDemo').addEventListener('click', function () {
+    location.href = location.pathname;
   });
 
   $('signOut').addEventListener('click', function () {
@@ -746,7 +817,7 @@
       try {
         const blob = await shrink(file, 1600, 0.82);
         const b64 = await blobToB64(blob);
-        const slug = (item.id || item.name || 'new').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const slug = (item.id || item.title || item.name || 'new').toLowerCase().replace(/[^a-z0-9]+/g, '-');
         const path = 'assets/properties/' + slug + '/' + Date.now() + '-' + i + '.jpg';
         pending[path] = { b64: b64, name: file.name, url: URL.createObjectURL(blob) };
         item.photos = item.photos || [];
@@ -769,6 +840,10 @@
 
   /* ─────────────────────────── Publish ─────────────────────────── */
   $('publish').addEventListener('click', async function () {
+    if (demo) {
+      log('This is the demo — nothing is published. On the real one this would go live in about a minute.', 'good');
+      return;
+    }
     if (!dirty && !hasPending()) return;
     $('publish').disabled = true;
 
@@ -805,6 +880,10 @@
 
   /* ─────────────────────── Resume a session ─────────────────────── */
   (async function () {
+    // A ?demo=1 link opens the demo directly, so it can be shared with someone
+    // who should never be handed a token.
+    if (/[?&]demo=1/.test(location.search)) return startDemo();
+
     let saved = '';
     try { saved = localStorage.getItem(KEY) || ''; } catch (e) {}
     if (!saved) return;
