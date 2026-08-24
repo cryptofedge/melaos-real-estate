@@ -1,0 +1,26 @@
+# Alternative host. Fly gives a small persistent volume on the free allowance,
+# so no gist storage is needed — keys live on the volume.
+app = "melaos-bot"
+primary_region = "dfw"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8787"
+  CONFIG_FILE = "/data/config.json"
+
+[[mounts]]
+  source = "melao_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8787
+  force_https = true
+  auto_stop_machines = false
+  min_machines_running = 1
+
+[[http_service.checks]]
+  path = "/health"
+  interval = "30s"
+  timeout = "5s"

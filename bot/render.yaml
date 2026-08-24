@@ -1,0 +1,21 @@
+# One-click deploy to Render. The two generated secrets let the bot keep the
+# client's API keys across restarts, because a free web service has no disk
+# that survives a redeploy.
+services:
+  - type: web
+    name: melaos-bot
+    runtime: docker
+    dockerfilePath: ./bot/Dockerfile
+    dockerContext: ./bot
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 8787
+      # Encrypts the stored config. Render generates it; you never see it.
+      - key: CONFIG_SECRET
+        generateValue: true
+      # A GitHub token with only the "gist" scope, so the encrypted config has
+      # somewhere durable to live. Paste it in the Render dashboard once.
+      - key: BOOTSTRAP_GITHUB_TOKEN
+        sync: false

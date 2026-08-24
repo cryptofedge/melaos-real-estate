@@ -3,793 +3,476 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Melao's Real Estate Development — Modern Texas Neighborhoods</title>
-<meta name="description" content="Melao's Real Estate Development builds thoughtfully designed single-family homes and master-planned residential communities across Austin, Dallas-Fort Worth, Houston and San Antonio." />
-<meta name="theme-color" content="#111827" />
+<title>Melao's Real Estate Development — Homes for Rent in Texas</title>
+<meta name="description" content="Well-kept houses for rent across Austin, Dallas-Fort Worth, Houston and San Antonio. Straight answers, fair terms, and repairs that actually get done." />
+<meta name="theme-color" content="#F7F4EE" />
 <link rel="icon" href="assets/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="assets/favicon.png" />
 
-<!--
-  Link previews (WhatsApp, iMessage, Facebook, LinkedIn, Slack, X).
-  Scrapers do not resolve relative paths — og:image and og:url must be absolute,
-  or the preview renders with no image at all. Update the host below if the site
-  moves to a custom domain.
--->
 <meta property="og:site_name" content="Melao's Real Estate Development" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://cryptofedge.github.io/melaos-real-estate/" />
-<meta property="og:title" content="Melao's Real Estate Development" />
-<meta property="og:description" content="Thoughtfully designed single-family homes and residential communities across Austin, Dallas–Fort Worth, Houston and San Antonio." />
+<meta property="og:title" content="Homes for Rent — Melao's Real Estate Development" />
+<meta property="og:description" content="Well-kept houses for rent across Austin, Dallas-Fort Worth, Houston and San Antonio." />
 <meta property="og:image" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-card.png" />
 <meta property="og:image:secure_url" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-card.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Melao's Real Estate Development — Austin, Dallas–Fort Worth, Houston, San Antonio" />
+<meta property="og:image:alt" content="Melao's Real Estate Development — homes for rent in Texas" />
 <meta property="og:locale" content="en_US" />
-
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Melao's Real Estate Development" />
-<meta name="twitter:description" content="Thoughtfully designed single-family homes and residential communities across Texas." />
+<meta name="twitter:title" content="Homes for Rent — Melao's Real Estate Development" />
+<meta name="twitter:description" content="Well-kept houses for rent across Texas." />
 <meta name="twitter:image" content="https://cryptofedge.github.io/melaos-real-estate/assets/og-card.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
         colors: {
-          cloud:  '#F9FAFB',
-          slate7: '#1F2937',
-          ink:    '#111827',
+          // Warmer and plainer than the original: paper instead of stark white,
+          // ink for text, and gold kept for small accents only.
+          paper:  '#F7F4EE',
+          cream:  '#FFFDF9',
+          ink:    '#1C1917',
+          slate7: '#44403C',
           gold:   '#C5A059',
-          bronze: '#826A3B',
-          gilt:   '#D4AF37',
-          sand:   '#F3EFE6',
+          bronze: '#7A6234',
+          leaf:   '#2F6F4E',
+          brick:  '#9A3412',
+          line:   '#E7E1D6',
         },
-        fontFamily: {
-          sans:    ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-          display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
-        },
-        boxShadow: {
-          card: '0 1px 2px rgba(17,24,39,.04), 0 8px 24px -12px rgba(17,24,39,.18)',
-          lift: '0 2px 4px rgba(17,24,39,.05), 0 24px 48px -20px rgba(17,24,39,.28)',
-        },
+        fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+        boxShadow: { soft: '0 1px 2px rgba(28,25,23,.05), 0 6px 16px -10px rgba(28,25,23,.15)' },
         maxWidth: { shell: '1200px' },
-        screens: { nav: '1340px' },
+        screens: { nav: '1180px' },
       },
     },
   };
 </script>
 <style>
-  :root { color-scheme: light; }
-  body { -webkit-font-smoothing: antialiased; }
-  :focus-visible { outline: 2px solid #C5A059; outline-offset: 2px; border-radius: 4px; }
-  .no-scroll { overflow: hidden; }
-  @keyframes mspin { to { transform: rotate(360deg); } }
-  .mSpin { animation: mspin .9s linear infinite; transform-origin: 50% 50%; }
-  @media (prefers-reduced-motion: reduce) { .mSpin { animation: none; } }
-  /* Belt and braces: some renderers (and CSS resets that set display on the
-     element) ignore the [hidden] attribute, which would leak an empty modal
-     or drawer shell onto the page. Force them closed. */
+  :focus-visible { outline: 2px solid #7A6234; outline-offset: 2px; border-radius: 4px; }
   [hidden] { display: none !important; }
-  .rule::after {
-    content: ''; display: block; width: 44px; height: 2px; margin-top: .75rem;
-    background: linear-gradient(90deg, #D4AF37, #C5A059);
-  }
-  /* Residential photography placeholder.
-     To use real photos, replace the .ph element with:
-     <img src="/img/community.jpg" alt="…" class="h-full w-full object-cover" /> */
-  .ph {
-    background:
-      radial-gradient(120% 90% at 50% 0%, rgba(197,160,89,.20) 0%, rgba(197,160,89,0) 60%),
-      linear-gradient(160deg, #2b3644 0%, #1F2937 55%, #161d27 100%);
-  }
+  .no-scroll { overflow: hidden; }
+  /* Photo placeholder while a listing has no picture yet. */
+  .ph { background: linear-gradient(160deg, #EFE9DE 0%, #E5DCCC 100%); }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
   }
 </style>
 </head>
-<body id="top" class="bg-cloud font-sans text-ink antialiased">
+<body id="top" class="bg-paper font-sans text-ink antialiased">
 
 <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white">Skip to main content</a>
+
 <!-- ═══════════════════════ SVG SPRITE ═══════════════════════ -->
 <svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="gilt" x1="0" y1="0" x2=".85" y2="1">
-      <stop offset="0%"   stop-color="#F5E7BE" /><stop offset="24%" stop-color="#E2C782" />
-      <stop offset="48%"  stop-color="#D4AF37" /><stop offset="72%" stop-color="#C5A059" />
+      <stop offset="0%" stop-color="#F5E7BE" /><stop offset="24%" stop-color="#E2C782" />
+      <stop offset="48%" stop-color="#D4AF37" /><stop offset="72%" stop-color="#C5A059" />
       <stop offset="100%" stop-color="#93762F" />
     </linearGradient>
-
-    <!--
-      Brand mark — vector interpretation of the Melao's logo: stepped art-deco
-      spires rising over an M, with the Texas star knocked into the centre.
-      Drawn to sit on a dark ground; the star's stroke is the ink separator.
-      Superseded by assets/logo.svg; this only renders if that file fails to load.
-    -->
     <symbol id="brandMark" viewBox="0 0 200 214">
       <g fill="url(#gilt)">
-        <!-- Twin centre spires, mitred to a peak -->
-        <path d="M84 132 V30 L96 14 V132 Z" />
-        <path d="M104 132 V14 L116 30 V132 Z" />
-        <!-- Flanking spires, stepping down and out -->
-        <path d="M60 132 V68 L76 50 V132 Z" />
-        <path d="M124 132 V50 L140 68 V132 Z" />
-        <!-- The M, with splayed feet -->
+        <path d="M84 132 V30 L96 14 V132 Z" /><path d="M104 132 V14 L116 30 V132 Z" />
+        <path d="M60 132 V68 L76 50 V132 Z" /><path d="M124 132 V50 L140 68 V132 Z" />
         <path d="M22 198 V164 L70 70 H88 L100 152 L112 70 H130 L178 164 V198 H150 V168 L120 100 L100 118 L80 100 L50 168 V198 Z" />
       </g>
-      <!-- Ink separators keep the spire gaps reading through the M -->
-      <g stroke="#111827" stroke-width="8" stroke-linecap="butt">
-        <path d="M100 62 V96" /><path d="M80 62 V104" /><path d="M120 62 V104" />
-      </g>
-      <!-- Texas star, outlined in ink so it floats clear of the M -->
+      <g stroke="#1C1917" stroke-width="8"><path d="M100 62 V96" /><path d="M80 62 V104" /><path d="M120 62 V104" /></g>
       <path d="M100 96 L107.05 116.29 L128.53 116.73 L111.41 129.71 L117.63 150.27 L100 138 L82.37 150.27 L88.59 129.71 L71.47 116.73 L92.95 116.29 Z"
-            fill="url(#gilt)" stroke="#111827" stroke-width="6" stroke-linejoin="round" />
+            fill="url(#gilt)" stroke="#1C1917" stroke-width="6" stroke-linejoin="round" />
     </symbol>
-
-    <!-- Community art placeholder -->
-    <symbol id="artHome" viewBox="0 0 320 200">
-      <g stroke="#C5A059" fill="none" stroke-linejoin="round" stroke-linecap="round">
-        <path d="M52 158V96l56-34 56 34v62" stroke-width="2" />
-        <path d="M38 102 108 56l70 46" stroke-width="2" />
-        <rect x="72" y="112" width="26" height="22" stroke-width="1.3" />
-        <path d="M85 112v22M72 123h26" stroke-width=".8" opacity=".65" />
-        <rect x="118" y="112" width="26" height="22" stroke-width="1.3" />
-        <path d="M131 112v22M118 123h26" stroke-width=".8" opacity=".65" />
-        <rect x="96" y="128" width="24" height="30" stroke-width="1.5" />
-        <path d="M178 158v-44l38-22 38 22v44" stroke-width="1.6" opacity=".6" />
-        <path d="M170 118l46-27 46 27" stroke-width="1.6" opacity=".6" />
-        <rect x="200" y="124" width="32" height="22" stroke-width="1.2" opacity=".6" />
-        <g opacity=".45">
-          <path d="M24 158v-28" stroke-width="1.6" /><circle cx="24" cy="120" r="12" stroke-width="1.3" />
-          <path d="M296 158v-24" stroke-width="1.6" /><circle cx="296" cy="126" r="10" stroke-width="1.3" />
-        </g>
-        <path d="M0 158h320" stroke-width="1.2" opacity=".5" />
-        <path d="M90 200c14-24 96-24 110 0" stroke-width=".9" opacity=".3" />
+    <symbol id="artHouse" viewBox="0 0 320 200">
+      <g stroke="#B9A98B" fill="none" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M64 156V92l58-36 58 36v64" stroke-width="2.2" />
+        <path d="M48 98 122 52l74 46" stroke-width="2.2" />
+        <rect x="88" y="108" width="26" height="22" stroke-width="1.4" />
+        <rect x="132" y="108" width="26" height="22" stroke-width="1.4" />
+        <rect x="108" y="132" width="26" height="24" stroke-width="1.6" />
+        <path d="M196 156v-42l34-20 34 20v42" stroke-width="1.8" opacity=".7" />
+        <path d="M188 118l42-25 42 25" stroke-width="1.8" opacity=".7" />
+        <path d="M0 156h320" stroke-width="1.4" />
       </g>
     </symbol>
   </defs>
 </svg>
 
-<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
-<header class="sticky top-0 z-50 border-b border-ink/10 bg-white/90 backdrop-blur">
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<header class="sticky top-0 z-50 border-b border-line bg-cream/95 backdrop-blur">
   <div class="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-5 py-3.5 lg:px-8">
 
     <a href="#top" class="flex shrink-0 items-center gap-3" aria-label="Melao's Real Estate Development — home">
-      <span class="grid h-11 w-11 place-items-center rounded-full bg-ink ring-1 ring-gold/40">
-        <!-- Official mark; the vector symbol only appears if the file fails to load. -->
+      <span class="grid h-11 w-11 place-items-center rounded-full bg-ink">
         <img src="assets/logo.svg" alt="" class="h-6 w-6 object-contain"
              onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
-        <svg viewBox="0 0 200 214" class="h-6 w-5" hidden aria-hidden="true" focusable="false"><use href="#brandMark" /></svg>
+        <svg viewBox="0 0 200 214" class="h-6 w-5" hidden aria-hidden="true"><use href="#brandMark" /></svg>
       </span>
       <span class="leading-tight">
-        <span class="block font-display text-[15px] font-extrabold tracking-tight text-ink sm:text-base">MELAO&rsquo;S</span>
-        <span class="block text-[10px] font-semibold uppercase tracking-[.18em] text-bronze sm:text-[11px]">Real Estate Development</span>
+        <span class="block text-[15px] font-bold tracking-tight">MELAO&rsquo;S</span>
+        <span class="block text-[10px] font-semibold uppercase tracking-[.14em] text-bronze">Homes for Rent</span>
       </span>
     </a>
 
     <nav aria-label="Primary" class="hidden nav:block">
-      <ul class="flex items-center gap-5 whitespace-nowrap text-[14px] font-medium text-slate7">
-        <li><a class="py-2 transition-colors hover:text-bronze" href="#communities">Communities</a></li>
-        <li><a class="py-2 transition-colors hover:text-bronze" href="#floorplans">Available Floor Plans</a></li>
-        <li><a class="py-2 transition-colors hover:text-bronze" href="#custom">Custom Builds</a></li>
-        <li><a class="py-2 transition-colors hover:text-bronze" href="#about">About Us</a></li>
-        <li><a class="py-2 transition-colors hover:text-bronze" href="#process">Warranty &amp; Process</a></li>
-        <li><a class="py-2 font-semibold text-bronze transition-colors hover:text-ink" href="status.html">Resident Portal</a></li>
+      <ul class="flex items-center gap-6 whitespace-nowrap text-[15px] font-medium text-slate7">
+        <li><a class="py-2 hover:text-bronze" href="#homes">Homes for Rent</a></li>
+        <li><a class="py-2 hover:text-bronze" href="#areas">Where We Rent</a></li>
+        <li><a class="py-2 hover:text-bronze" href="#how">How It Works</a></li>
+        <li><a class="py-2 hover:text-bronze" href="#about">About Us</a></li>
+        <li><a class="py-2 font-semibold text-bronze hover:text-ink" href="status.html">Current Tenants</a></li>
       </ul>
     </nav>
 
     <div class="flex items-center gap-2">
-      <a href="#contact" class="hidden whitespace-nowrap rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate7 sm:inline-block">Schedule a Tour</a>
+      <a id="waHeader" href="#" class="hidden items-center gap-2 whitespace-nowrap rounded-lg bg-leaf px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-leaf/90 sm:inline-flex">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
+        WhatsApp us
+      </a>
       <button id="navToggle" type="button" aria-expanded="false" aria-controls="mobileDrawer"
-              class="grid h-11 w-11 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-gold hover:text-bronze nav:hidden">
-        <span class="sr-only">Open navigation menu</span>
+              class="grid h-11 w-11 place-items-center rounded-lg border border-line text-ink transition hover:border-bronze nav:hidden">
+        <span class="sr-only">Open menu</span>
         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
       </button>
     </div>
   </div>
 </header>
 
-<!-- Mobile drawer -->
-<div id="navScrim" hidden class="fixed inset-0 z-[60] bg-ink/50 backdrop-blur-sm nav:hidden"></div>
-<aside id="mobileDrawer" hidden role="dialog" aria-modal="true" aria-label="Site navigation"
-       class="fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-sm flex-col bg-white shadow-lift nav:hidden">
-  <div class="flex items-center justify-between border-b border-ink/10 px-5 py-4">
-    <span class="font-display text-sm font-extrabold uppercase tracking-[.16em] text-ink">Menu</span>
-    <button id="navClose" type="button" class="grid h-10 w-10 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-gold hover:text-bronze">
-      <span class="sr-only">Close navigation menu</span>
+<div id="navScrim" hidden class="fixed inset-0 z-[60] bg-ink/50 nav:hidden"></div>
+<aside id="mobileDrawer" hidden role="dialog" aria-modal="true" aria-label="Menu"
+       class="fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-sm flex-col bg-cream shadow-2xl nav:hidden">
+  <div class="flex items-center justify-between border-b border-line px-5 py-4">
+    <span class="text-sm font-bold uppercase tracking-[.14em]">Menu</span>
+    <button id="navClose" type="button" class="grid h-10 w-10 place-items-center rounded-lg border border-line">
+      <span class="sr-only">Close menu</span>
       <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
     </button>
   </div>
   <nav aria-label="Mobile" class="flex-1 overflow-y-auto px-3 py-4">
     <ul class="space-y-1 text-[17px] font-medium text-slate7">
-      <li><a class="block rounded-md px-3 py-3 transition hover:bg-sand hover:text-ink" href="#communities">Communities</a></li>
-      <li><a class="block rounded-md px-3 py-3 transition hover:bg-sand hover:text-ink" href="#floorplans">Available Floor Plans</a></li>
-      <li><a class="block rounded-md px-3 py-3 transition hover:bg-sand hover:text-ink" href="#custom">Custom Builds</a></li>
-      <li><a class="block rounded-md px-3 py-3 transition hover:bg-sand hover:text-ink" href="#about">About Us</a></li>
-      <li><a class="block rounded-md px-3 py-3 transition hover:bg-sand hover:text-ink" href="#process">Warranty &amp; Process</a></li>
-      <li><a class="block rounded-md px-3 py-3 font-semibold text-bronze transition hover:bg-sand" href="status.html">Resident Portal</a></li>
+      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#homes">Homes for Rent</a></li>
+      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#areas">Where We Rent</a></li>
+      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#how">How It Works</a></li>
+      <li><a class="block rounded-lg px-3 py-3 hover:bg-paper" href="#about">About Us</a></li>
+      <li><a class="block rounded-lg px-3 py-3 font-semibold text-bronze hover:bg-paper" href="status.html">Current Tenants</a></li>
     </ul>
   </nav>
-  <div class="border-t border-ink/10 p-5">
-    <a href="#contact" class="block rounded-md bg-ink px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-slate7">Schedule a Tour</a>
-    <a href="tel:+15125550142" class="mt-3 block text-center text-sm font-medium text-slate7 transition hover:text-bronze">(512) 555-0142</a>
+  <div class="border-t border-line p-5">
+    <a id="waDrawer" href="#" class="block rounded-lg bg-leaf px-5 py-3 text-center text-sm font-semibold text-white">Message us on WhatsApp</a>
+    <a id="telDrawer" href="#" class="mt-3 block text-center text-sm font-medium text-slate7"></a>
   </div>
 </aside>
 
 <main id="main">
 
-<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
-<section class="relative overflow-hidden bg-white">
-  <div class="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-sand/70 to-transparent" aria-hidden="true"></div>
-
-  <div class="relative mx-auto grid max-w-shell gap-12 px-5 pb-14 pt-14 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-14 lg:px-8 lg:pb-20 lg:pt-20">
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="bg-cream">
+  <div class="mx-auto grid max-w-shell gap-10 px-5 py-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14 lg:px-8 lg:py-16">
     <div>
-      <p class="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[.16em] text-bronze">
-        <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-        Texas Homebuilder &middot; Est. 2009
+      <p class="inline-flex items-center gap-2 rounded-full bg-paper px-3.5 py-1.5 text-[13px] font-semibold text-bronze">
+        Renting across Texas since 2009
       </p>
-
-      <h1 class="mt-5 font-display text-[38px] font-extrabold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[56px]">
-        Crafting Modern Texas<br class="hidden sm:block" /> Neighborhoods
-        <span class="bg-gradient-to-r from-gilt to-gold bg-clip-text text-transparent">Built to Last.</span>
+      <h1 class="mt-5 text-[34px] font-bold leading-[1.12] tracking-tight sm:text-5xl">
+        Looking for a house to rent?
       </h1>
-
-      <p class="mt-5 max-w-xl text-[17px] leading-relaxed text-slate7">
-        Thoughtfully designed single-family homes and residential communities across Texas &mdash; built by a local team that answers the phone long after closing day.
+      <p class="mt-4 max-w-xl text-[17px] leading-relaxed text-slate7">
+        We rent clean, well-kept houses in Austin, Dallas&ndash;Fort Worth, Houston and San Antonio.
+        Clear prices, no surprise fees, and repairs that actually get done.
       </p>
 
       <div class="mt-7 flex flex-wrap items-center gap-3">
-        <a href="#communities" class="rounded-md bg-ink px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate7">Explore Communities</a>
-        <a href="#contact" class="rounded-md border border-ink/15 bg-white px-6 py-3.5 text-sm font-semibold text-ink transition hover:border-gold hover:text-bronze">Talk to a Builder</a>
+        <a href="#homes" class="rounded-lg bg-ink px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate7">See available homes</a>
+        <a id="waHero" href="#" class="inline-flex items-center gap-2 rounded-lg bg-leaf px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-leaf/90">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
+          Ask on WhatsApp
+        </a>
       </div>
-
-      <dl class="mt-9 grid max-w-lg grid-cols-3 gap-6 border-t border-ink/10 pt-6">
-        <div>
-          <dt class="text-[11px] font-semibold uppercase tracking-[.14em] text-slate7/70">Homes Built</dt>
-          <dd class="mt-1 font-display text-2xl font-extrabold text-ink">1,480+</dd>
-        </div>
-        <div>
-          <dt class="text-[11px] font-semibold uppercase tracking-[.14em] text-slate7/70">Communities</dt>
-          <dd class="mt-1 font-display text-2xl font-extrabold text-ink">17</dd>
-        </div>
-        <div>
-          <dt class="text-[11px] font-semibold uppercase tracking-[.14em] text-slate7/70">Warranty</dt>
-          <dd class="mt-1 font-display text-2xl font-extrabold text-ink">2&ndash;10 yr</dd>
-        </div>
-      </dl>
+      <p class="mt-3 text-sm text-slate7">
+        Message us any time &mdash; <a id="waNumber" class="font-semibold text-bronze underline underline-offset-4" href="#"></a>. We answer fast.
+      </p>
     </div>
 
-    <!-- Hero visual -->
-    <div class="relative">
-      <div class="ph relative aspect-[4/3.2] overflow-hidden rounded-xl shadow-lift ring-1 ring-ink/10">
-        <svg viewBox="0 0 400 320" class="absolute inset-0 h-full w-full" role="img" aria-label="Illustration of a modern single-story Texas home with a covered porch and mature trees">
-          <defs>
-            <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#38445a" /><stop offset="100%" stop-color="#1F2937" />
-            </linearGradient>
-            <linearGradient id="heroGold" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#E4C878" /><stop offset="100%" stop-color="#B08C46" />
-            </linearGradient>
-          </defs>
-          <rect width="400" height="320" fill="url(#heroSky)" />
-          <circle cx="316" cy="70" r="26" fill="#D4AF37" opacity=".14" />
-          <circle cx="316" cy="70" r="14" fill="#D4AF37" opacity=".22" />
-          <g stroke="url(#heroGold)" fill="none" stroke-linejoin="round" stroke-linecap="round">
-            <path d="M60 250V152l88-52 88 52v98" stroke-width="2.4" />
-            <path d="M42 160 148 92l106 68" stroke-width="2.4" />
-            <path d="M254 250v-74l52-30 52 30v74" stroke-width="2" opacity=".55" />
-            <path d="M244 182l62-36 62 36" stroke-width="2" opacity=".55" />
-            <rect x="86" y="184" width="34" height="30" stroke-width="1.6" />
-            <path d="M103 184v30M86 199h34" stroke-width="1.1" opacity=".7" />
-            <rect x="176" y="184" width="34" height="30" stroke-width="1.6" />
-            <path d="M193 184v30M176 199h34" stroke-width="1.1" opacity=".7" />
-            <rect x="132" y="204" width="32" height="46" stroke-width="1.8" />
-            <path d="M60 204h88M148 204v46" stroke-width="1" opacity=".45" />
-            <rect x="286" y="196" width="40" height="34" stroke-width="1.5" opacity=".55" />
-          </g>
-          <g stroke="#C5A059" fill="none" opacity=".45" stroke-linecap="round">
-            <path d="M28 250v-46" stroke-width="2" /><circle cx="28" cy="188" r="18" stroke-width="1.6" />
-            <path d="M382 250v-38" stroke-width="2" /><circle cx="382" cy="198" r="15" stroke-width="1.6" />
-          </g>
-          <path d="M0 250h400" stroke="#C5A059" stroke-width="1.6" opacity=".5" />
-          <path d="M0 250h400v70H0z" fill="#111827" opacity=".45" />
-          <path d="M120 320c20-32 140-32 160 0" stroke="#C5A059" stroke-width="1.2" fill="none" opacity=".35" />
-        </svg>
-      </div>
-
-      <!-- Floating trust chip -->
-      <div class="absolute -bottom-5 left-5 flex items-center gap-3 rounded-lg border border-ink/10 bg-white px-4 py-3 shadow-card sm:left-8">
-        <span class="grid h-9 w-9 place-items-center rounded-md bg-sand text-bronze">
-          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" /><path d="M9 12l2 2 4-4" /></svg>
-        </span>
-        <span class="text-sm leading-tight">
-          <span class="block font-semibold text-ink">2&ndash;10 Structural Warranty</span>
-          <span class="block text-slate7/80">Every Melao&rsquo;s home, every phase</span>
-        </span>
-      </div>
+    <div class="ph overflow-hidden rounded-2xl ring-1 ring-line">
+      <svg viewBox="0 0 320 200" class="h-full w-full" role="img" aria-label="Illustration of a single-family rental house"><use href="#artHouse" /></svg>
     </div>
   </div>
 
-  <!-- Quick filter bar -->
-  <div class="mx-auto max-w-shell px-5 pb-16 pt-10 lg:px-8">
-    <form id="quickFilter" class="rounded-xl border border-ink/10 bg-white p-4 shadow-card sm:p-5" aria-label="Find a home">
+  <!-- Filter -->
+  <div class="mx-auto max-w-shell px-5 pb-12 lg:px-8">
+    <form id="quickFilter" class="rounded-2xl border border-line bg-paper p-4 sm:p-5" aria-label="Find a rental">
       <fieldset>
-        <legend class="mb-4 flex items-center gap-2 font-display text-sm font-bold uppercase tracking-[.14em] text-ink">
-          <svg viewBox="0 0 24 24" class="h-4 w-4 text-bronze" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" /></svg>
-          Find your home
-        </legend>
-
-        <div class="grid gap-4 md:grid-cols-4">
+        <legend class="mb-3 text-sm font-bold">Find a home</legend>
+        <div class="grid gap-3 md:grid-cols-4">
           <div>
-            <label for="fCity" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Location / City</label>
-            <select id="fCity" name="city" class="w-full rounded-md border border-ink/15 bg-white px-3 py-3 text-sm text-ink transition hover:border-gold focus:border-gold focus:ring-0">
-              <option value="">All Texas markets</option>
+            <label for="fCity" class="mb-1.5 block text-xs font-semibold text-slate7">City</label>
+            <select id="fCity" class="w-full rounded-lg border border-line bg-cream px-3 py-3 text-sm">
+              <option value="">All cities</option>
               <option value="austin">Austin</option>
               <option value="dfw">Dallas&ndash;Fort Worth</option>
               <option value="houston">Houston</option>
               <option value="sanantonio">San Antonio</option>
             </select>
           </div>
-
           <div>
-            <label for="fPrice" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Price Range</label>
-            <select id="fPrice" name="price" class="w-full rounded-md border border-ink/15 bg-white px-3 py-3 text-sm text-ink transition hover:border-gold focus:border-gold focus:ring-0">
-              <option value="">Any price</option>
-              <option value="0-375">Under $375,000</option>
-              <option value="375-425">$375,000 &ndash; $425,000</option>
-              <option value="425-999">$425,000+</option>
+            <label for="fPrice" class="mb-1.5 block text-xs font-semibold text-slate7">Monthly rent</label>
+            <select id="fPrice" class="w-full rounded-lg border border-line bg-cream px-3 py-3 text-sm">
+              <option value="">Any rent</option>
+              <option value="0-1500">Under $1,500</option>
+              <option value="1500-2000">$1,500 &ndash; $2,000</option>
+              <option value="2000-2500">$2,000 &ndash; $2,500</option>
+              <option value="2500-99999">$2,500+</option>
             </select>
           </div>
-
           <div>
-            <label for="fBeds" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Bedrooms / Baths</label>
-            <select id="fBeds" name="beds" class="w-full rounded-md border border-ink/15 bg-white px-3 py-3 text-sm text-ink transition hover:border-gold focus:border-gold focus:ring-0">
-              <option value="">Any layout</option>
-              <option value="3">3+ beds &middot; 2+ baths</option>
-              <option value="4">4+ beds &middot; 2.5+ baths</option>
-              <option value="5">5+ beds &middot; 3+ baths</option>
+            <label for="fBeds" class="mb-1.5 block text-xs font-semibold text-slate7">Bedrooms</label>
+            <select id="fBeds" class="w-full rounded-lg border border-line bg-cream px-3 py-3 text-sm">
+              <option value="">Any size</option>
+              <option value="2">2+ bedrooms</option>
+              <option value="3">3+ bedrooms</option>
+              <option value="4">4+ bedrooms</option>
             </select>
           </div>
-
           <div class="flex items-end gap-2">
-            <button type="submit" class="flex-1 rounded-md bg-gold px-5 py-3 text-sm font-semibold text-ink shadow-sm transition hover:bg-gilt">Search Homes</button>
-            <button type="reset" class="rounded-md border border-ink/15 px-4 py-3 text-sm font-semibold text-slate7 transition hover:border-gold hover:text-bronze">Reset</button>
+            <button type="submit" class="flex-1 rounded-lg bg-bronze px-5 py-3 text-sm font-semibold text-white transition hover:bg-ink">Search</button>
+            <button type="reset" class="rounded-lg border border-line px-4 py-3 text-sm font-semibold text-slate7">Reset</button>
           </div>
         </div>
-
-        <p id="filterStatus" role="status" aria-live="polite" class="mt-4 text-sm text-slate7">Showing all 6 communities.</p>
+        <p id="filterStatus" role="status" aria-live="polite" class="mt-3 text-sm text-slate7"></p>
       </fieldset>
     </form>
   </div>
 </section>
 
-<!-- ═══════════════════ FEATURED COMMUNITIES ═══════════════════ -->
-<section id="communities" class="scroll-mt-24 bg-cloud py-16 lg:py-24">
+<!-- ═══════════════════════ HOMES ═══════════════════════ -->
+<section id="homes" class="scroll-mt-24 py-14 lg:py-20">
   <div class="mx-auto max-w-shell px-5 lg:px-8">
-
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-      <div>
-        <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-bronze">Featured Communities</p>
-        <h2 class="mt-4 max-w-2xl font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-          Master-planned neighborhoods, rooted in Texas
-        </h2>
-        <p class="mt-3 max-w-2xl text-[17px] leading-relaxed text-slate7">
-          Parks before pavement. Every Melao&rsquo;s community is planned around trails, shade, schools and front porches you will actually use.
-        </p>
-      </div>
-      <a href="#contact" class="shrink-0 text-sm font-semibold text-ink underline decoration-gold decoration-2 underline-offset-8 transition hover:text-bronze">Request a community map</a>
-    </div>
-
-    <div id="communityGrid" class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
-
-    <p id="noCommunities" hidden class="mt-10 rounded-lg border border-dashed border-ink/20 bg-white px-6 py-10 text-center text-slate7">
-      No communities match those filters yet &mdash; <a class="font-semibold text-bronze underline underline-offset-4" href="#contact">tell us what you are looking for</a> and we will call you when a lot opens up.
+    <h2 class="text-3xl font-bold tracking-tight">Homes for rent</h2>
+    <p class="mt-2 max-w-2xl text-[17px] text-slate7">
+      Available now, plus homes that are rented today so you can see what tends to come up.
     </p>
-  </div>
-</section>
 
-<!-- ═══════════════ FLOOR PLANS &amp; HOME MODELS (40) ═══════════════ -->
-<section id="floorplans" class="scroll-mt-24 bg-white py-16 lg:py-24">
-  <div class="mx-auto max-w-shell px-5 lg:px-8">
-
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-      <div>
-        <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-bronze">Floor Plans &amp; Home Models</p>
-        <h2 class="mt-4 max-w-2xl font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-          40 homes you can walk through
-        </h2>
-        <p class="mt-3 max-w-2xl text-[17px] leading-relaxed text-slate7">
-          Single-story, two-story and custom spec homes across all four markets. Open any plan to see the layout, room by room.
-        </p>
-      </div>
-      <p class="shrink-0 text-sm text-slate7"><span id="planCount" class="font-display text-2xl font-extrabold text-ink">40</span> plans available</p>
-    </div>
-
-    <!-- Tabs -->
-    <div class="mt-8 border-b border-ink/10">
-      <div role="tablist" aria-label="Home model categories" class="-mb-px flex flex-wrap gap-1">
-        <button role="tab" id="tab-single" aria-controls="panel-single" aria-selected="true" data-tab="single"
-                class="tab rounded-t-md border-b-2 border-gold px-4 py-3 text-sm font-semibold text-ink transition">
-          Single-Story <span class="ml-1 text-xs font-normal text-slate7/70">(14)</span>
+    <div class="mt-8 border-b border-line">
+      <div role="tablist" aria-label="Availability" class="-mb-px flex flex-wrap gap-1">
+        <button role="tab" id="tab-available" aria-controls="panel-available" aria-selected="true" data-tab="available"
+                class="tab rounded-t-lg border-b-2 border-bronze px-4 py-3 text-sm font-semibold text-ink">
+          Available now <span class="ml-1 text-xs font-normal text-slate7">(0)</span>
         </button>
-        <button role="tab" id="tab-two" aria-controls="panel-two" aria-selected="false" tabindex="-1" data-tab="two"
-                class="tab rounded-t-md border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-slate7 transition hover:text-ink">
-          Two-Story <span class="ml-1 text-xs font-normal text-slate7/70">(16)</span>
+        <button role="tab" id="tab-occupied" aria-controls="panel-occupied" aria-selected="false" tabindex="-1" data-tab="occupied"
+                class="tab rounded-t-lg border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-slate7 hover:text-ink">
+          Currently rented <span class="ml-1 text-xs font-normal text-slate7">(0)</span>
         </button>
-        <button role="tab" id="tab-custom" aria-controls="panel-custom" aria-selected="false" tabindex="-1" data-tab="custom"
-                class="tab rounded-t-md border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-slate7 transition hover:text-ink">
-          Custom Spec Homes <span class="ml-1 text-xs font-normal text-slate7/70">(10)</span>
+        <button role="tab" id="tab-sale" hidden aria-controls="panel-sale" aria-selected="false" tabindex="-1" data-tab="sale"
+                class="tab rounded-t-lg border-b-2 border-transparent px-4 py-3 text-sm font-semibold text-slate7 hover:text-ink">
+          For sale <span class="ml-1 text-xs font-normal text-slate7">(0)</span>
         </button>
       </div>
     </div>
 
-    <div id="panel-single" role="tabpanel" aria-labelledby="tab-single" tabindex="0" class="panel mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
-    <div id="panel-two" role="tabpanel" aria-labelledby="tab-two" tabindex="0" hidden class="panel mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
-    <div id="panel-custom" role="tabpanel" aria-labelledby="tab-custom" tabindex="0" hidden class="panel mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+    <div id="panel-available" role="tabpanel" aria-labelledby="tab-available" tabindex="0" class="panel mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+    <div id="panel-occupied" role="tabpanel" aria-labelledby="tab-occupied" tabindex="0" hidden class="panel mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+    <div id="panel-sale" role="tabpanel" aria-labelledby="tab-sale" tabindex="0" hidden class="panel mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
 
-    <p id="noPlans" hidden class="mt-10 rounded-lg border border-dashed border-ink/20 bg-cloud px-6 py-10 text-center text-slate7">
-      No homes in this category match your filters. <a class="font-semibold text-bronze underline underline-offset-4" href="#quickFilter">Widen your search</a> or <a class="font-semibold text-bronze underline underline-offset-4" href="#contact">ask us to build one</a>.
-    </p>
-  </div>
-</section>
-
-<!-- ═══════════════════════ CUSTOM BUILDS ═══════════════════════ -->
-<section id="custom" class="scroll-mt-24 bg-ink py-16 text-white lg:py-24">
-  <div class="mx-auto grid max-w-shell gap-12 px-5 lg:grid-cols-2 lg:items-center lg:px-8">
-    <div>
-      <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-gilt">Custom Builds</p>
-      <h2 class="mt-4 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">Bring your lot. Or build on ours.</h2>
-      <p class="mt-4 max-w-xl text-[17px] leading-relaxed text-white/75">
-        Start from one of our 40 plans and change what matters &mdash; a wider kitchen island, a fourth bay, a covered patio sized for a Texas summer. Our design studio prices every change before you sign, so the number you approve is the number you pay.
+    <div id="emptyState" hidden class="mt-8 rounded-2xl border border-dashed border-line bg-cream px-6 py-14 text-center">
+      <p class="text-lg font-semibold">Nothing listed here right now</p>
+      <p class="mx-auto mt-2 max-w-md text-slate7">
+        Homes come up often and the good ones go fast. Message us and we will tell you what is
+        opening up before it goes online.
       </p>
-      <ul class="mt-8 grid gap-4 sm:grid-cols-2">
-        <li class="flex gap-3 rounded-lg border border-white/10 bg-white/[.04] p-4">
-          <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-gilt" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M6 21V8l6-4 6 4v13" /></svg>
-          <span class="text-sm"><strong class="block font-semibold">Build on your land</strong><span class="text-white/70">Site evaluation and utility review included.</span></span>
-        </li>
-        <li class="flex gap-3 rounded-lg border border-white/10 bg-white/[.04] p-4">
-          <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-gilt" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18" /></svg>
-          <span class="text-sm"><strong class="block font-semibold">Structural options</strong><span class="text-white/70">Flex rooms, extended garages, casitas.</span></span>
-        </li>
-        <li class="flex gap-3 rounded-lg border border-white/10 bg-white/[.04] p-4">
-          <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-gilt" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16M7 16V9M12 16V5M17 16v-4" /></svg>
-          <span class="text-sm"><strong class="block font-semibold">Fixed-price contract</strong><span class="text-white/70">Allowances locked at signing.</span></span>
-        </li>
-        <li class="flex gap-3 rounded-lg border border-white/10 bg-white/[.04] p-4">
-          <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-gilt" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" /></svg>
-          <span class="text-sm"><strong class="block font-semibold">Weekly cost updates</strong><span class="text-white/70">A shared build ledger you can read.</span></span>
-        </li>
-      </ul>
-      <a href="#contact" class="mt-8 inline-block rounded-md bg-gold px-6 py-3.5 text-sm font-semibold text-ink transition hover:bg-gilt">Start a custom build</a>
-    </div>
-
-    <div class="rounded-xl border border-white/10 bg-white/[.04] p-6 sm:p-8">
-      <h3 class="font-display text-lg font-bold">What a Melao&rsquo;s custom home includes</h3>
-      <dl class="mt-6 divide-y divide-white/10">
-        <div class="flex items-baseline justify-between gap-4 py-3.5">
-          <dt class="text-sm text-white/75">Engineered post-tension slab</dt><dd class="text-sm font-semibold text-gilt">Standard</dd>
-        </div>
-        <div class="flex items-baseline justify-between gap-4 py-3.5">
-          <dt class="text-sm text-white/75">Spray-foam envelope, radiant barrier</dt><dd class="text-sm font-semibold text-gilt">Standard</dd>
-        </div>
-        <div class="flex items-baseline justify-between gap-4 py-3.5">
-          <dt class="text-sm text-white/75">16 SEER2 HVAC, zoned upstairs</dt><dd class="text-sm font-semibold text-gilt">Standard</dd>
-        </div>
-        <div class="flex items-baseline justify-between gap-4 py-3.5">
-          <dt class="text-sm text-white/75">Full-yard irrigation and sod</dt><dd class="text-sm font-semibold text-gilt">Standard</dd>
-        </div>
-        <div class="flex items-baseline justify-between gap-4 py-3.5">
-          <dt class="text-sm text-white/75">Solar-ready conduit and panel space</dt><dd class="text-sm font-semibold text-gilt">Standard</dd>
-        </div>
-        <div class="flex items-baseline justify-between gap-4 py-3.5">
-          <dt class="text-sm text-white/75">Casita or guest suite</dt><dd class="text-sm font-semibold text-white/60">Option</dd>
-        </div>
-      </dl>
+      <a id="waEmpty" href="#" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-leaf px-6 py-3.5 text-sm font-semibold text-white">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
+        Tell us what you need
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ THE BUILDING PROCESS ═══════════════════ -->
-<section id="process" class="scroll-mt-24 bg-cloud py-16 lg:py-24">
+<!-- ═══════════════════════ AREAS ═══════════════════════ -->
+<section id="areas" class="scroll-mt-24 bg-cream py-14 lg:py-20">
   <div class="mx-auto max-w-shell px-5 lg:px-8">
-    <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-bronze">Warranty &amp; Process</p>
-    <h2 class="mt-4 max-w-2xl font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">The Melao&rsquo;s building process</h2>
-    <p class="mt-3 max-w-2xl text-[17px] leading-relaxed text-slate7">
-      Four stages, roughly seven to nine months, with a named build superintendent from lot pin to key handoff.
+    <h2 class="text-3xl font-bold tracking-tight">Where we rent</h2>
+    <p class="mt-2 max-w-2xl text-[17px] text-slate7">The areas we know well and keep houses in.</p>
+    <div id="areaGrid" class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"></div>
+    <p id="noAreas" hidden class="mt-8 rounded-2xl border border-dashed border-line px-6 py-10 text-center text-slate7">
+      Areas will show here once they are added.
     </p>
+  </div>
+</section>
 
-    <ol class="relative mt-12 grid gap-8 md:grid-cols-4">
-      <li class="pointer-events-none absolute left-0 right-0 top-7 hidden h-px bg-gradient-to-r from-gold/0 via-gold/50 to-gold/0 md:block" aria-hidden="true"></li>
+<!-- ═══════════════════════ HOW IT WORKS ═══════════════════════ -->
+<section id="how" class="scroll-mt-24 py-14 lg:py-20">
+  <div class="mx-auto max-w-shell px-5 lg:px-8">
+    <h2 class="text-3xl font-bold tracking-tight">How renting with us works</h2>
+    <p class="mt-2 max-w-2xl text-[17px] text-slate7">Four steps, no runaround.</p>
 
-      <li class="relative">
-        <span class="relative z-10 grid h-14 w-14 place-items-center rounded-full border border-gold/40 bg-white font-display text-lg font-extrabold text-bronze shadow-card">01</span>
-        <h3 class="mt-5 font-display text-lg font-bold text-ink">Lot Selection</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate7">Walk the phase with a community manager. Compare orientation, tree cover, greenbelt backing and lot premium in writing.</p>
-        <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-bronze">Week 1&ndash;2</p>
+    <ol class="mt-10 grid gap-6 md:grid-cols-4">
+      <li class="rounded-2xl border border-line bg-cream p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-full bg-paper text-lg font-bold text-bronze">1</span>
+        <h3 class="mt-4 text-lg font-bold">See the house</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate7">Message us and we will set up a time. Same week, usually same day.</p>
       </li>
-
-      <li class="relative">
-        <span class="relative z-10 grid h-14 w-14 place-items-center rounded-full border border-gold/40 bg-white font-display text-lg font-extrabold text-bronze shadow-card">02</span>
-        <h3 class="mt-5 font-display text-lg font-bold text-ink">Plan Customization</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate7">Pick your plan, then structural options and finishes at the design studio. Every selection is priced before it is locked.</p>
-        <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-bronze">Week 3&ndash;6</p>
+      <li class="rounded-2xl border border-line bg-cream p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-full bg-paper text-lg font-bold text-bronze">2</span>
+        <h3 class="mt-4 text-lg font-bold">Apply</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate7">Simple application. We tell you exactly what we look at, and what the fees are, before you pay anything.</p>
       </li>
-
-      <li class="relative">
-        <span class="relative z-10 grid h-14 w-14 place-items-center rounded-full border border-gold/40 bg-white font-display text-lg font-extrabold text-bronze shadow-card">03</span>
-        <h3 class="mt-5 font-display text-lg font-bold text-ink">Quality Construction</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate7">Slab, frame, mechanical, drywall, finish. Third-party inspections at four stages plus weekly photo updates in your portal.</p>
-        <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-bronze">Month 2&ndash;8</p>
+      <li class="rounded-2xl border border-line bg-cream p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-full bg-paper text-lg font-bold text-bronze">3</span>
+        <h3 class="mt-4 text-lg font-bold">Sign and pay</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate7">Lease in plain language. Deposit and first month, nothing hidden.</p>
       </li>
-
-      <li class="relative">
-        <span class="relative z-10 grid h-14 w-14 place-items-center rounded-full border border-gold/40 bg-white font-display text-lg font-extrabold text-bronze shadow-card">04</span>
-        <h3 class="mt-5 font-display text-lg font-bold text-ink">Walkthrough &amp; Closing</h3>
-        <p class="mt-2 text-sm leading-relaxed text-slate7">Two orientation walks, a punch list closed before funding, and a 30-day and 11-month warranty visit after you move in.</p>
-        <p class="mt-3 text-xs font-semibold uppercase tracking-wide text-bronze">Closing</p>
+      <li class="rounded-2xl border border-line bg-cream p-6">
+        <span class="grid h-11 w-11 place-items-center rounded-full bg-paper text-lg font-bold text-bronze">4</span>
+        <h3 class="mt-4 text-lg font-bold">Move in</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate7">Keys, and a number that answers when something breaks.</p>
       </li>
     </ol>
-
-    <div class="mt-12 grid gap-5 rounded-xl border border-ink/10 bg-white p-6 shadow-card sm:grid-cols-3 sm:p-8">
-      <div class="flex gap-3">
-        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-sand text-bronze">
-          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" /></svg>
-        </span>
-        <p class="text-sm leading-relaxed text-slate7"><strong class="block font-semibold text-ink">1 &middot; 2 &middot; 10 warranty</strong>One year workmanship, two years systems, ten years structural.</p>
-      </div>
-      <div class="flex gap-3">
-        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-sand text-bronze">
-          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" /></svg>
-        </span>
-        <p class="text-sm leading-relaxed text-slate7"><strong class="block font-semibold text-ink">HERS-rated efficiency</strong>Every home third-party tested and rated before closing.</p>
-      </div>
-      <div class="flex gap-3">
-        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-sand text-bronze">
-          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z" /><path d="M9 9h6v6H9z" /></svg>
-        </span>
-        <p class="text-sm leading-relaxed text-slate7"><strong class="block font-semibold text-ink">Texas registered builder</strong>Licensed trades, permitted work, documented inspections.</p>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- ═══════════════ TEXAS TRUST &amp; TESTIMONIALS ═══════════════ -->
-<section id="about" class="scroll-mt-24 bg-white py-16 lg:py-24">
-  <div class="mx-auto max-w-shell px-5 lg:px-8">
-
-    <div class="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-16">
-      <div>
-        <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-bronze">About Us</p>
-        <h2 class="mt-4 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">Texas roots, and a name on every door</h2>
-        <p class="mt-4 text-[17px] leading-relaxed text-slate7">
-          Melao&rsquo;s started in 2009 with one spec home in Schertz and a simple rule: build it like the family moving in is your own. Sixteen years and 1,480 homes later, we still run our own crews on framing and finish, and our superintendents live in the markets they build in.
-        </p>
-        <p class="mt-4 text-[17px] leading-relaxed text-slate7">
-          We are not the biggest builder in Texas. We are the one that picks up the phone in year three.
-        </p>
-
-        <div class="mt-8 grid grid-cols-2 gap-4">
-          <div class="rounded-lg border border-ink/10 bg-cloud p-4">
-            <p class="font-display text-2xl font-extrabold text-ink">HERS 52</p>
-            <p class="mt-1 text-xs font-medium uppercase tracking-wide text-slate7/80">Average energy rating</p>
-          </div>
-          <div class="rounded-lg border border-ink/10 bg-cloud p-4">
-            <p class="font-display text-2xl font-extrabold text-ink">4.8 / 5</p>
-            <p class="mt-1 text-xs font-medium uppercase tracking-wide text-slate7/80">Homeowner satisfaction</p>
-          </div>
-          <div class="rounded-lg border border-ink/10 bg-cloud p-4">
-            <p class="font-display text-2xl font-extrabold text-ink">96%</p>
-            <p class="mt-1 text-xs font-medium uppercase tracking-wide text-slate7/80">On-time closings, 2025</p>
-          </div>
-          <div class="rounded-lg border border-ink/10 bg-cloud p-4">
-            <p class="font-display text-2xl font-extrabold text-ink">17</p>
-            <p class="mt-1 text-xs font-medium uppercase tracking-wide text-slate7/80">Texas communities</p>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="grid gap-6 sm:grid-cols-2">
-
-          <figure class="flex h-full flex-col rounded-xl border border-ink/10 bg-cloud p-6 shadow-card">
-            <div class="flex gap-0.5 text-bronze" role="img" aria-label="Rated 5 out of 5">
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-            </div>
-            <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-slate7">
-              &ldquo;They caught a grading issue on our lot before the slab went down and fixed it without a change order. That told me everything about how they build.&rdquo;
-            </blockquote>
-            <figcaption class="mt-5 border-t border-ink/10 pt-4 text-sm">
-              <span class="block font-semibold text-ink">Marisol &amp; Danny R.</span>
-              <span class="block text-slate7/80">Cypress Grove, Katy &middot; Closed 2024</span>
-            </figcaption>
-          </figure>
-
-          <figure class="flex h-full flex-col rounded-xl border border-ink/10 bg-cloud p-6 shadow-card">
-            <div class="flex gap-0.5 text-bronze" role="img" aria-label="Rated 5 out of 5">
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-            </div>
-            <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-slate7">
-              &ldquo;August electric bill on 2,700 square feet came in under what we paid for our old 1,900. The foam envelope is not a sales line.&rdquo;
-            </blockquote>
-            <figcaption class="mt-5 border-t border-ink/10 pt-4 text-sm">
-              <span class="block font-semibold text-ink">The Okafor Family</span>
-              <span class="block text-slate7/80">Copper Creek, Celina &middot; Closed 2025</span>
-            </figcaption>
-          </figure>
-
-          <figure class="flex h-full flex-col rounded-xl border border-ink/10 bg-cloud p-6 shadow-card sm:col-span-2">
-            <div class="flex gap-0.5 text-bronze" role="img" aria-label="Rated 5 out of 5">
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-              <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.7L12 17.9 6.1 20.4l1.2-6.7L2.5 9l6.6-.9L12 2z" /></svg>
-            </div>
-            <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-slate7">
-              &ldquo;Our eleven-month warranty walk was the real test. They came out, wrote up nine small items, and every one was closed in two weeks. No arguing, no runaround.&rdquo;
-            </blockquote>
-            <figcaption class="mt-5 border-t border-ink/10 pt-4 text-sm">
-              <span class="block font-semibold text-ink">Priya &amp; Sam T.</span>
-              <span class="block text-slate7/80">Bluebonnet Ridge, Georgetown &middot; Closed 2023</span>
-            </figcaption>
-          </figure>
-        </div>
-
-        <!-- Certifications -->
-        <ul class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <li class="rounded-lg border border-ink/10 bg-white px-3 py-4 text-center">
-            <p class="font-display text-sm font-extrabold text-ink">ENERGY STAR</p>
-            <p class="mt-0.5 text-[11px] uppercase tracking-wide text-slate7/70">Certified Homes</p>
-          </li>
-          <li class="rounded-lg border border-ink/10 bg-white px-3 py-4 text-center">
-            <p class="font-display text-sm font-extrabold text-ink">HERS Rated</p>
-            <p class="mt-0.5 text-[11px] uppercase tracking-wide text-slate7/70">Third-party tested</p>
-          </li>
-          <li class="rounded-lg border border-ink/10 bg-white px-3 py-4 text-center">
-            <p class="font-display text-sm font-extrabold text-ink">2-10 HBW</p>
-            <p class="mt-0.5 text-[11px] uppercase tracking-wide text-slate7/70">Structural warranty</p>
-          </li>
-          <li class="rounded-lg border border-ink/10 bg-white px-3 py-4 text-center">
-            <p class="font-display text-sm font-extrabold text-ink">TAB Member</p>
-            <p class="mt-0.5 text-[11px] uppercase tracking-wide text-slate7/70">Texas Assn. of Builders</p>
-          </li>
-        </ul>
-      </div>
+<!-- ═══════════════════════ ABOUT ═══════════════════════ -->
+<section id="about" class="scroll-mt-24 bg-cream py-14 lg:py-20">
+  <div class="mx-auto grid max-w-shell gap-10 px-5 lg:grid-cols-2 lg:gap-14 lg:px-8">
+    <div>
+      <h2 class="text-3xl font-bold tracking-tight">About us</h2>
+      <p class="mt-4 text-[17px] leading-relaxed text-slate7">
+        Melao&rsquo;s is a family business. We own and look after the houses we rent, so when you call
+        about a problem you are talking to the people who can fix it &mdash; not a call center.
+      </p>
+      <p class="mt-4 text-[17px] leading-relaxed text-slate7">
+        We are not the biggest landlord in Texas. We are the one that picks up the phone.
+      </p>
+      <a id="waAbout" href="#" class="mt-6 inline-flex items-center gap-2 rounded-lg bg-leaf px-6 py-3.5 text-sm font-semibold text-white">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
+        Talk to us
+      </a>
     </div>
+
+    <ul class="grid gap-4 sm:grid-cols-2">
+      <li class="rounded-2xl border border-line bg-paper p-5">
+        <h3 class="font-bold">Repairs get done</h3>
+        <p class="mt-1.5 text-sm leading-relaxed text-slate7">Report it from your phone. Emergencies same day.</p>
+      </li>
+      <li class="rounded-2xl border border-line bg-paper p-5">
+        <h3 class="font-bold">No surprise fees</h3>
+        <p class="mt-1.5 text-sm leading-relaxed text-slate7">What you are quoted is what you pay.</p>
+      </li>
+      <li class="rounded-2xl border border-line bg-paper p-5">
+        <h3 class="font-bold">Straight answers</h3>
+        <p class="mt-1.5 text-sm leading-relaxed text-slate7">If a house will not work for you, we will say so.</p>
+      </li>
+      <li class="rounded-2xl border border-line bg-paper p-5">
+        <h3 class="font-bold">Fair housing</h3>
+        <p class="mt-1.5 text-sm leading-relaxed text-slate7">Everyone gets the same terms and the same process.</p>
+      </li>
+    </ul>
   </div>
 </section>
 
-<!-- ═══════════════ CONTACT &amp; PRIVATE TOUR BOOKING ═══════════════ -->
-<section id="contact" class="scroll-mt-24 bg-cloud py-16 lg:py-24">
+<!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+<section id="contact" class="scroll-mt-24 py-14 lg:py-20">
   <div class="mx-auto max-w-shell px-5 lg:px-8">
-    <div class="overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-lift">
-      <div class="grid lg:grid-cols-[1fr_1.15fr]">
-
-        <!-- Left rail -->
-        <div class="bg-ink p-8 text-white sm:p-10">
-          <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-gilt">Private Tour</p>
-          <h2 class="mt-4 font-display text-3xl font-extrabold tracking-tight">Book a walk-through</h2>
-          <p class="mt-3 text-[15px] leading-relaxed text-white/75">
-            Tell us what you are looking for and a community manager &mdash; not a call center &mdash; will reach out within one business day.
+    <div class="overflow-hidden rounded-2xl border border-line bg-cream">
+      <div class="grid lg:grid-cols-[.85fr_1.15fr]">
+        <div class="border-b border-line bg-paper p-8 lg:border-b-0 lg:border-r">
+          <h2 class="text-2xl font-bold tracking-tight">Ask about a home</h2>
+          <p class="mt-3 text-[15px] leading-relaxed text-slate7">
+            Fastest way to reach us is WhatsApp. Send a message and we will answer with what is
+            available, what it costs, and when you can see it.
           </p>
-
-          <ul class="mt-8 space-y-5 text-sm">
-            <li class="flex gap-3">
-              <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-gilt" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" /><circle cx="12" cy="10" r="2.5" /></svg>
-              <span><strong class="block font-semibold">Design Studio &amp; Sales</strong><span class="text-white/70">4180 Ranch Road 620, Austin, TX 78734</span></span>
-            </li>
-            <li class="flex gap-3">
-              <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-gilt" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c0 8.3 6.7 15 15 15v-3.4l-4-1.6-2 2a12 12 0 01-6-6l2-2L7.4 5H4z" /></svg>
-              <span><strong class="block font-semibold">Call a builder</strong><a href="tel:+15125550142" class="text-white/70 underline decoration-gold/50 underline-offset-4 transition hover:text-gilt">(512) 555-0142</a></span>
-            </li>
-            <li class="flex gap-3">
-              <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-gilt" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>
-              <span><strong class="block font-semibold">Email</strong><a href="mailto:tours@melaosdevelopment.com" class="break-all text-white/70 underline decoration-gold/50 underline-offset-4 transition hover:text-gilt">tours@melaosdevelopment.com</a></span>
-            </li>
-            <li class="flex gap-3">
-              <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-gilt" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
-              <span><strong class="block font-semibold">Model home hours</strong><span class="text-white/70">Mon&ndash;Sat 10a&ndash;6p &middot; Sun 12p&ndash;6p</span></span>
-            </li>
-          </ul>
+          <a id="waContact" href="#" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-leaf px-6 py-3.5 text-sm font-semibold text-white sm:w-auto">
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
+            Message on WhatsApp
+          </a>
+          <p class="mt-4 text-sm text-slate7">
+            Or call <a id="telContact" class="font-semibold text-bronze underline underline-offset-4" href="#"></a><br />
+            Mon&ndash;Sat 8am&ndash;7pm
+          </p>
         </div>
 
-        <!-- Form -->
-        <div class="p-8 sm:p-10">
-          <form id="tourForm" novalidate class="space-y-5">
-            <div class="grid gap-5 sm:grid-cols-2">
+        <div class="p-8">
+          <p class="mb-5 text-sm font-semibold">Prefer we contact you? Leave your details.</p>
+          <form id="tourForm" novalidate class="space-y-4">
+            <div class="grid gap-4 sm:grid-cols-2">
               <div>
-                <label for="cName" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Full name <span class="text-bronze" aria-hidden="true">*</span></label>
-                <input id="cName" name="name" type="text" autocomplete="name" required aria-required="true" aria-describedby="cNameErr"
-                       class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm text-ink transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0" placeholder="Jordan Alvarez" />
-                <p id="cNameErr" class="mt-1.5 hidden text-xs font-medium text-red-600">Please enter your name.</p>
+                <label for="cName" class="mb-1.5 block text-xs font-semibold text-slate7">Your name <span class="text-brick">*</span></label>
+                <input id="cName" type="text" autocomplete="name" required aria-required="true" aria-describedby="cNameErr"
+                       class="w-full rounded-lg border border-line px-3.5 py-3 text-sm" placeholder="Jordan Alvarez" />
+                <p id="cNameErr" hidden class="mt-1.5 text-xs font-medium text-brick">Please enter your name.</p>
               </div>
               <div>
-                <label for="cEmail" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Email <span class="text-bronze" aria-hidden="true">*</span></label>
-                <input id="cEmail" name="email" type="email" autocomplete="email" required aria-required="true" aria-describedby="cEmailErr"
-                       class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm text-ink transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0" placeholder="you@email.com" />
-                <p id="cEmailErr" class="mt-1.5 hidden text-xs font-medium text-red-600">Please enter a valid email address.</p>
+                <label for="cPhone" class="mb-1.5 block text-xs font-semibold text-slate7">Phone <span class="text-brick">*</span></label>
+                <input id="cPhone" type="tel" autocomplete="tel" inputmode="tel" required aria-required="true" aria-describedby="cPhoneErr"
+                       class="w-full rounded-lg border border-line px-3.5 py-3 text-sm" placeholder="(432) 606-9495" />
+                <p id="cPhoneErr" hidden class="mt-1.5 text-xs font-medium text-brick">Please enter a phone number we can reach you on.</p>
               </div>
             </div>
 
-            <div class="grid gap-5 sm:grid-cols-2">
+            <div class="grid gap-4 sm:grid-cols-2">
               <div>
-                <label for="cPhone" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Phone</label>
-                <input id="cPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel"
-                       class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm text-ink transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0" placeholder="(512) 555-0142" />
+                <label for="cEmail" class="mb-1.5 block text-xs font-semibold text-slate7">Email</label>
+                <input id="cEmail" type="email" autocomplete="email" aria-describedby="cEmailErr"
+                       class="w-full rounded-lg border border-line px-3.5 py-3 text-sm" placeholder="you@email.com" />
+                <p id="cEmailErr" hidden class="mt-1.5 text-xs font-medium text-brick">That email does not look right.</p>
               </div>
               <div>
-                <label for="cLocation" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Preferred location <span class="text-bronze" aria-hidden="true">*</span></label>
-                <select id="cLocation" name="location" required aria-required="true" aria-describedby="cLocationErr"
-                        class="w-full rounded-md border border-ink/15 bg-white px-3.5 py-3 text-sm text-ink transition hover:border-gold focus:border-gold focus:ring-0">
-                  <option value="">Select a market</option>
+                <label for="cLocation" class="mb-1.5 block text-xs font-semibold text-slate7">City <span class="text-brick">*</span></label>
+                <select id="cLocation" required aria-required="true" aria-describedby="cLocationErr"
+                        class="w-full rounded-lg border border-line bg-cream px-3.5 py-3 text-sm">
+                  <option value="">Choose a city</option>
                   <option>Austin</option>
                   <option>Dallas&ndash;Fort Worth</option>
                   <option>Houston</option>
                   <option>San Antonio</option>
-                  <option>Build on my own land</option>
                 </select>
-                <p id="cLocationErr" class="mt-1.5 hidden text-xs font-medium text-red-600">Please choose a market.</p>
+                <p id="cLocationErr" hidden class="mt-1.5 text-xs font-medium text-brick">Please choose a city.</p>
               </div>
             </div>
 
-            <div class="grid gap-5 sm:grid-cols-2">
+            <div class="grid gap-4 sm:grid-cols-2">
               <div>
-                <label for="cTimeline" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Timeline</label>
-                <select id="cTimeline" name="timeline" class="w-full rounded-md border border-ink/15 bg-white px-3.5 py-3 text-sm text-ink transition hover:border-gold focus:border-gold focus:ring-0">
+                <label for="cBudget" class="mb-1.5 block text-xs font-semibold text-slate7">Monthly budget</label>
+                <select id="cBudget" class="w-full rounded-lg border border-line bg-cream px-3.5 py-3 text-sm">
                   <option value="">Not sure yet</option>
-                  <option>Ready now &ndash; 3 months</option>
-                  <option>3 &ndash; 6 months</option>
-                  <option>6 &ndash; 12 months</option>
-                  <option>Just researching</option>
+                  <option>Under $1,500</option>
+                  <option>$1,500 &ndash; $2,000</option>
+                  <option>$2,000 &ndash; $2,500</option>
+                  <option>$2,500+</option>
                 </select>
               </div>
               <div>
-                <label for="cBudget" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">Budget</label>
-                <select id="cBudget" name="budget" class="w-full rounded-md border border-ink/15 bg-white px-3.5 py-3 text-sm text-ink transition hover:border-gold focus:border-gold focus:ring-0">
-                  <option value="">Prefer not to say</option>
-                  <option>Under $375,000</option>
-                  <option>$375,000 &ndash; $425,000</option>
-                  <option>$425,000 &ndash; $550,000</option>
-                  <option>$550,000+</option>
+                <label for="cTimeline" class="mb-1.5 block text-xs font-semibold text-slate7">When do you need it?</label>
+                <select id="cTimeline" class="w-full rounded-lg border border-line bg-cream px-3.5 py-3 text-sm">
+                  <option value="">Not sure yet</option>
+                  <option>Right away</option>
+                  <option>Within a month</option>
+                  <option>1 &ndash; 3 months</option>
+                  <option>Just looking</option>
                 </select>
               </div>
             </div>
 
             <div>
-              <label for="cMessage" class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate7">What are you looking for?</label>
-              <textarea id="cMessage" name="message" rows="4"
-                        class="w-full rounded-md border border-ink/15 px-3.5 py-3 text-sm text-ink transition placeholder:text-slate7/40 hover:border-gold focus:border-gold focus:ring-0"
-                        placeholder="Single-story, greenbelt lot, three-car garage, close to Katy ISD elementary&hellip;"></textarea>
+              <label for="cMessage" class="mb-1.5 block text-xs font-semibold text-slate7">Anything else?</label>
+              <textarea id="cMessage" rows="3" class="w-full rounded-lg border border-line px-3.5 py-3 text-sm"
+                        placeholder="Three bedrooms, fenced yard, near a school, we have a dog&hellip;"></textarea>
             </div>
 
             <div class="flex items-start gap-3">
-              <input id="cConsent" name="consent" type="checkbox" required aria-required="true" aria-describedby="cConsentErr"
-                     class="mt-0.5 h-4 w-4 rounded border-ink/30 text-bronze focus:ring-gold" />
+              <input id="cConsent" type="checkbox" required aria-required="true" aria-describedby="cConsentErr"
+                     class="mt-0.5 h-4 w-4 rounded border-line" />
               <label for="cConsent" class="text-sm leading-relaxed text-slate7">
-                I agree to be contacted about Melao&rsquo;s communities. <span class="text-bronze" aria-hidden="true">*</span>
-                <span class="block text-xs text-slate7/70">We never sell your information. Message and data rates may apply.</span>
+                You can contact me about renting a home. <span class="text-brick">*</span>
               </label>
             </div>
-            <p id="cConsentErr" class="-mt-3 hidden text-xs font-medium text-red-600">Please confirm before submitting.</p>
+            <p id="cConsentErr" hidden class="-mt-2 text-xs font-medium text-brick">Please tick the box so we can reply.</p>
 
-            <button type="submit" class="w-full rounded-md bg-gold px-6 py-3.5 text-sm font-semibold text-ink shadow-sm transition hover:bg-gilt sm:w-auto">
-              Request my private tour
-            </button>
-
+            <button type="submit" class="w-full rounded-lg bg-ink px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-slate7 sm:w-auto">Send</button>
             <p id="formStatus" role="status" aria-live="polite" class="text-sm font-medium text-slate7"></p>
           </form>
         </div>
@@ -797,453 +480,247 @@
     </div>
   </div>
 </section>
-<!-- ═══════════════════ SITE HEALTH / MAINTENANCE ═══════════════════ -->
-<section id="maintenance" class="scroll-mt-24 border-t border-ink/10 bg-white py-16 lg:py-20">
-  <div class="mx-auto max-w-shell px-5 lg:px-8">
-
-    <div class="flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <p class="rule text-[11px] font-bold uppercase tracking-[.18em] text-bronze">Maintenance</p>
-        <h2 class="mt-4 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">Site health</h2>
-        <p class="mt-3 max-w-2xl text-[17px] leading-relaxed text-slate7">
-          This site is watched automatically. The checks below run in your browser right now; a
-          50-test suite runs on every change and again every day.
-        </p>
-      </div>
-      <a href="https://github.com/cryptofedge/melaos-real-estate/actions/workflows/maintenance.yml"
-         target="_blank" rel="noopener"
-         class="shrink-0 text-sm font-semibold text-ink underline decoration-gold decoration-2 underline-offset-8 transition hover:text-bronze">
-        Full run history
-      </a>
-    </div>
-
-    <!-- Verdict -->
-    <div class="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 rounded-xl border border-ink/10 bg-cloud p-5 shadow-card sm:flex-nowrap sm:p-6">
-      <span id="mVerdictDot" class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-sand">
-        <svg class="mSpin h-6 w-6 text-bronze" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.6" /></svg>
-      </span>
-      <div class="min-w-0 flex-1">
-        <p id="mVerdictText" class="font-display text-lg font-extrabold text-ink sm:text-xl">Running checks&hellip;</p>
-        <p id="mVerdictSub" class="mt-0.5 text-sm text-slate7">Assets, link previews and dependencies.</p>
-      </div>
-      <button id="mRerun" type="button"
-              class="w-full shrink-0 rounded-md border border-ink/15 px-4 py-2.5 text-sm font-semibold text-slate7 transition hover:border-gold hover:text-bronze sm:w-auto">
-        Re-run
-      </button>
-    </div>
-
-    <div class="mt-6 grid gap-6 lg:grid-cols-2">
-      <!-- Live checks -->
-      <div>
-        <h3 class="font-display text-sm font-bold uppercase tracking-[.14em] text-ink">Live checks</h3>
-        <ul id="mChecks" role="status" aria-live="polite"
-            class="mt-3 divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/10 bg-white shadow-card"></ul>
-      </div>
-
-      <!-- CI runs -->
-      <div>
-        <div class="flex items-baseline justify-between gap-3">
-          <h3 class="font-display text-sm font-bold uppercase tracking-[.14em] text-ink">Recent test runs</h3>
-          <a class="text-xs font-semibold text-bronze underline underline-offset-4"
-             href="https://github.com/cryptofedge/melaos-real-estate/actions/workflows/maintenance.yml"
-             target="_blank" rel="noopener">On GitHub &rarr;</a>
-        </div>
-        <ul id="mRuns" class="mt-3 divide-y divide-ink/10 overflow-hidden rounded-xl border border-ink/10 bg-white shadow-card">
-          <li class="px-4 py-3.5 text-sm text-slate7">Loading run history&hellip;</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
 </main>
 
-<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
-<footer class="bg-ink pt-16 text-white/70">
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="border-t border-line bg-cream pt-12">
   <div class="mx-auto max-w-shell px-5 lg:px-8">
-    <div class="grid gap-10 pb-12 md:grid-cols-2 lg:grid-cols-4">
-
+    <div class="grid gap-8 pb-10 sm:grid-cols-2 lg:grid-cols-4">
       <div>
         <div class="flex items-center gap-3">
-          <span class="grid h-11 w-11 place-items-center rounded-full bg-white/[.06] ring-1 ring-gold/30">
-            <img src="assets/logo.svg" alt="" class="h-6 w-6 object-contain"
-                 onerror="this.hidden=true;this.nextElementSibling.hidden=false" />
-            <svg viewBox="0 0 200 214" class="h-6 w-5" hidden aria-hidden="true"><use href="#brandMark" /></svg>
+          <span class="grid h-11 w-11 place-items-center rounded-full bg-ink">
+            <img src="assets/logo.svg" alt="" class="h-6 w-6 object-contain" />
           </span>
           <span class="leading-tight">
-            <span class="block font-display text-base font-extrabold tracking-tight text-white">MELAO&rsquo;S</span>
-            <span class="block text-[10px] font-semibold uppercase tracking-[.18em] text-gold">Real Estate Development</span>
+            <span class="block text-[15px] font-bold">MELAO&rsquo;S</span>
+            <span class="block text-[10px] font-semibold uppercase tracking-[.14em] text-bronze">Homes for Rent</span>
           </span>
         </div>
-        <p class="mt-5 text-sm leading-relaxed">
-          Building modern single-family homes and master-planned neighborhoods across Texas since 2009.
+        <p class="mt-4 text-sm leading-relaxed text-slate7">
+          Family-run rentals across Texas. We own the houses we rent and look after them ourselves.
         </p>
-        <div class="mt-6 flex gap-2">
-          <a href="#" aria-label="Melao's on Facebook" class="grid h-10 w-10 place-items-center rounded-md border border-white/10 transition hover:border-gold hover:text-gilt">
-            <svg viewBox="0 0 24 24" class="h-4.5 w-4.5" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.6c-.29-.04-1.27-.13-2.41-.13-2.38 0-4.01 1.45-4.01 4.12V9.9H7.6V13h2.68v8h3.22z" /></svg>
-          </a>
-          <a href="#" aria-label="Melao's on Instagram" class="grid h-10 w-10 place-items-center rounded-md border border-white/10 transition hover:border-gold hover:text-gilt">
-            <svg viewBox="0 0 24 24" class="h-4.5 w-4.5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="3.8" /><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none" /></svg>
-          </a>
-          <a href="#" aria-label="Melao's on YouTube" class="grid h-10 w-10 place-items-center rounded-md border border-white/10 transition hover:border-gold hover:text-gilt">
-            <svg viewBox="0 0 24 24" class="h-4.5 w-4.5" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2s-.2-1.4-.8-2c-.75-.8-1.6-.8-2-.85C16 4.2 12 4.2 12 4.2s-4 0-6.8.15c-.4.05-1.25.05-2 .85-.6.6-.8 2-.8 2S2.2 8.8 2.2 10.5v1.6c0 1.6.2 3.3.2 3.3s.2 1.4.8 2c.75.8 1.75.75 2.2.85 1.6.15 6.8.2 6.8.2s4 0 6.8-.2c.4-.05 1.25-.05 2-.85.6-.6.8-2 .8-2s.2-1.65.2-3.3v-1.6c0-1.7-.2-3.3-.2-3.3zM10 14.6V9.2l5.2 2.7-5.2 2.7z" /></svg>
-          </a>
-          <a href="#" aria-label="Melao's on LinkedIn" class="grid h-10 w-10 place-items-center rounded-md border border-white/10 transition hover:border-gold hover:text-gilt">
-            <svg viewBox="0 0 24 24" class="h-4.5 w-4.5" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H4.2V20h2.74V8.5zM5.57 4a1.6 1.6 0 100 3.2 1.6 1.6 0 000-3.2zM20 13.9c0-3-1.6-4.4-3.74-4.4-1.72 0-2.5.95-2.93 1.62V8.5h-2.74c.04.78 0 11.5 0 11.5h2.74v-6.42c0-.24.02-.48.09-.65.19-.48.63-.98 1.37-.98.97 0 1.36.74 1.36 1.82V20H20v-6.1z" /></svg>
-          </a>
-        </div>
+        <div id="socialLinks" class="mt-5 flex flex-wrap gap-2"></div>
       </div>
 
-      <nav aria-label="Communities">
-        <h2 class="font-display text-sm font-bold uppercase tracking-[.14em] text-white">Communities</h2>
-        <ul class="mt-5 space-y-3 text-sm">
-          <li><a href="#communities" class="transition hover:text-gilt">Cypress Grove &middot; Katy</a></li>
-          <li><a href="#communities" class="transition hover:text-gilt">Bluebonnet Ridge &middot; Georgetown</a></li>
-          <li><a href="#communities" class="transition hover:text-gilt">Alamo Heights Reserve &middot; Schertz</a></li>
-          <li><a href="#communities" class="transition hover:text-gilt">Copper Creek &middot; Celina</a></li>
-          <li><a href="#communities" class="transition hover:text-gilt">Pecan Hollow &middot; Round Rock</a></li>
-          <li><a href="#communities" class="transition hover:text-gilt">Harvest Bend &middot; Mansfield</a></li>
+      <nav aria-label="Homes">
+        <h2 class="text-sm font-bold">Homes</h2>
+        <ul class="mt-4 space-y-2.5 text-sm text-slate7">
+          <li><a href="#homes" class="hover:text-bronze">Available now</a></li>
+          <li><a href="#homes" class="hover:text-bronze">Currently rented</a></li>
+          <li><a href="#areas" class="hover:text-bronze">Where we rent</a></li>
+          <li><a href="#how" class="hover:text-bronze">How it works</a></li>
         </ul>
       </nav>
 
-      <nav aria-label="Homes and buying">
-        <h2 class="font-display text-sm font-bold uppercase tracking-[.14em] text-white">Homes</h2>
-        <ul class="mt-5 space-y-3 text-sm">
-          <li><a href="#floorplans" class="transition hover:text-gilt">All 40 floor plans</a></li>
-          <li><a href="#floorplans" class="transition hover:text-gilt">Single-story homes</a></li>
-          <li><a href="#floorplans" class="transition hover:text-gilt">Two-story homes</a></li>
-          <li><a href="#floorplans" class="transition hover:text-gilt">Custom spec homes</a></li>
-          <li><a href="#custom" class="transition hover:text-gilt">Build on your land</a></li>
-          <li><a href="#process" class="transition hover:text-gilt">Warranty &amp; process</a></li>
+      <nav aria-label="Tenants">
+        <h2 class="text-sm font-bold">Tenants</h2>
+        <ul class="mt-4 space-y-2.5 text-sm text-slate7">
+          <li><a href="status.html" class="hover:text-bronze">Tenant portal</a></li>
+          <li><a href="status.html#request" class="hover:text-bronze">Report a repair</a></li>
+          <li><a href="status.html#request" class="hover:text-bronze">Make a complaint</a></li>
         </ul>
       </nav>
 
-      <nav aria-label="Company">
-        <h2 class="font-display text-sm font-bold uppercase tracking-[.14em] text-white">Company</h2>
-        <ul class="mt-5 space-y-3 text-sm">
-          <li><a href="#about" class="transition hover:text-gilt">About Melao&rsquo;s</a></li>
-          <li><a href="#contact" class="transition hover:text-gilt">Schedule a tour</a></li>
-          <li><a href="#contact" class="transition hover:text-gilt">Contact a builder</a></li>
-          <li><a href="#" class="transition hover:text-gilt">Careers</a></li>
-          <li><a href="#" class="transition hover:text-gilt">Realtor program</a></li>
-          <li><a href="status.html" class="transition hover:text-gilt">Resident portal &amp; complaints</a></li>
-          <li><a href="status.html#request" class="transition hover:text-gilt">Warranty service request</a></li>
+      <nav aria-label="Contact">
+        <h2 class="text-sm font-bold">Contact</h2>
+        <ul class="mt-4 space-y-2.5 text-sm text-slate7">
+          <li><a id="waFooter" href="#" class="font-semibold text-leaf hover:underline">WhatsApp us</a></li>
+          <li><a id="telFooter" href="#" class="hover:text-bronze"></a></li>
+          <li><a href="#contact" class="hover:text-bronze">Send us your details</a></li>
         </ul>
       </nav>
     </div>
 
-    <!-- Disclosures -->
-    <div class="border-t border-white/10 py-8">
-      <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-        <div class="flex items-start gap-4">
-          <svg viewBox="0 0 48 48" class="h-12 w-12 shrink-0 text-white" role="img" aria-label="Equal Housing Opportunity">
-            <path d="M24 8 6 20h4v18h28V20h4L24 8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-            <path d="M16 28h16M16 34h16M20 22h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
-          <p class="max-w-2xl text-xs leading-relaxed text-white/55">
-            <strong class="font-semibold text-white/80">Equal Housing Opportunity.</strong>
-            Melao&rsquo;s Real Estate Development is committed to the letter and spirit of U.S. policy for the achievement of equal housing opportunity throughout the nation. We encourage and support an affirmative advertising and marketing program in which there are no barriers to obtaining housing because of race, color, religion, sex, handicap, familial status, or national origin.
-          </p>
-        </div>
-        <p class="max-w-md text-xs leading-relaxed text-white/55">
-          <strong class="font-semibold text-white/80">Texas disclosures.</strong>
-          Prices, plans, dimensions, features, materials, specifications and availability are subject to change without notice. Square footages are approximate and may vary in construction. Renderings and floor plan drawings are artist concepts and are not to scale. Community amenities, school assignments and lot premiums are subject to change and are not guaranteed. Not an offer where prohibited by law.
-          Information About Brokerage Services and the Consumer Protection Notice are available on request from the Texas Real Estate Commission.
+    <div class="border-t border-line py-7">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:gap-8">
+        <svg viewBox="0 0 48 48" class="h-11 w-11 shrink-0 text-slate7" role="img" aria-label="Equal Housing Opportunity">
+          <path d="M24 8 6 20h4v18h28V20h4L24 8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          <path d="M16 28h16M16 34h16M20 22h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <p class="text-xs leading-relaxed text-slate7">
+          <strong>Equal Housing Opportunity.</strong>
+          We rent in accordance with federal, state and local fair housing law. We do not refuse to
+          rent, or set different terms, because of race, color, religion, sex, disability, familial
+          status or national origin.
+          Rents, availability, deposits and terms are subject to change and are not a contract.
+          Photographs may show a similar home. Applicant screening criteria are available on request.
         </p>
       </div>
     </div>
 
-    <div class="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 text-xs text-white/50 sm:flex-row">
-      <p>&copy; <span id="year">2026</span> Melao&rsquo;s Real Estate Development. All rights reserved.</p>
-      <ul class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-        <li><a href="#" class="transition hover:text-gilt">Privacy Policy</a></li>
-        <li><a href="#" class="transition hover:text-gilt">Terms of Use</a></li>
-        <li><a href="#" class="transition hover:text-gilt">Accessibility Statement</a></li>
-        <li><a href="#" class="transition hover:text-gilt">TREC Information About Brokerage Services</a></li>
+    <div class="flex flex-col items-center justify-between gap-3 border-t border-line py-6 text-xs text-slate7 sm:flex-row">
+      <p>&copy; <span id="year">2026</span> Melao&rsquo;s Real Estate Development.</p>
+      <ul class="flex flex-wrap justify-center gap-x-5 gap-y-2">
+        <li><a href="#" class="hover:text-bronze">Privacy</a></li>
+        <li><a href="#" class="hover:text-bronze">Terms</a></li>
+        <li><a href="#" class="hover:text-bronze">Accessibility</a></li>
       </ul>
     </div>
   </div>
 </footer>
 
-<!-- ═══════════════════════ FLOOR PLAN MODAL ═══════════════════════ -->
-<div id="planScrim" hidden class="fixed inset-0 z-[80] bg-ink/60 backdrop-blur-sm"></div>
+<!-- ═══════════════════════ DETAIL MODAL ═══════════════════════ -->
+<div id="planScrim" hidden class="fixed inset-0 z-[80] bg-ink/60"></div>
 <div id="planModal" hidden role="dialog" aria-modal="true" aria-labelledby="planTitle"
      class="fixed inset-0 z-[90] flex items-end justify-center p-0 sm:items-center sm:p-6">
-  <div class="flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-2xl bg-white shadow-lift sm:rounded-2xl">
-    <div class="flex items-start justify-between gap-4 border-b border-ink/10 px-6 py-5">
+  <div class="flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-2xl bg-cream sm:rounded-2xl">
+    <div class="flex items-start justify-between gap-4 border-b border-line px-6 py-5">
       <div>
-        <p id="planEyebrow" class="text-[11px] font-bold uppercase tracking-[.16em] text-bronze">Single-Story</p>
-        <h2 id="planTitle" class="mt-1.5 font-display text-2xl font-extrabold text-ink">The Llano</h2>
-        <p id="planSub" class="mt-1 text-sm text-slate7">Cypress Grove &middot; Katy</p>
+        <p id="planEyebrow" class="text-xs font-semibold uppercase tracking-wide text-bronze"></p>
+        <h2 id="planTitle" class="mt-1 text-2xl font-bold"></h2>
+        <p id="planSub" class="mt-1 text-sm text-slate7"></p>
       </div>
-      <button id="planClose" type="button" class="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-ink/15 text-ink transition hover:border-gold hover:text-bronze">
-        <span class="sr-only">Close floor plan</span>
+      <button id="planClose" type="button" class="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-line">
+        <span class="sr-only">Close</span>
         <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
       </button>
     </div>
-
     <div class="overflow-y-auto px-6 py-6">
+      <div id="planGallery" class="mb-5"></div>
       <dl id="planStats" class="grid grid-cols-2 gap-3 sm:grid-cols-4"></dl>
-      <div id="planDrawing" class="mt-6 rounded-xl border border-ink/10 bg-cloud p-4"></div>
-      <p class="mt-4 text-xs leading-relaxed text-slate7/70">
-        Schematic layout, not to scale. Room dimensions, window placement and elevation options vary by community and lot orientation. Ask your community manager for the construction drawing set.
-      </p>
+      <p id="planDesc" class="mt-5 text-[15px] leading-relaxed text-slate7"></p>
     </div>
-
-    <div class="flex flex-col gap-3 border-t border-ink/10 bg-cloud px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-      <p class="text-sm text-slate7">Want to walk this plan in person?</p>
-      <a href="#contact" data-modal-close class="rounded-md bg-ink px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-slate7">Schedule a tour of this plan</a>
+    <div class="flex flex-col gap-3 border-t border-line bg-paper px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-sm text-slate7">Want to see it?</p>
+      <a id="planWhatsApp" href="#" class="inline-flex items-center justify-center gap-2 rounded-lg bg-leaf px-5 py-3 text-sm font-semibold text-white">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.7 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2Zm5.5 14c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-3.2-.8a11.4 11.4 0 0 1-4.7-4.2c-.4-.6-1-1.6-1-2.6 0-1 .5-1.5.8-1.8.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3-.1.5.2.4.8 1.3 1.6 2 1 .9 1.8 1.1 2.1 1.3.2.1.4 0 .5-.1l.8-1c.2-.2.3-.2.5-.1l2 1c.2.1.4.2.4.3.1.2.1.5 0 .8Z"/></svg>
+        Ask about this home
+      </a>
     </div>
   </div>
 </div>
-
 
 <script>
 (function () {
   'use strict';
 
   /* ══════════════════════════════════════════════════════════════════════
-     CONFIGURATION — edit this block to connect the tour form.
+     CONFIGURATION
      ══════════════════════════════════════════════════════════════════════ */
   const CONFIG = {
-    // POST target for tour requests. Empty falls back to the resident's own
-    // email client, prefilled, so an enquiry is never silently dropped.
+    // Business WhatsApp, answered by the AI agent. Digits only, country code first.
+    whatsapp: '14326069495',
+    phoneDisplay: '(432) 606-9495',
+    // POST target for enquiries. Empty falls back to a prefilled email.
     endpoint: '',
-    salesEmail: 'tours@melaosdevelopment.com',
+    salesEmail: 'rentals@melaosdevelopment.com',
   };
 
-  /* ───────────────────────── Data: 40 homes ───────────────────────── */
-  /* ─────────────────── Properties, loaded from data ───────────────────
-     Everything the brothers edit in admin.html lands in data/properties.json
-     and is committed to the repo, so the site redeploys with their changes. */
-  let COMMUNITIES = {};
-  let PLANS = [];
+  const $ = (id) => document.getElementById(id);
+  const esc = (v) => String(v == null ? '' : v)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  const usd = (n) => '$' + Number(n || 0).toLocaleString('en-US');
+  const waLink = (msg) => 'https://wa.me/' + CONFIG.whatsapp +
+    (msg ? '?text=' + encodeURIComponent(msg) : '');
 
-  function adaptCommunity(c) {
-    return { id: c.id, name: c.name, place: c.place, market: c.market, city: c.city };
-  }
+  /* Every WhatsApp button on the page, wired from one number. */
+  [['waHeader', ''], ['waHero', 'Hi, I am looking for a house to rent.'],
+   ['waEmpty', 'Hi, do you have anything coming up for rent?'],
+   ['waAbout', 'Hi, I have a question about renting.'],
+   ['waContact', 'Hi, I am looking for a house to rent.'],
+   ['waDrawer', 'Hi, I am looking for a house to rent.'],
+   ['waFooter', '']].forEach(function (pair) {
+    const el = $(pair[0]);
+    if (el) { el.href = waLink(pair[1]); el.rel = 'noopener'; el.target = '_blank'; }
+  });
+  ['waNumber'].forEach(function (id) {
+    const el = $(id);
+    if (el) { el.href = waLink(''); el.textContent = CONFIG.phoneDisplay; el.target = '_blank'; el.rel = 'noopener'; }
+  });
+  ['telContact', 'telFooter', 'telDrawer'].forEach(function (id) {
+    const el = $(id);
+    if (el) { el.href = 'tel:+' + CONFIG.whatsapp; el.textContent = CONFIG.phoneDisplay; }
+  });
 
-  function adaptHome(h, comms) {
-    return {
-      id: h.id, name: h.name, comm: comms[h.community] || {},
-      story: h.story, price: h.price,
-      beds: h.beds, baths: h.baths, sqft: h.sqft, garage: h.garage,
-      status: h.status, photos: h.photos || [], description: h.description || '',
-    };
-  }
+  /* ───────────────────────── Data ───────────────────────── */
+  let HOMES = [], AREAS = [], PUBLISH = { rent: true, sale: false, build: false };
 
-  const STORY_LABEL = { single: 'Single-Story', two: 'Two-Story', custom: 'Custom Spec Home' };
-  const usd = function (dollars) { return '$' + Number(dollars || 0).toLocaleString('en-US'); };
-  const thousands = function (dollars) { return Math.round(Number(dollars || 0) / 1000); };
+  const CITY_LABEL = { austin: 'Austin', dfw: 'Dallas–Fort Worth',
+                       houston: 'Houston', sanantonio: 'San Antonio' };
 
-  /* ───────────────── Floor plan schematic generation ───────────────── */
-  // Packs a row of rooms into the available width using relative weights.
-  function packRow(rooms, x, y, w, h, gap) {
-    const total = rooms.reduce(function (s, r) { return s + r.w; }, 0);
-    const usable = w - gap * (rooms.length - 1);
-    let cx = x;
-    return rooms.map(function (r) {
-      const rw = usable * (r.w / total);
-      const rect = { x: cx, y: y, w: rw, h: h, label: r.l };
-      cx += rw + gap;
-      return rect;
-    });
-  }
-
-  function floorsFor(plan) {
-    const secondaryBeds = Math.max(1, plan.beds - 1);
-    const gap = 1.6, PW = 120, PH = 86, M = 3;
-    const innerW = PW - M * 2;
-
-    function floor(name, rowA, rowB) {
-      const hA = (PH - M * 2 - gap) * 0.46;
-      const hB = (PH - M * 2 - gap) * 0.54;
-      return {
-        name: name,
-        rooms: packRow(rowA, M, M, innerW, hA, gap)
-          .concat(packRow(rowB, M, M + hA + gap, innerW, hB, gap)),
-      };
-    }
-
-    if (plan.story === 'single') {
-      const down = [{ l: 'Primary Suite', w: 1.9 }];
-      for (let i = 0; i < secondaryBeds && i < 3; i++) down.push({ l: 'Bed ' + (i + 2), w: 1 });
-      down.push({ l: plan.garage + '-Car Garage', w: 1.5 });
-      return [floor('Single Level', [
-        { l: 'Great Room', w: 2.2 }, { l: 'Kitchen', w: 1.5 }, { l: 'Dining', w: 1.3 },
-      ], down)];
-    }
-
-    const upper = [];
-    for (let i = 0; i < secondaryBeds && i < 4; i++) upper.push({ l: 'Bed ' + (i + 2), w: 1 });
-    upper.push({ l: 'Bath', w: .7 });
-
-    const first = floor('First Floor',
-      [{ l: 'Great Room', w: 2.1 }, { l: 'Kitchen', w: 1.5 }, { l: 'Dining', w: 1.2 }],
-      plan.story === 'custom'
-        ? [{ l: 'Primary Suite', w: 1.9 }, { l: 'Guest Suite', w: 1.2 }, { l: 'Study', w: 1 }, { l: plan.garage + '-Car Garage', w: 1.6 }]
-        : [{ l: 'Primary Suite', w: 1.9 }, { l: 'Study / Flex', w: 1.1 }, { l: plan.garage + '-Car Garage', w: 1.6 }]);
-
-    const second = floor('Second Floor',
-      plan.story === 'custom'
-        ? [{ l: 'Media Room', w: 1.6 }, { l: 'Game Room', w: 1.6 }, { l: 'Loft', w: 1 }]
-        : [{ l: 'Game Room', w: 2 }, { l: 'Loft', w: 1.2 }],
-      upper);
-
-    return [first, second];
-  }
-
-  function drawFloor(f) {
-    const rooms = f.rooms.map(function (r) {
-      const fs = Math.min(4.4, Math.max(2.9, r.w / (r.label.length * 0.52)));
-      return '<g>' +
-        '<rect x="' + r.x.toFixed(1) + '" y="' + r.y.toFixed(1) + '" width="' + r.w.toFixed(1) + '" height="' + r.h.toFixed(1) + '" rx="1" fill="#FFFFFF" stroke="#C5A059" stroke-width=".7"/>' +
-        '<text x="' + (r.x + r.w / 2).toFixed(1) + '" y="' + (r.y + r.h / 2 + 1.4).toFixed(1) + '" text-anchor="middle" font-size="' + fs.toFixed(1) + '" font-family="Inter, sans-serif" fill="#1F2937">' + r.label + '</text>' +
-        '</g>';
-    }).join('');
-
-    return '<figure class="min-w-0">' +
-      '<figcaption class="mb-2 text-[11px] font-bold uppercase tracking-[.14em] text-bronze">' + f.name + '</figcaption>' +
-      '<svg viewBox="0 0 120 86" class="w-full rounded-lg bg-white ring-1 ring-ink/10" role="img" aria-label="Schematic layout, ' + f.name + '">' +
-      '<rect x="1.2" y="1.2" width="117.6" height="83.6" rx="2" fill="#F9FAFB" stroke="#111827" stroke-width="1.2"/>' +
-      rooms + '</svg></figure>';
-  }
-
-  /* ───────────────────────── Card rendering ───────────────────────── */
-
-  /* Uploaded photo if there is one, otherwise the line-art placeholder. */
-  function media(photos, label) {
+  function photoBlock(photos, label) {
     if (photos && photos.length) {
-      return '<img src="' + esc(photos[0]) + '" alt="' + esc(label) + '" loading="lazy" ' +
-             'class="absolute inset-0 h-full w-full object-cover" />';
+      return '<img src="' + esc(photos[0]) + '" alt="' + esc(label) + '" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />';
     }
-    return '<svg viewBox="0 0 320 200" class="absolute inset-0 h-full w-full opacity-90" ' +
-           'role="img" aria-label="' + esc(label) + '"><use href="#artHome"/></svg>';
+    return '<svg viewBox="0 0 320 200" class="absolute inset-0 h-full w-full" role="img" aria-label="' + esc(label) + '"><use href="#artHouse"/></svg>';
   }
 
-  /* Everything below interpolates values the brothers type in, so escape. */
-  function esc(v) {
-    return String(v == null ? '' : v)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
+  function homeCard(h) {
+    const occupied = h.availability === 'occupied';
+    const forSale = h.listingType === 'sale';
+    const price = forSale ? usd(h.price) : usd(h.rent) + '<span class="text-sm font-normal text-slate7">/mo</span>';
+    const badge = occupied
+      ? '<span class="absolute left-3 top-3 rounded-full bg-ink/85 px-2.5 py-1 text-[11px] font-semibold text-white">Rented</span>'
+      : '<span class="absolute left-3 top-3 rounded-full bg-leaf px-2.5 py-1 text-[11px] font-semibold text-white">Available</span>';
+    const when = occupied
+      ? (h.availableFrom ? 'Free from ' + esc(h.availableFrom) : 'Currently rented')
+      : (h.availableFrom ? 'Move in ' + esc(h.availableFrom) : 'Available now');
 
-  function communityCard(c) {
-    const tone = c.statusTone === 'ink'
-      ? 'bg-ink text-gilt ring-1 ring-gold/40'
-      : c.statusTone === 'white'
-        ? 'bg-white text-ink ring-1 ring-gold/50'
-        : 'bg-gold text-ink';
-    const amenities = (c.amenities || []).map(function (a) {
-      return '<li class="rounded-full bg-sand px-2.5 py-1">' + esc(a) + '</li>';
-    }).join('');
-
-    return '<article class="community group flex flex-col overflow-hidden rounded-xl border border-ink/10 bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:shadow-lift" ' +
-      'data-city="' + esc(c.city) + '" data-price="' + thousands(c.fromPrice) + '" data-beds="' + (c.beds || 3) + '">' +
-      '<div class="ph relative aspect-[16/10] overflow-hidden">' +
-        media(c.photos, c.name + ' community') +
-        '<span class="absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ' + tone + '">' + esc(c.status) + '</span>' +
-      '</div>' +
+    return '<article class="home flex flex-col overflow-hidden rounded-2xl border border-line bg-cream shadow-soft" ' +
+      'data-city="' + esc(h.city) + '" data-price="' + (forSale ? Math.round((h.price || 0) / 1000) : (h.rent || 0)) + '" data-beds="' + (h.beds || 0) + '">' +
+      '<div class="ph relative aspect-[16/10] overflow-hidden">' + photoBlock(h.photos, h.title || 'Rental home') + badge + '</div>' +
       '<div class="flex flex-1 flex-col p-5">' +
-        '<h3 class="font-display text-xl font-bold text-ink">' + esc(c.name) + '</h3>' +
-        '<p class="mt-1 text-sm text-slate7">' + esc(c.place) + ' &middot; ' + esc(c.market) + '</p>' +
-        '<p class="mt-4 font-display text-lg font-extrabold text-ink">From ' + usd(c.fromPrice) + '</p>' +
-        '<p class="text-xs font-medium uppercase tracking-wide text-slate7/80">' + esc(c.lots) + ' lots</p>' +
-        '<ul class="mt-4 flex flex-wrap gap-2 text-[12px] font-medium text-slate7">' + amenities + '</ul>' +
-        '<a href="#contact" class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition group-hover:text-bronze">Tour ' + esc(c.name) +
-          '<svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
-        '</a>' +
+        '<h3 class="text-lg font-bold">' + esc(h.title) + '</h3>' +
+        '<p class="mt-0.5 text-sm text-slate7">' + esc(h.area || '') + (h.city ? ' &middot; ' + esc(CITY_LABEL[h.city] || h.city) : '') + '</p>' +
+        '<p class="mt-3 text-xl font-bold">' + price + '</p>' +
+        '<p class="text-xs font-medium text-slate7">' + when + '</p>' +
+        '<dl class="mt-4 grid grid-cols-3 gap-2 border-t border-line pt-4 text-sm">' +
+          '<div><dt class="text-xs text-slate7">Beds</dt><dd class="font-semibold">' + (h.beds || '—') + '</dd></div>' +
+          '<div><dt class="text-xs text-slate7">Baths</dt><dd class="font-semibold">' + (h.baths || '—') + '</dd></div>' +
+          '<div><dt class="text-xs text-slate7">Sq ft</dt><dd class="font-semibold">' + (h.sqft ? Number(h.sqft).toLocaleString('en-US') : '—') + '</dd></div>' +
+        '</dl>' +
+        '<button type="button" data-home="' + esc(h.id) + '" class="mt-5 rounded-lg border border-line px-4 py-2.5 text-sm font-semibold transition hover:border-bronze hover:text-bronze">' +
+          'See details<span class="sr-only"> for ' + esc(h.title) + '</span></button>' +
       '</div></article>';
   }
 
-  function cardFor(p) {
-    return '' +
-      '<article class="plan group flex flex-col overflow-hidden rounded-xl border border-ink/10 bg-white shadow-card transition duration-200 hover:-translate-y-1 hover:shadow-lift" ' +
-        'data-city="' + esc(p.comm.city) + '" data-price="' + thousands(p.price) + '" data-beds="' + p.beds + '">' +
-        '<div class="ph relative aspect-[16/10] overflow-hidden">' +
-          media(p.photos, p.name + ' elevation') +
-          '<span class="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-ink ring-1 ring-gold/50">' + esc(p.status) + '</span>' +
-        '</div>' +
-        '<div class="flex flex-1 flex-col p-5">' +
-          '<h3 class="font-display text-lg font-bold text-ink">' + esc(p.name) + '</h3>' +
-          '<p class="mt-0.5 text-sm text-slate7">' + esc(p.comm.name) + ' &middot; ' + esc(p.comm.place) + '</p>' +
-          '<p class="mt-3 font-display text-lg font-extrabold text-ink">From ' + usd(p.price) + '</p>' +
-          '<dl class="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 border-t border-ink/10 pt-4 text-sm">' +
-            '<div class="flex items-baseline gap-1.5"><dt class="text-slate7/70">Sq ft</dt><dd class="font-semibold text-ink">' + p.sqft.toLocaleString('en-US') + '</dd></div>' +
-            '<div class="flex items-baseline gap-1.5"><dt class="text-slate7/70">Garage</dt><dd class="font-semibold text-ink">' + p.garage + '-car</dd></div>' +
-            '<div class="flex items-baseline gap-1.5"><dt class="text-slate7/70">Beds</dt><dd class="font-semibold text-ink">' + p.beds + '</dd></div>' +
-            '<div class="flex items-baseline gap-1.5"><dt class="text-slate7/70">Baths</dt><dd class="font-semibold text-ink">' + p.baths + '</dd></div>' +
-          '</dl>' +
-          '<button type="button" data-plan="' + p.id + '" class="mt-5 inline-flex items-center justify-center gap-1.5 rounded-md border border-ink/15 px-4 py-2.5 text-sm font-semibold text-ink transition hover:border-gold hover:text-bronze">' +
-            '<svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 10h18M10 21V10"/></svg>' +
-            'View floor plan<span class="sr-only"> for ' + p.name + '</span>' +
-          '</button>' +
-        '</div>' +
+  function areaCard(a) {
+    const count = HOMES.filter(function (h) { return h.area === a.name && h.availability !== 'occupied'; }).length;
+    return '<article class="area rounded-2xl border border-line bg-paper p-5" data-city="' + esc(a.city) + '" data-price="0" data-beds="0">' +
+      '<h3 class="text-lg font-bold">' + esc(a.name) + '</h3>' +
+      '<p class="mt-1 text-sm text-slate7">' + esc(CITY_LABEL[a.city] || a.city) + '</p>' +
+      (a.note ? '<p class="mt-3 text-sm leading-relaxed text-slate7">' + esc(a.note) + '</p>' : '') +
+      '<p class="mt-4 text-sm font-semibold text-bronze">' + count + ' available</p>' +
       '</article>';
   }
 
-  const panels = {
-    single: document.getElementById('panel-single'),
-    two:    document.getElementById('panel-two'),
-    custom: document.getElementById('panel-custom'),
-  };
-  function renderInventory() {
-    Object.keys(panels).forEach(function (k) {
-      panels[k].innerHTML = PLANS.filter(function (p) { return p.story === k; }).map(cardFor).join('');
-    });
-    ['single', 'two', 'custom'].forEach(function (k) {
-      const tab = document.getElementById('tab-' + (k === 'single' ? 'single' : k === 'two' ? 'two' : 'custom'));
-      const count = PLANS.filter(function (p) { return p.story === k; }).length;
-      const badge = tab && tab.querySelector('span');
-      if (badge) badge.textContent = '(' + count + ')';
-    });
+  /* ───────────────────────── Render ───────────────────────── */
+  const panels = { available: $('panel-available'), occupied: $('panel-occupied'), sale: $('panel-sale') };
+
+  function bucket(h) {
+    if (h.listingType === 'sale' || h.listingType === 'build') return 'sale';
+    return h.availability === 'occupied' ? 'occupied' : 'available';
   }
 
-  /* ───────────────────────────── Tabs ───────────────────────────── */
-  const tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
-
-  function selectTab(tab, focus) {
-    tabs.forEach(function (t) {
-      const on = t === tab;
-      t.setAttribute('aria-selected', String(on));
-      t.tabIndex = on ? 0 : -1;
-      t.classList.toggle('border-gold', on);
-      t.classList.toggle('text-ink', on);
-      t.classList.toggle('border-transparent', !on);
-      t.classList.toggle('text-slate7', !on);
-      document.getElementById('panel-' + t.dataset.tab).hidden = !on;
+  function renderAll() {
+    const visible = HOMES.filter(function (h) {
+      const t = h.listingType || 'rent';
+      return PUBLISH[t === 'build' ? 'build' : t] !== false;
     });
-    if (focus) tab.focus();
+
+    Object.keys(panels).forEach(function (k) {
+      panels[k].innerHTML = visible.filter(function (h) { return bucket(h) === k; }).map(homeCard).join('');
+    });
+
+    $('areaGrid').innerHTML = AREAS.map(areaCard).join('');
+    $('noAreas').hidden = AREAS.length > 0;
+
+    // The "for sale" tab only exists once selling is switched on and has stock.
+    const saleCount = visible.filter(function (h) { return bucket(h) === 'sale'; }).length;
+    $('tab-sale').hidden = !(PUBLISH.sale || PUBLISH.build) || saleCount === 0;
+
     applyFilters();
   }
 
-  tabs.forEach(function (tab, i) {
-    tab.addEventListener('click', function () { selectTab(tab, false); });
-    tab.addEventListener('keydown', function (e) {
-      const map = { ArrowRight: 1, ArrowLeft: -1, Home: 'first', End: 'last' };
-      if (!(e.key in map)) return;
-      e.preventDefault();
-      const next = map[e.key] === 'first' ? tabs[0]
-        : map[e.key] === 'last' ? tabs[tabs.length - 1]
-        : tabs[(i + map[e.key] + tabs.length) % tabs.length];
-      selectTab(next, true);
-    });
-  });
-
-  /* ─────────────────────────── Filtering ─────────────────────────── */
-  const fCity = document.getElementById('fCity');
-  const fPrice = document.getElementById('fPrice');
-  const fBeds = document.getElementById('fBeds');
-  const filterStatus = document.getElementById('filterStatus');
-  const noCommunities = document.getElementById('noCommunities');
-  const noPlans = document.getElementById('noPlans');
-  const planCount = document.getElementById('planCount');
+  /* ───────────────────────── Filters ───────────────────────── */
+  const fCity = $('fCity'), fPrice = $('fPrice'), fBeds = $('fBeds');
 
   function matches(el) {
-    const city = fCity.value, price = fPrice.value, beds = fBeds.value;
-    if (city && el.dataset.city !== city) return false;
-    if (beds && Number(el.dataset.beds) < Number(beds)) return false;
-    if (price) {
-      const parts = price.split('-');
+    if (fCity.value && el.dataset.city !== fCity.value) return false;
+    if (fBeds.value && Number(el.dataset.beds) < Number(fBeds.value)) return false;
+    if (fPrice.value) {
+      const parts = fPrice.value.split('-');
       const p = Number(el.dataset.price);
       if (p < Number(parts[0]) || p >= Number(parts[1])) return false;
     }
@@ -1251,73 +728,73 @@
   }
 
   function applyFilters() {
-    let communitiesShown = 0;
-    document.querySelectorAll('.community').forEach(function (el) {
+    let shown = 0;
+    document.querySelectorAll('.home').forEach(function (el) {
       const ok = matches(el);
       el.hidden = !ok;
-      if (ok) communitiesShown++;
+      if (ok) shown++;
     });
-    noCommunities.hidden = communitiesShown > 0;
 
-    let plansShown = 0, visibleInPanel = 0;
-    document.querySelectorAll('.plan').forEach(function (el) {
-      const ok = matches(el);
-      el.hidden = !ok;
-      if (ok) {
-        plansShown++;
-        if (!el.closest('.panel').hidden) visibleInPanel++;
-      }
+    ['available', 'occupied', 'sale'].forEach(function (k) {
+      const tab = $('tab-' + k);
+      if (!tab) return;
+      const badge = tab.querySelector('span');
+      const n = panels[k].querySelectorAll('.home:not([hidden])').length;
+      if (badge) badge.textContent = '(' + n + ')';
     });
-    noPlans.hidden = visibleInPanel > 0;
-    planCount.textContent = plansShown;
+
+    const openPanel = Object.keys(panels).filter(function (k) { return !panels[k].hidden; })[0];
+    const inPanel = openPanel ? panels[openPanel].querySelectorAll('.home:not([hidden])').length : 0;
+    $('emptyState').hidden = inPanel > 0;
 
     const filtered = fCity.value || fPrice.value || fBeds.value;
-    filterStatus.textContent = filtered
-      ? 'Showing ' + communitiesShown + (communitiesShown === 1 ? ' community' : ' communities') + ' and ' + plansShown + (plansShown === 1 ? ' home' : ' homes') + ' that match.'
-      : 'Showing all 6 communities and all 40 homes.';
+    $('filterStatus').textContent = HOMES.length === 0
+      ? 'No homes listed online right now — message us and we will tell you what is coming up.'
+      : filtered
+        ? shown + (shown === 1 ? ' home matches' : ' homes match') + ' what you are looking for.'
+        : 'Showing all ' + HOMES.length + (HOMES.length === 1 ? ' home.' : ' homes.');
   }
 
-  document.getElementById('quickFilter').addEventListener('submit', function (e) {
+  $('quickFilter').addEventListener('submit', function (e) {
     e.preventDefault();
     applyFilters();
-    document.getElementById('communities').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    $('homes').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
-  document.getElementById('quickFilter').addEventListener('reset', function () {
-    setTimeout(applyFilters, 0);
-  });
+  $('quickFilter').addEventListener('reset', function () { setTimeout(applyFilters, 0); });
   [fCity, fPrice, fBeds].forEach(function (el) { el.addEventListener('change', applyFilters); });
 
-  /* ─────────────────── Load properties, then render ─────────────────── */
-  function loadProperties() {
-    return fetch('data/properties.json', { cache: 'no-store' })
-      .then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json();
-      })
-      .then(function (data) {
-        COMMUNITIES = {};
-        (data.communities || []).forEach(function (c) { COMMUNITIES[c.id] = adaptCommunity(c); });
-        PLANS = (data.homes || []).map(function (h) { return adaptHome(h, COMMUNITIES); });
-
-        document.getElementById('communityGrid').innerHTML =
-          (data.communities || []).map(communityCard).join('');
-        renderInventory();
-        applyFilters();
-      })
-      .catch(function (err) {
-        // Say so rather than showing an empty page that looks like no inventory.
-        document.getElementById('communityGrid').innerHTML =
-          '<p class="sm:col-span-2 lg:col-span-3 rounded-lg border border-dashed border-ink/20 bg-white px-6 py-10 text-center text-slate7">' +
-          'Our listings could not be loaded (' + esc(err.message) + '). ' +
-          '<a class="font-semibold text-bronze underline underline-offset-4" href="#contact">Contact a builder</a> ' +
-          'and we will walk you through what is available.</p>';
-        filterStatus.textContent = 'Listings unavailable right now.';
-      });
+  /* ───────────────────────── Tabs ───────────────────────── */
+  const tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  function selectTab(tab, focus) {
+    tabs.forEach(function (t) {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      t.classList.toggle('border-bronze', on);
+      t.classList.toggle('text-ink', on);
+      t.classList.toggle('border-transparent', !on);
+      t.classList.toggle('text-slate7', !on);
+      panels[t.dataset.tab].hidden = !on;
+    });
+    if (focus) tab.focus();
+    applyFilters();
   }
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { selectTab(tab, false); });
+    tab.addEventListener('keydown', function (e) {
+      const map = { ArrowRight: 1, ArrowLeft: -1, Home: 'first', End: 'last' };
+      if (!(e.key in map)) return;
+      e.preventDefault();
+      const shown = tabs.filter(function (t) { return !t.hidden; });
+      const at = shown.indexOf(tab);
+      const next = map[e.key] === 'first' ? shown[0]
+        : map[e.key] === 'last' ? shown[shown.length - 1]
+        : shown[(at + map[e.key] + shown.length) % shown.length];
+      selectTab(next, true);
+    });
+  });
 
-  loadProperties();
-
-  /* ─────────────────── Dialog helpers (drawer + modal) ─────────────────── */
+  /* ───────────────────── Dialogs ───────────────────── */
   const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
   let openDialog = null, lastFocused = null;
 
@@ -1331,339 +808,192 @@
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 
-  // `trigger` must be passed explicitly: WebKit does not focus a button when it
-  // is clicked, so relying on document.activeElement loses the return target on
-  // Safari, iPhone and iPad, and focus lands on <body> when the panel closes.
-  function openPanel(panel, scrim, onOpen, trigger) {
+  function openPanel(panel, scrim, trigger) {
     lastFocused = trigger || document.activeElement;
-    scrim.hidden = false;
-    panel.hidden = false;
+    scrim.hidden = false; panel.hidden = false;
     document.documentElement.classList.add('no-scroll');
     document.body.classList.add('no-scroll');
     openDialog = panel;
-    if (onOpen) onOpen();
     const first = panel.querySelector(FOCUSABLE);
     if (first) first.focus();
   }
-
   function closePanel(panel, scrim) {
-    panel.hidden = true;
-    scrim.hidden = true;
+    panel.hidden = true; scrim.hidden = true;
     document.documentElement.classList.remove('no-scroll');
     document.body.classList.remove('no-scroll');
     openDialog = null;
     if (lastFocused && lastFocused.focus) lastFocused.focus();
   }
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && openDialog) {
-      if (openDialog === drawer) closeDrawer(); else closeModal();
-    }
-    trap(e);
-  });
-
-  /* ────────────────────── Mobile drawer ────────────────────── */
-  const drawer = document.getElementById('mobileDrawer');
-  const drawerScrim = document.getElementById('navScrim');
-  const navToggle = document.getElementById('navToggle');
-
-  function openDrawer() {
-    openPanel(drawer, drawerScrim, null, navToggle);
-    navToggle.setAttribute('aria-expanded', 'true');
-  }
-  function closeDrawer() {
-    closePanel(drawer, drawerScrim);
-    navToggle.setAttribute('aria-expanded', 'false');
-  }
-
+  const drawer = $('mobileDrawer'), drawerScrim = $('navScrim'), navToggle = $('navToggle');
+  function openDrawer() { openPanel(drawer, drawerScrim, navToggle); navToggle.setAttribute('aria-expanded', 'true'); }
+  function closeDrawer() { closePanel(drawer, drawerScrim); navToggle.setAttribute('aria-expanded', 'false'); }
   navToggle.addEventListener('click', openDrawer);
-  document.getElementById('navClose').addEventListener('click', closeDrawer);
+  $('navClose').addEventListener('click', closeDrawer);
   drawerScrim.addEventListener('click', closeDrawer);
-  drawer.querySelectorAll('a[href^="#"]').forEach(function (a) {
-    a.addEventListener('click', closeDrawer);
-  });
+  drawer.querySelectorAll('a[href]').forEach(function (a) { a.addEventListener('click', closeDrawer); });
   window.addEventListener('resize', function () {
-    if (window.innerWidth >= 1340 && !drawer.hidden) closeDrawer();
+    if (window.innerWidth >= 1180 && !drawer.hidden) closeDrawer();
   });
 
-  /* ────────────────────── Floor plan modal ────────────────────── */
-  const modal = document.getElementById('planModal');
-  const modalScrim = document.getElementById('planScrim');
+  const modal = $('planModal'), modalScrim = $('planScrim');
+  function openHome(id, trigger) {
+    const h = HOMES.filter(function (x) { return x.id === id; })[0];
+    if (!h) return;
+    const forSale = h.listingType === 'sale';
+    $('planEyebrow').textContent = h.availability === 'occupied' ? 'Currently rented'
+      : forSale ? 'For sale' : 'Available';
+    $('planTitle').textContent = h.title;
+    $('planSub').textContent = [h.area, CITY_LABEL[h.city] || h.city].filter(Boolean).join(' · ');
+    $('planDesc').textContent = h.description || '';
 
-  function statTile(label, value) {
-    return '<div class="rounded-lg border border-ink/10 bg-cloud px-4 py-3">' +
-      '<dt class="text-[11px] font-semibold uppercase tracking-wide text-slate7/70">' + label + '</dt>' +
-      '<dd class="mt-0.5 font-display text-lg font-extrabold text-ink">' + value + '</dd></div>';
-  }
+    $('planGallery').innerHTML = (h.photos && h.photos.length)
+      ? '<div class="grid gap-2 ' + (h.photos.length > 1 ? 'sm:grid-cols-2' : '') + '">' +
+        h.photos.slice(0, 4).map(function (p) {
+          return '<img src="' + esc(p) + '" alt="" class="aspect-[4/3] w-full rounded-lg object-cover" />';
+        }).join('') + '</div>'
+      : '<div class="ph aspect-[16/9] overflow-hidden rounded-lg"><svg viewBox="0 0 320 200" class="h-full w-full" aria-hidden="true"><use href="#artHouse"/></svg></div>';
 
-  function openModal(id, trigger) {
-    const p = PLANS.filter(function (x) { return x.id === id; })[0];
-    if (!p) return;
-    document.getElementById('planEyebrow').textContent = STORY_LABEL[p.story] + ' · ' + p.status;
-    document.getElementById('planTitle').textContent = p.name;
-    document.getElementById('planSub').textContent = p.comm.name + ' · ' + p.comm.place + ', ' + p.comm.market;
-    document.getElementById('planStats').innerHTML =
-      statTile('Square feet', p.sqft.toLocaleString('en-US')) +
-      statTile('Bedrooms', p.beds) +
-      statTile('Bathrooms', p.baths) +
-      statTile('From', usd(p.price));
-    document.getElementById('planDrawing').innerHTML =
-      '<div class="grid gap-5 ' + (p.story === 'single' ? '' : 'sm:grid-cols-2') + '">' +
-      floorsFor(p).map(drawFloor).join('') + '</div>';
-    openPanel(modal, modalScrim, null, trigger);
+    const stat = function (l, v) {
+      return '<div class="rounded-lg border border-line bg-paper px-4 py-3"><dt class="text-xs text-slate7">' + l +
+        '</dt><dd class="mt-0.5 text-lg font-bold">' + v + '</dd></div>';
+    };
+    $('planStats').innerHTML =
+      stat(forSale ? 'Price' : 'Rent', forSale ? usd(h.price) : usd(h.rent) + '/mo') +
+      stat('Bedrooms', h.beds || '—') +
+      stat('Bathrooms', h.baths || '—') +
+      stat('Square feet', h.sqft ? Number(h.sqft).toLocaleString('en-US') : '—');
+
+    $('planWhatsApp').href = waLink('Hi, I am interested in ' + h.title +
+      (h.area ? ' in ' + h.area : '') + '. Is it still available?');
+    openPanel(modal, modalScrim, trigger);
   }
   function closeModal() { closePanel(modal, modalScrim); }
 
   document.addEventListener('click', function (e) {
-    const trigger = e.target.closest('[data-plan]');
-    if (trigger) { openModal(trigger.dataset.plan, trigger); return; }
-    if (e.target.closest('[data-modal-close]')) { closeModal(); return; }
+    const t = e.target.closest('[data-home]');
+    if (t) openHome(t.dataset.home, t);
   });
-  document.getElementById('planClose').addEventListener('click', closeModal);
+  $('planClose').addEventListener('click', closeModal);
   modalScrim.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && openDialog) { openDialog === drawer ? closeDrawer() : closeModal(); }
+    trap(e);
+  });
 
-  /* ──────────────────────── Contact form ──────────────────────── */
-  const form = document.getElementById('tourForm');
-  const status = document.getElementById('formStatus');
-
-  function setError(input, errId, bad) {
-    const err = document.getElementById(errId);
-    err.classList.toggle('hidden', !bad);
+  /* ───────────────────────── Enquiry form ───────────────────────── */
+  const form = $('tourForm'), status = $('formStatus');
+  function flag(input, errId, bad) {
+    $(errId).hidden = !bad;
     input.setAttribute('aria-invalid', bad ? 'true' : 'false');
-    input.classList.toggle('border-red-500', bad);
-    input.classList.toggle('border-ink/15', !bad);
+    input.classList.toggle('border-brick', bad);
+    input.classList.toggle('border-line', !bad);
   }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    const name = document.getElementById('cName');
-    const email = document.getElementById('cEmail');
-    const location = document.getElementById('cLocation');
-    const consent = document.getElementById('cConsent');
+    const name = $('cName'), phone = $('cPhone'), email = $('cEmail'),
+          city = $('cLocation'), consent = $('cConsent');
 
     const badName = name.value.trim().length < 2;
-    const badEmail = !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
-    const badLocation = location.value === '';
+    const badPhone = phone.value.replace(/\D/g, '').length < 10;
+    const badEmail = email.value.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
+    const badCity = city.value === '';
     const badConsent = !consent.checked;
 
-    setError(name, 'cNameErr', badName);
-    setError(email, 'cEmailErr', badEmail);
-    setError(location, 'cLocationErr', badLocation);
-    document.getElementById('cConsentErr').classList.toggle('hidden', !badConsent);
-    consent.setAttribute('aria-invalid', badConsent ? 'true' : 'false');
+    flag(name, 'cNameErr', badName);
+    flag(phone, 'cPhoneErr', badPhone);
+    flag(email, 'cEmailErr', badEmail);
+    flag(city, 'cLocationErr', badCity);
+    $('cConsentErr').hidden = !badConsent;
 
-    const firstBad = badName ? name : badEmail ? email : badLocation ? location : badConsent ? consent : null;
-    if (firstBad) {
-      status.className = 'text-sm font-medium text-red-600';
-      status.textContent = 'Please fix the highlighted fields and try again.';
-      firstBad.focus();
+    const first = badName ? name : badPhone ? phone : badEmail ? email : badCity ? city : badConsent ? consent : null;
+    if (first) {
+      status.className = 'text-sm font-medium text-brick';
+      status.textContent = 'Please check the highlighted boxes.';
+      first.focus();
       return;
     }
 
     const payload = {
-      name: name.value.trim(),
-      email: email.value.trim(),
-      phone: document.getElementById('cPhone').value.trim(),
-      location: location.value,
-      timeline: document.getElementById('cTimeline').value,
-      budget: document.getElementById('cBudget').value,
-      message: document.getElementById('cMessage').value.trim(),
-      submitted: new Date().toISOString(),
+      name: name.value.trim(), phone: phone.value.trim(), email: email.value.trim(),
+      city: city.value, budget: $('cBudget').value, timeline: $('cTimeline').value,
+      message: $('cMessage').value.trim(), submitted: new Date().toISOString(),
     };
     const firstName = payload.name.split(' ')[0];
 
-    function tourMailto(p) {
-      const body = [
-        'Tour request',
-        '',
-        'Name:     ' + p.name,
-        'Email:    ' + p.email,
-        'Phone:    ' + (p.phone || '-'),
-        'Market:   ' + p.location,
-        'Timeline: ' + (p.timeline || 'Not sure yet'),
-        'Budget:   ' + (p.budget || 'Prefer not to say'),
-        '',
-        p.message,
-      ].join(String.fromCharCode(10));
+    function mailto(p) {
+      const body = ['Rental enquiry', '', 'Name:     ' + p.name, 'Phone:    ' + p.phone,
+        'Email:    ' + (p.email || '-'), 'City:     ' + p.city,
+        'Budget:   ' + (p.budget || 'Not sure'), 'When:     ' + (p.timeline || 'Not sure'),
+        '', p.message].join(String.fromCharCode(10));
       return 'mailto:' + CONFIG.salesEmail +
-        '?subject=' + encodeURIComponent('Tour request - ' + p.name + ' - ' + p.location) +
+        '?subject=' + encodeURIComponent('Rental enquiry - ' + p.name + ' - ' + p.city) +
         '&body=' + encodeURIComponent(body);
     }
 
     if (CONFIG.endpoint) {
       status.className = 'text-sm font-medium text-slate7';
       status.textContent = 'Sending' + String.fromCharCode(8230);
-      fetch(CONFIG.endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }).then(function (res) {
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        status.className = 'text-sm font-medium text-ink';
-        status.textContent = 'Thank you, ' + firstName +
-          '. Your tour request is in — a community manager will reach out within one business day.';
-        form.reset();
-      }).catch(function (err) {
-        status.className = 'text-sm font-medium text-red-600';
-        status.textContent = 'We could not send that (' + err.message + '). ';
-        status.insertAdjacentHTML('beforeend',
-          '<a class="font-semibold text-bronze underline underline-offset-4" href="' +
-          tourMailto(payload) + '">Send it by email instead</a>, or call (512) 555-0142.');
-      });
+      fetch(CONFIG.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload) })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); })
+        .then(function () {
+          status.className = 'text-sm font-medium text-ink';
+          status.textContent = 'Thanks ' + firstName + ', we will call you back. For a faster answer, message us on WhatsApp.';
+          form.reset();
+        })
+        .catch(function (err) {
+          status.className = 'text-sm font-medium text-brick';
+          status.textContent = 'That did not send (' + err.message + '). ';
+          status.insertAdjacentHTML('beforeend',
+            '<a class="font-semibold text-leaf underline" href="' + waLink('Hi, I sent a form but it failed.') + '" target="_blank" rel="noopener">Message us on WhatsApp instead</a>.');
+        });
       return;
     }
 
     status.className = 'text-sm font-medium text-ink';
-    status.textContent = 'Thank you, ' + firstName +
-      '. Your tour request is ready to send — a community manager will reach out within one business day.';
+    status.textContent = 'Thanks ' + firstName + '. ';
     status.insertAdjacentHTML('beforeend',
-      ' <a class="font-semibold text-bronze underline underline-offset-4" href="' +
-      tourMailto(payload) + '">Open your email to send it</a>.');
+      '<a class="font-semibold text-leaf underline" href="' + waLink('Hi, I am looking for a house to rent in ' + payload.city + '.') +
+      '" target="_blank" rel="noopener">Send it now on WhatsApp</a> for the fastest answer, or ' +
+      '<a class="font-semibold text-bronze underline" href="' + mailto(payload) + '">email it</a>.');
     form.reset();
   });
 
-  form.addEventListener('reset', function () {
-    ['cName', 'cEmail', 'cLocation'].forEach(function (id, i) {
-      setError(document.getElementById(id), ['cNameErr', 'cEmailErr', 'cLocationErr'][i], false);
-    });
-    document.getElementById('cConsentErr').classList.add('hidden');
-  });
-
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  /* ─────────────────── Site health / maintenance panel ─────────────────── */
-  const REPO = 'cryptofedge/melaos-real-estate';
-  const checkList = document.getElementById('mChecks');
-
-  const ICON = {
-    pass: '<svg viewBox="0 0 24 24" class="h-4.5 w-4.5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
-    fail: '<svg viewBox="0 0 24 24" class="h-4.5 w-4.5 text-red-600" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>',
-    busy: '<svg viewBox="0 0 24 24" class="mSpin h-4.5 w-4.5 text-bronze" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg>',
-  };
-
-  function checkRow(name, state, detail) {
-    return '<li class="flex items-start gap-3 px-4 py-3">' +
-      '<span class="mt-0.5 shrink-0">' + ICON[state] + '</span>' +
-      '<span class="min-w-0 flex-1"><span class="block text-sm font-medium text-ink">' + name + '</span>' +
-      (detail ? '<span class="block truncate text-xs text-slate7/70">' + detail + '</span>' : '') +
-      '</span></li>';
-  }
-
-  async function runHealthChecks() {
-    const base = location.href.replace(/[^/]*$/, '');
-    const results = [];
-    checkList.innerHTML = checkRow('Running checks&hellip;', 'busy', '');
-
-    const first = [];
-    const add = (name, ok, detail) => {
-      results.push(ok);
-      first.push(checkRow(name, ok ? 'pass' : 'fail', detail));
-      checkList.innerHTML = first.join('');
-    };
-
-    try {
-      const res = await fetch(base + 'index.html', { cache: 'no-store' });
-      add('Page responds', res.ok, 'HTTP ' + res.status);
-    } catch (err) {
-      add('Page responds', false, String(err));
-    }
-
-    // The cards are rendered by script, so count the live DOM rather than the source.
-    const planCount = document.querySelectorAll('.plan').length;
-    add('All 40 homes rendered', planCount === 40, planCount + ' of 40 cards');
-    add('All 6 communities rendered',
-      document.querySelectorAll('.community').length === 6,
-      document.querySelectorAll('.community').length + ' of 6');
-
-    const og = document.querySelector('meta[property="og:image"]');
-    const ogUrl = og ? og.getAttribute('content') : '';
-    add('Share preview configured', /^https:\/\//.test(ogUrl),
-      ogUrl ? ogUrl.split('/').pop() : 'missing');
-
-    for (const [label, path] of [
-      ['Logo artwork', 'assets/logo.svg'],
-      ['Favicon', 'assets/favicon.png'],
-      ['Share card', 'assets/og-card.png'],
-    ]) {
-      try {
-        const r = await fetch(base + path, { cache: 'no-store' });
-        add(label, r.ok && /image/.test(r.headers.get('content-type') || ''), 'HTTP ' + r.status);
-      } catch (err) { add(label, false, 'unreachable'); }
-    }
-
-    // Stylesheet is the big one: if the CDN fails every class silently does nothing.
-    add('Stylesheet applied',
-      getComputedStyle(document.getElementById('quickFilter')).borderRadius !== '0px',
-      'Tailwind classes computing');
-
-    const failed = results.filter(function (r) { return !r; }).length;
-    const dot = document.getElementById('mVerdictDot');
-    const txt = document.getElementById('mVerdictText');
-    const sub = document.getElementById('mVerdictSub');
-
-    if (!failed) {
-      dot.className = 'grid h-12 w-12 shrink-0 place-items-center rounded-full bg-emerald-50';
-      dot.innerHTML = ICON.pass.replace('h-4.5 w-4.5', 'h-6 w-6');
-      txt.textContent = 'All systems healthy';
-      sub.textContent = results.length + ' of ' + results.length + ' live checks passed.';
-    } else {
-      dot.className = 'grid h-12 w-12 shrink-0 place-items-center rounded-full bg-red-50';
-      dot.innerHTML = ICON.fail.replace('h-4.5 w-4.5', 'h-6 w-6');
-      txt.textContent = failed + ' check' + (failed > 1 ? 's' : '') + ' failing';
-      sub.textContent = 'See the list for what broke.';
-    }
-  }
-
-  async function loadRuns() {
-    const ul = document.getElementById('mRuns');
-    try {
-      const res = await fetch('https://api.github.com/repos/' + REPO +
-        '/actions/workflows/maintenance.yml/runs?per_page=4');
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const runs = (await res.json()).workflow_runs || [];
-      if (!runs.length) { ul.innerHTML = '<li class="px-4 py-3.5 text-sm text-slate7">No runs yet.</li>'; return; }
-
-      ul.innerHTML = runs.map(function (r) {
-        const pending = r.status !== 'completed';
-        const ok = r.conclusion === 'success';
-        const badge = pending
-          ? '<span class="shrink-0 rounded-full bg-sand px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-bronze">Running</span>'
-          : ok
-            ? '<span class="shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700">Passed</span>'
-            : '<span class="shrink-0 rounded-full bg-red-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-red-700">Failed</span>';
-        const title = r.head_commit && r.head_commit.message
-          ? r.head_commit.message.split('\n')[0] : r.name;
-        return '<li class="flex items-center justify-between gap-3 px-4 py-3">' +
-          '<span class="min-w-0"><a class="block truncate text-sm font-medium text-ink transition hover:text-bronze" href="' +
-          r.html_url + '" target="_blank" rel="noopener">' + title + '</a>' +
-          '<span class="block text-xs text-slate7/70">' + new Date(r.updated_at).toLocaleString() +
-          ' &middot; ' + r.head_sha.slice(0, 7) + '</span></span>' + badge + '</li>';
+  /* ───────────────────────── Social links ───────────────────────── */
+  function renderSocial(profiles) {
+    const map = { facebook: 'Facebook', instagram: 'Instagram', tiktok: 'TikTok',
+                  youtube: 'YouTube', googleBusiness: 'Google' };
+    const html = Object.keys(map).filter(function (k) { return profiles && profiles[k]; })
+      .map(function (k) {
+        return '<a href="' + esc(profiles[k]) + '" target="_blank" rel="noopener" ' +
+          'class="rounded-lg border border-line px-3 py-2 text-xs font-semibold text-slate7 hover:border-bronze hover:text-bronze">' +
+          map[k] + '</a>';
       }).join('');
-    } catch (err) {
-      ul.innerHTML = '<li class="px-4 py-3.5 text-sm text-slate7">Run history unavailable (' + err.message +
-        '). <a class="font-semibold text-bronze underline underline-offset-4" href="https://github.com/' + REPO +
-        '/actions" target="_blank" rel="noopener">Open Actions</a></li>';
-    }
+    $('socialLinks').innerHTML = html;
   }
 
-  document.getElementById('mRerun').addEventListener('click', runHealthChecks);
+  /* ───────────────────────── Load ───────────────────────── */
+  fetch('data/properties.json', { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (d) {
+      HOMES = d.homes || [];
+      AREAS = d.neighborhoods || [];
+      PUBLISH = Object.assign({ rent: true, sale: false, build: false }, d.publish || {});
+      renderAll();
+    })
+    .catch(function (err) {
+      $('emptyState').hidden = false;
+      $('filterStatus').textContent = 'Listings could not be loaded (' + err.message + ').';
+    });
 
-  // Only do the work when the panel is actually looked at. GitHub rate-limits
-  // unauthenticated callers to 60 requests an hour per IP, so firing on every
-  // page load would burn the budget for visitors sharing an address.
-  const panel = document.getElementById('maintenance');
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(function (entries) {
-      if (!entries.some(function (e) { return e.isIntersecting; })) return;
-      io.disconnect();
-      runHealthChecks();
-      loadRuns();
-    }, { rootMargin: '200px' });
-    io.observe(panel);
-  } else {
-    runHealthChecks();
-    loadRuns();
-  }
+  fetch('data/promotions.json', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (p) { if (p) renderSocial(p.profiles); })
+    .catch(function () { /* social links are optional */ });
+
+  $('year').textContent = new Date().getFullYear();
 })();
 </script>
 </body>

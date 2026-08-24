@@ -1,0 +1,26 @@
+{
+  "updated": "2026-08-24T19:31:07.194Z",
+  "profiles": {
+    "facebook": "",
+    "instagram": "",
+    "tiktok": "",
+    "youtube": "",
+    "googleBusiness": ""
+  },
+  "adAccounts": {
+    "google": {
+      "customerId": "",
+      "label": ""
+    },
+    "meta": {
+      "adAccountId": "",
+      "pageId": "",
+      "label": ""
+    },
+    "tiktok": {
+      "advertiserId": "",
+      "label": ""
+    }
+  },
+  "campaigns": []
+}

@@ -240,11 +240,38 @@
     <button role="tab" id="tab-homes" aria-controls="panel-homes" aria-selected="true"
             data-panel="homes" class="tab">Homes <span style="font-weight:400; opacity:.7">(0)</span></button>
     <button role="tab" id="tab-communities" aria-controls="panel-communities" aria-selected="false"
-            tabindex="-1" data-panel="communities" class="tab">Communities <span style="font-weight:400; opacity:.7">(0)</span></button>
+            tabindex="-1" data-panel="communities" class="tab">Areas <span style="font-weight:400; opacity:.7">(0)</span></button>
+    <button role="tab" id="tab-promos" aria-controls="panel-promos" aria-selected="false"
+            tabindex="-1" data-panel="promos" class="tab">Promotions <span style="font-weight:400; opacity:.7">(0)</span></button>
   </div>
 
   <div id="panel-homes" role="tabpanel" aria-labelledby="tab-homes" class="grid"></div>
   <div id="panel-communities" role="tabpanel" aria-labelledby="tab-communities" hidden class="grid"></div>
+
+  <div id="panel-promos" role="tabpanel" aria-labelledby="tab-promos" hidden>
+    <section class="panel" style="margin-top:1.5rem">
+      <h2 style="font-size:1.1rem">Social profiles</h2>
+      <p class="tiny muted" style="margin:.25rem 0 1rem">These appear in the website footer.</p>
+      <div class="row two">
+        <div><label class="lbl" for="pFacebook">Facebook</label><input id="pFacebook" class="field" placeholder="https://facebook.com/..." /></div>
+        <div><label class="lbl" for="pInstagram">Instagram</label><input id="pInstagram" class="field" placeholder="https://instagram.com/..." /></div>
+      </div>
+      <div class="row two" style="margin-top:1rem">
+        <div><label class="lbl" for="pTiktok">TikTok</label><input id="pTiktok" class="field" placeholder="https://tiktok.com/@..." /></div>
+        <div><label class="lbl" for="pGoogle">Google Business</label><input id="pGoogle" class="field" placeholder="https://g.page/..." /></div>
+      </div>
+      <p class="tiny muted" style="margin-top:1rem">
+        Ad campaigns are created and launched from WhatsApp, or here. API keys live on the bot's
+        setup page &mdash; never in this browser, and never in the website.
+      </p>
+    </section>
+
+    <div class="head" style="margin-top:2rem">
+      <h2 style="font-size:1.1rem">Campaigns</h2>
+      <button id="addCampaign" type="button" class="btn">New campaign</button>
+    </div>
+    <div id="campaignGrid" class="grid"></div>
+  </div>
 </section>
 </main>
 
@@ -277,6 +304,7 @@
   const REPO   = 'cryptofedge/melaos-real-estate';
   const BRANCH = 'main';
   const DATA   = 'data/properties.json';
+  const PROMOS = 'data/promotions.json';
   const API    = 'https://api.github.com';
   const KEY    = 'melaos.admin.token';
 
@@ -286,6 +314,7 @@
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
   let token = '', data = null, sha = null, dirty = false, editing = null;
+  let promos = null, promoSha = null;
 
   // Photos wait here until Publish. Uploading straight away would put them on
   // the public internet before anyone pressed publish, which is not what
@@ -383,10 +412,25 @@
       const file = await gh('/repos/' + REPO + '/contents/' + DATA + '?ref=' + BRANCH);
       sha = file.sha;
       data = JSON.parse(fromB64(file.content));
+      data.homes = data.homes || [];
+      data.neighborhoods = data.neighborhoods || [];
+
+      try {
+        const pf = await gh('/repos/' + REPO + '/contents/' + PROMOS + '?ref=' + BRANCH);
+        promoSha = pf.sha;
+        promos = JSON.parse(fromB64(pf.content));
+      } catch (e) {
+        promos = { profiles: {}, adAccounts: {}, campaigns: [] };
+        promoSha = null;
+      }
+      promos.campaigns = promos.campaigns || [];
+      promos.profiles = promos.profiles || {};
+
       dirty = false;
       pending = {};
       render();
-      log('Loaded ' + data.homes.length + ' homes and ' + data.communities.length + ' communities.');
+      log('Loaded ' + data.homes.length + ' homes, ' + data.neighborhoods.length +
+          ' areas and ' + promos.campaigns.length + ' campaigns.');
     } catch (ex) {
       log('Could not load properties: ' + ex.message, 'bad');
     }
@@ -411,30 +455,54 @@
   };
 
   function card(item, kind) {
-    const sub = kind === 'home'
-      ? esc(commName(item.community) + ' · ' + item.beds + ' bd · ' + Number(item.sqft || 0).toLocaleString('en-US') + ' sq ft')
-      : esc(item.place + ' · ' + item.market);
-    const price = kind === 'home' ? money(item.price) : 'From ' + money(item.fromPrice);
+    if (kind === 'campaign') {
+      return '<article class="card"><div class="body">' +
+        '<h3>' + esc(item.platform) + '</h3>' +
+        '<p class="tiny muted" style="margin:.25rem 0 0">' + money(item.dailyBudget) + '/day for ' +
+          (item.days || 0) + ' days &middot; ' + esc(item.status || 'draft') + '</p>' +
+        '<p class="small" style="margin:.5rem 0 0">' + esc((item.message || '').slice(0, 90)) + '</p>' +
+        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="campaign" class="btn">Edit</button>' +
+        '</div></article>';
+    }
+    if (kind === 'area') {
+      return '<article class="card"><div class="body">' +
+        '<h3>' + esc(item.name) + '</h3>' +
+        '<p class="tiny muted" style="margin:.25rem 0 0">' + esc(item.city || '') + '</p>' +
+        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="area" class="btn">Edit</button>' +
+        '</div></article>';
+    }
+
+    const forSale = item.listingType === 'sale' || item.listingType === 'build';
+    const price = forSale ? money(item.price) : money(item.rent) + '/mo';
     const photos = item.photos || [];
     const waiting = photos.filter(isPending).length;
+    const state = item.availability === 'occupied' ? 'Rented' : 'Available';
     return '<article class="card">' +
       '<div class="thumb">' + thumb(photos) +
         '<span class="badge">' + photos.length + ' photo' + (photos.length === 1 ? '' : 's') + '</span>' +
         (waiting ? '<span class="pending">' + waiting + ' not yet published</span>' : '') +
       '</div>' +
       '<div class="body">' +
-        '<h3>' + esc(item.name) + '</h3>' +
-        '<p class="tiny muted" style="margin:.25rem 0 0">' + sub + '</p>' +
+        '<h3>' + esc(item.title) + '</h3>' +
+        '<p class="tiny muted" style="margin:.25rem 0 0">' + esc(item.area || '') + ' &middot; ' +
+          esc(item.city || '') + ' &middot; ' + state + '</p>' +
         '<p class="small" style="margin:.5rem 0 0; font-weight:600">' + price + '</p>' +
-        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="' + kind + '" class="btn">Edit</button>' +
+        '<button type="button" data-edit="' + esc(item.id) + '" data-kind="home" class="btn">Edit</button>' +
       '</div></article>';
   }
 
   function render() {
     $('panel-homes').innerHTML = data.homes.map(function (h) { return card(h, 'home'); }).join('');
-    $('panel-communities').innerHTML = data.communities.map(function (c) { return card(c, 'community'); }).join('');
+    $('panel-communities').innerHTML = data.neighborhoods.map(function (a) { return card(a, 'area'); }).join('');
+    $('campaignGrid').innerHTML = promos.campaigns.map(function (c) { return card(c, 'campaign'); }).join('');
     $('tab-homes').querySelector('span').textContent = '(' + data.homes.length + ')';
-    $('tab-communities').querySelector('span').textContent = '(' + data.communities.length + ')';
+    $('tab-communities').querySelector('span').textContent = '(' + data.neighborhoods.length + ')';
+    $('tab-promos').querySelector('span').textContent = '(' + promos.campaigns.length + ')';
+
+    ['facebook', 'instagram', 'tiktok', 'googleBusiness'].forEach(function (k) {
+      const el = $('p' + k.charAt(0).toUpperCase() + k.slice(1).replace('Business', ''));
+      if (el && document.activeElement !== el) el.value = promos.profiles[k] || '';
+    });
 
     const changed = dirty || hasPending();
     $('publish').disabled = !changed;
@@ -462,33 +530,37 @@
   /* ─────────────────────────── Edit dialog ─────────────────────────── */
   const FIELDS = {
     home: [
-      ['name', 'Name', 'text'],
-      ['community', 'Community', 'community'],
-      ['story', 'Type', 'select', ['single', 'two', 'custom']],
-      ['status', 'Status badge', 'text'],
-      ['price', 'Price (dollars)', 'number'],
+      ['title', 'Name or address', 'text'],
+      ['listingType', 'Listing type', 'select', ['rent', 'sale', 'build']],
+      ['availability', 'Status', 'select', ['available', 'occupied']],
+      ['city', 'City', 'select', ['austin', 'dfw', 'houston', 'sanantonio']],
+      ['area', 'Neighborhood', 'text'],
+      ['rent', 'Monthly rent (dollars)', 'number'],
+      ['price', 'Sale price (only if for sale)', 'number'],
       ['beds', 'Bedrooms', 'number'],
       ['baths', 'Bathrooms', 'number'],
       ['sqft', 'Square feet', 'number'],
-      ['garage', 'Garage spaces', 'number'],
+      ['availableFrom', 'Available from', 'text'],
       ['description', 'Description', 'textarea'],
     ],
-    community: [
-      ['name', 'Name', 'text'],
-      ['place', 'City / town', 'text'],
-      ['market', 'Market', 'text'],
-      ['city', 'Filter market', 'select', ['austin', 'dfw', 'houston', 'sanantonio']],
-      ['status', 'Status badge', 'text'],
-      ['fromPrice', 'Starting price (dollars)', 'number'],
-      ['lots', 'Lot sizes', 'text'],
-      ['beds', 'Typical bedrooms', 'number'],
-      ['amenities', 'Amenities (one per line)', 'textarea'],
+    area: [
+      ['name', 'Area name', 'text'],
+      ['city', 'City', 'select', ['austin', 'dfw', 'houston', 'sanantonio']],
+      ['note', 'Note', 'textarea'],
+    ],
+    campaign: [
+      ['platform', 'Platform', 'select', ['meta', 'google', 'tiktok']],
+      ['dailyBudget', 'Budget per day (dollars)', 'number'],
+      ['days', 'How many days', 'number'],
+      ['message', 'Ad message', 'textarea'],
+      ['status', 'Status', 'select', ['draft', 'live', 'paused', 'stopped']],
     ],
   };
 
   function openDialog(kind, item) {
     editing = { kind: kind, item: item };
-    $('dlgTitle').textContent = item.name || (kind === 'home' ? 'New home' : 'New community');
+    $('dlgTitle').textContent = item.title || item.name ||
+      (kind === 'home' ? 'New home' : kind === 'area' ? 'New area' : 'New campaign');
 
     const rows = FIELDS[kind].map(function (f) {
       const key = f[0], label = f[1], type = f[2], options = f[3];
@@ -577,9 +649,10 @@
       else item[key] = el.value.trim();
     });
     if (!item.id) {
-      item.id = (item.name || 'untitled').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+      const label = item.title || item.name || item.platform || 'untitled';
+      item.id = String(label).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
         + '-' + Math.random().toString(36).slice(2, 6);
-      (kind === 'home' ? data.homes : data.communities).push(item);
+      listFor(kind).push(item);
     }
     dirty = true;
     closeDialog();
@@ -587,10 +660,17 @@
     log('Saved locally. Press "Publish changes" to put it on the website.');
   });
 
+  function listFor(kind) {
+    return kind === 'home' ? data.homes
+      : kind === 'area' ? data.neighborhoods
+      : promos.campaigns;
+  }
+
   $('dlgDelete').addEventListener('click', function () {
     if (!editing || !editing.item.id) return closeDialog();
-    if (!confirm('Delete "' + editing.item.name + '"? It disappears from the website when you publish.')) return;
-    const list = editing.kind === 'home' ? data.homes : data.communities;
+    const label = editing.item.title || editing.item.name || editing.item.platform;
+    if (!confirm('Delete "' + label + '"? It disappears from the website when you publish.')) return;
+    const list = listFor(editing.kind);
     const i = list.indexOf(editing.item);
     if (i > -1) list.splice(i, 1);
     dirty = true;
@@ -599,22 +679,29 @@
     log('Deleted locally. Press "Publish changes" to apply it.');
   });
 
+  ['pFacebook', 'pInstagram', 'pTiktok', 'pGoogle'].forEach(function (id) {
+    const el = $(id);
+    if (el) el.addEventListener('input', function () { dirty = true; render(); });
+  });
+
   document.addEventListener('click', function (e) {
     const btn = e.target.closest('[data-edit]');
     if (!btn) return;
     const kind = btn.dataset.kind;
-    const list = kind === 'home' ? data.homes : data.communities;
-    const item = list.filter(function (x) { return x.id === btn.dataset.edit; })[0];
+    const item = listFor(kind).filter(function (x) { return x.id === btn.dataset.edit; })[0];
     if (item) openDialog(kind, item);
   });
 
   $('addHome').addEventListener('click', function () {
-    openDialog('home', { name: '', community: (data.communities[0] || {}).id || '', story: 'single',
-      status: 'Now selling', price: 0, beds: 3, baths: 2, sqft: 0, garage: 2, description: '', photos: [] });
+    openDialog('home', { title: '', listingType: 'rent', availability: 'available', city: 'austin',
+      area: '', rent: 0, price: 0, beds: 3, baths: 2, sqft: 0, availableFrom: '',
+      description: '', photos: [] });
   });
   $('addCommunity').addEventListener('click', function () {
-    openDialog('community', { name: '', place: '', market: '', city: 'austin', status: 'Now Selling',
-      statusTone: 'white', fromPrice: 0, lots: '', beds: 3, amenities: [], photos: [] });
+    openDialog('area', { name: '', city: 'austin', note: '' });
+  });
+  $('addCampaign').addEventListener('click', function () {
+    openDialog('campaign', { platform: 'meta', dailyBudget: 20, days: 7, message: '', status: 'draft' });
   });
 
   /* ─────────────────────── Photos: prepared here, uploaded on publish ─────────────────────── */
